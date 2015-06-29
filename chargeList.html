@@ -11,7 +11,7 @@
 	<table width="70%" border="1" style="table-layout:fixed; text-align: center">
 		<tr>
 		<% data.forEach( function (item, index) { %>
-			<th><%= if(item.postCharge._!="") { item.postCharge %><br/> <%= } item.charge._ %></th>
+			<th><%= if(item.postCharge._) { %><%= item.postCharge%><br/><%= } %><%= item.charge._ %></th>
 		<% }); %>
 		</tr>
 		<tr>
