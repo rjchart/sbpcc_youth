@@ -9,11 +9,13 @@
 	<hr />
 	<table width="100%" border="1">
 		<tr>
-		<% data.forEach( function (item, index) { %>
-			<th><%= item.charge._ %></th>
-		<% }); %>
+			<th>DELETE</th>
+			<th>EDIT</th>
+			<th>직책</th>
+			<th>이름</th>
+			<th>부서</th>
+			<th>분류</th>
 		</tr>
-<!-- 		
 		<% data.forEach( function (item, index) { %>
 		<tr>
 			<td><a href="/delete/<%= item.RowKey._ %>">DELETE</a></td>
@@ -24,7 +26,6 @@
 			<td><%= item.part._ %></td>
 		</tr>
 		<% }); %>
- -->	
- 	</table>
+	</table>
 </body>
 </html>

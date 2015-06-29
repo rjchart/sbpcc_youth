@@ -60,7 +60,7 @@ app.get('/charges', function(request, response) {
 	fs.readFile('chargeList.html', 'utf8', function (error, data) {
 		var query = new azure.TableQuery()
 		// .top(5)
-		.where('PartitionKey eq ?', '청년부');
+		.where('PartitionKey eq ? && part eq ?', '청년부', '임원');
 
 		// 데이터베이스 쿼리를 실행합니다.
 		tableService.queryEntities('charges', query, null, function entitiesQueried(error, result) {
