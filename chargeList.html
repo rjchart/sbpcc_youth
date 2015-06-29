@@ -7,13 +7,13 @@
 	<h1>List Page</h1>
 	<a href="/insert"> INSERT DATA </a>
 	<hr />
-	<table width="100%" border="1" style="table-layout:fixed" >
+	<table width="100%" border="1" style="table-layout:fixed" align="center">
 		<tr>
 		<% data.forEach( function (item, index) { %>
 			<th><%= item.charge._ %></th>
 		<% }); %>
 		</tr>
-		<tr text-align="center" >
+		<tr>
 		<% data.forEach( function (item, index) { %>
 			<td><%= item.name._ %></td>
 		<% }); %>
