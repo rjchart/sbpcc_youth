@@ -44,6 +44,25 @@
 		<% }); %>
 		</tr>
  	</table>
+
+	<p>BS 명단</p>
+	<table width="70%" height="100" border="1" style="table-layout:fixed; text-align: center">
+		<tr>
+		<% data.forEach( function (item, index) { %>
+			<% if(item.part._ == 'BS') { %>
+			<th><%= item.charge._ %></th>
+			<% } %>
+		<% }); %>
+
+		</tr>
+		<tr>
+		<% data.forEach( function (item, index) { %>
+			<% if(item.part._ == 'BS') { %>
+			<td><%= item.name._ %></td>
+			<% } %>
+		<% }); %>
+		</tr>
+ 	</table>
 <!-- 		
 		<% data.forEach( function (item, index) { %>
 		<tr>
