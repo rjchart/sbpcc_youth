@@ -82,9 +82,11 @@ app.get('/branch', function(request, response) {
 
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
-						var get;
+						var get, checkList;
 						bsList.forEach (function (item, index) {
-							get = item.charge._;
+							var branchName = item.charge._;
+							var getList = getBranchArray(branchName, entries);
+							checkList = getList;
 						});
 
 						// var bsTableList;
@@ -95,8 +97,7 @@ app.get('/branch', function(request, response) {
 						// });
 
 						// var get = getBranchArray('빛과기쁨',entries);
-						// response.send(JSON.stringify(get));
-						response.send(get);
+						response.send(JSON.stringify(checkList));
 				// 		response.send(ejs.render(data, 
 				// 			{data: entries}
 				// 		));
