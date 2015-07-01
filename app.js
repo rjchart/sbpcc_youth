@@ -53,9 +53,9 @@ app.get('/branch', function(request, response) {
 
 
 	fs.readFile('branchTable.html', 'utf8', function (error, data) {
-		var branchQuery = new azure.TableQuery();
+		var branchQuery = new azure.TableQuery()
 		// .top(5)
-		// .where('age ge ?', '{18}');
+		.where('part eq ?', 'BS');
 
 		// 데이터베이스 쿼리를 실행합니다.
 		tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
@@ -65,16 +65,18 @@ app.get('/branch', function(request, response) {
 
 				var query = new azure.TableQuery();
 				// .top(5)
-				// .where('PartitionKey eq ?', '청년부');
+				// .where('age ge ?', '{18}');
 
 				// 데이터베이스 쿼리를 실행합니다.
-				tableService.queryEntities('charges', query, null, function entitiesQueried(error, result) {
+				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
 					if (!error) {
+
 						var testString = JSON.stringify(result.entries);
-						var entries = JSON.parse(testString);
-						response.send(ejs.render(data, 
-							{data: entries}
-						));
+						response.send(testString);
+				// 		var entries = JSON.parse(testString);
+				// 		response.send(ejs.render(data, 
+				// 			{data: entries}
+				// 		));
 					}
 				});
 			}
