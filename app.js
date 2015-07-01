@@ -59,7 +59,7 @@ app.get('/branch', function(request, response) {
 		// .where('age ge ?', '{18}');
 
 		// // 데이터베이스 쿼리를 실행합니다.
-		// tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
+		// tableService.queryEntities('members', branchQuery, null, function entitiesQueried(error, result) {
 		// 	if (!error) {
 		// 		var bsTestString = JSON.stringify(result.entries);
 		// 		var bsList = JSON.parse(bsTestString);
@@ -69,7 +69,7 @@ app.get('/branch', function(request, response) {
 				.where('PartitionKey eq ?', '청년부');
 
 				// 데이터베이스 쿼리를 실행합니다.
-				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+				tableService.queryEntities('charges', query, null, function entitiesQueried(error, result) {
 					if (!error) {
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
