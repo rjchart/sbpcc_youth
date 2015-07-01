@@ -96,12 +96,16 @@ app.get('/branch', function(request, response) {
 						// var get = getBranchArray('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));
 						// response.send(data);
+						
 						response.send(ejs.render(data, 
-							{
-								data: bsList
-								// branchTable: branchTable
-							}
+							{data: entries}
 						));
+						// response.send(ejs.render(data, 
+						// 	{
+						// 		data: bsList
+						// 		// branchTable: branchTable
+						// 	}
+						// ));
 					}
 				});
 			}
