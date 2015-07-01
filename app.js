@@ -97,7 +97,7 @@ app.get('/branch', function(request, response) {
 						// response.send(JSON.stringify(branchTable));
 						response.send(ejs.render(data, 
 							{
-								bsList: entries,
+								bsList: bsList,
 								branchTable: branchTable
 							}
 						));
