@@ -83,18 +83,25 @@ app.get('/branch', function(request, response) {
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
 						var get, checkList;
-						var bsTableList = [];
+						var branchTable = [];
+						var maxLength = 0;
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
 							var getList = getBranchArray(branchName, entries);
-							bsTableList.push(getList);
+							if (maxLength < getList.length) 
+								maxLength = getList.length;
+							branchTable.push(getList);
 						});
 
 						// var get = getBranchArray('빛과기쁨',entries);
-						response.send(JSON.stringify(bsTableList));
-				// 		response.send(ejs.render(data, 
-				// 			{data: entries}
-				// 		));
+						response.send(JSON.stringify(branchTable));
+						response.send(ejs.render(data, 
+							{
+								bsList: entries,
+								branchTable: branchTable,
+								maxNumber: maxLength
+							}
+						));
 					}
 				});
 			}

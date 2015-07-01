@@ -7,61 +7,22 @@
 	<h1>List Page</h1>
 	<!-- <a href="/insert"> INSERT DATA </a> -->
 	<hr />
-	<p>임원 명단</p>
-	<table width="70%" height="100" border="1" style="table-layout:fixed; text-align: center">
-		<tr>
-		<% data.forEach( function (item, index) { %>
-			<% if(item.part._ == '임원') { %>
-			<th><% if(item.postCharge) { %><%= item.postCharge._ %><br/><% } %><%= item.charge._ %></th>
-			<% } %>
-		<% }); %>
 
-		</tr>
+	<p>브랜치 명단</p>
+	<table width="100%" height="100" border="1" style="table-layout:fixed; text-align: center">
 		<tr>
-		<% data.forEach( function (item, index) { %>
-			<% if(item.part._ == '임원') { %>
-			<td><%= item.name._ %></td>
-			<% } %>
-		<% }); %>
-		</tr>
- 	</table>
-
-	<p>팀장 명단</p>
-	<table width="70%" height="100" border="1" style="table-layout:fixed; text-align: center">
-		<tr>
-		<% data.forEach( function (item, index) { %>
-			<% if(item.part._ == '팀장') { %>
+		<% bsList.forEach( function (item, index) { %>
 			<th><%= item.charge._ %></th>
-			<% } %>
 		<% }); %>
 
 		</tr>
+		<% for(var i = 0; i < maxNumber; i++) { %>
 		<tr>
-		<% data.forEach( function (item, index) { %>
-			<% if(item.part._ == '팀장') { %>
-			<td><%= item.name._ %></td>
-			<% } %>
-		<% }); %>
+			<% branchTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><%= item[i].name._ %> <% } %></td>
+			<% }); %>
 		</tr>
- 	</table>
-
-	<p>BS 명단</p>
-	<table width="70%" height="100" border="1" style="table-layout:fixed; text-align: center">
-		<tr>
-		<% data.forEach( function (item, index) { %>
-			<% if(item.part._ == 'BS') { %>
-			<th><%= item.charge._ %></th>
-			<% } %>
-		<% }); %>
-
-		</tr>
-		<tr>
-		<% data.forEach( function (item, index) { %>
-			<% if(item.part._ == 'BS') { %>
-			<td><%= item.name._ %></td>
-			<% } %>
-		<% }); %>
-		</tr>
+		<% } %>
  	</table>
  	
 </body>
