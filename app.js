@@ -61,7 +61,7 @@ app.get('/branch', function(request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 
 
-	fs.readFile('chargeList.html', 'utf8', function (error, data) {
+	fs.readFile('branchTable.html', 'utf8', function (error, data) {
 		var branchQuery = new azure.TableQuery()
 		// .top(5)
 		.where('part eq ?', 'BS');
@@ -95,15 +95,13 @@ app.get('/branch', function(request, response) {
 
 						// var get = getBranchArray('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));
-						// response(data);
-						response.send(ejs.render(data, 
-							{
-								bsList: bsList,
-								branchTable: branchTable
-							},
-							{nego}
-
-						));
+						response.send(data);
+						// response.send(ejs.render(data, 
+						// 	{
+						// 		bsList: bsList,
+						// 		branchTable: branchTable
+						// 	}
+						// ));
 					}
 				});
 			}
