@@ -56,7 +56,7 @@ app.get('/branch', function(request, response) {
 
 		var branchQuery = new azure.TableQuery();
 		// .top(5)
-		.where('age eq ?', '{18}');
+		.where('age ge ?', '{18}');
 
 		// 데이터베이스 쿼리를 실행합니다.
 		tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
