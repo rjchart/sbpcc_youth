@@ -83,12 +83,13 @@ app.get('/branch', function(request, response) {
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
 						// var bsTableList;
-						// bsList.forEach(function (bsElement, index) {
-						// 	bsTableList.push(getBranchArray(bsElement.charge._,entries));
-						// });
+						bsList.forEach(function (item, index) {
+							var get = getBranchArray(bsElement.charge._,entries);
+							// bsTableList.push();
+						});
 
 						// var get = getBranchArray('빛과기쁨',entries);
-						response.send(JSON.stringify(bsList));
+						response.send(JSON.stringify(get));
 				// 		response.send(ejs.render(data, 
 				// 			{data: entries}
 				// 		));
