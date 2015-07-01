@@ -24,9 +24,9 @@
 		</tr>
 		<% for(var i = 0; i < maxNumber; i++) { %>
 		<tr>
-			<td>test <%=i%></td>
+			<td></td>
 			<% branchTable.forEach( function (item, index) { %>
-				<td> check <% if (item.length > i) {%><%= item[i].RowKey._ %><%}%></td>
+				<td><% if (item.length > i) {%><%= item[i].RowKey._ %><%}%></td>
 			<% }); %>
 		</tr>
 		<% } %>
