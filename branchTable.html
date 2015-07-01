@@ -24,7 +24,10 @@
 		</tr>
 		<% for(var i = 0; i < maxNumber; i++) { %>
 		<tr>
-			<td>test</td>
+			<td>test <%=i%></td>
+			<% branchTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><%= item[i].name._ %> <% } %></td>
+			<% }); %>
 		</tr>
 		<% } %>
  	</table>
