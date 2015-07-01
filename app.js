@@ -54,15 +54,15 @@ app.get('/branch', function(request, response) {
 
 	fs.readFile('branchTable.html', 'utf8', function (error, data) {
 
-		var branchQuery = new azure.TableQuery();
-		// .top(5)
-		.where('age ge ?', '{18}');
+		// var branchQuery = new azure.TableQuery();
+		// // .top(5)
+		// .where('age ge ?', '{18}');
 
-		// 데이터베이스 쿼리를 실행합니다.
-		tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
-			if (!error) {
-				var bsTestString = JSON.stringify(result.entries);
-				var bsList = JSON.parse(bsTestString);
+		// // 데이터베이스 쿼리를 실행합니다.
+		// tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
+		// 	if (!error) {
+		// 		var bsTestString = JSON.stringify(result.entries);
+		// 		var bsList = JSON.parse(bsTestString);
 
 				var query = new azure.TableQuery()
 				// .top(5)
@@ -78,8 +78,8 @@ app.get('/branch', function(request, response) {
 						));
 					}
 				});
-			}
-		});
+			// }
+		// });
 
 
 	});
