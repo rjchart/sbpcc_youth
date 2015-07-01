@@ -82,9 +82,13 @@ app.get('/branch', function(request, response) {
 
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
+						var bsTableList;
+						bsList.forEach(function (bsElement, index) {
+							bsTableList.push(getBranchArray(bsElement.charge._,entries));
+						});
 
-						var get = getBranchArray('빛과기쁨',entries);
-						response.send(JSON.stringify(get));
+						// var get = getBranchArray('빛과기쁨',entries);
+						response.send(JSON.stringify(bsTableList));
 				// 		response.send(ejs.render(data, 
 				// 			{data: entries}
 				// 		));
