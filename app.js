@@ -20,6 +20,15 @@ app.use(app.router);
 var accessKey = 'pnOhpX2pEOye58E2gtlU5gVGzUbFVk3GcNYerm4RDuNuzoqsSB06v28oy3EF/wUZo6cUq/SUNdH0AQqek6rg7Q==';
 var storageAccount = 'sbpccyouth';
 
+function getBranchArray(branchName, members) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		if (item.branch._ == branchName)
+			branchArray.push(item);
+	});
+	return branchArray;
+}
+
 app.get('/', function(request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 
@@ -72,8 +81,10 @@ app.get('/branch', function(request, response) {
 					if (!error) {
 
 						var testString = JSON.stringify(result.entries);
-						response.send(testString);
-				// 		var entries = JSON.parse(testString);
+						var entries = JSON.parse(testString);
+
+						var get = getBranchArray('빛과기쁨',entries);
+						response.send(JSON.stringify(get));
 				// 		response.send(ejs.render(data, 
 				// 			{data: entries}
 				// 		));
