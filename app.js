@@ -48,42 +48,42 @@ app.get('/', function(request, response) {
 	});
 });
 
-app.get('/branch', function(request, response) {
-	var tableService = azure.createTableService(storageAccount, accessKey);
+// app.get('/branch', function(request, response) {
+// 	var tableService = azure.createTableService(storageAccount, accessKey);
 
 
-	fs.readFile('branchTable.html', 'utf8', function (error, data) {
+// 	fs.readFile('branchTable.html', 'utf8', function (error, data) {
 
-		// var branchQuery = new azure.TableQuery();
-		// // .top(5)
-		// .where('age ge ?', '{18}');
+// 		// var branchQuery = new azure.TableQuery();
+// 		// // .top(5)
+// 		// .where('age ge ?', '{18}');
 
-		// // 데이터베이스 쿼리를 실행합니다.
-		// tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
-		// 	if (!error) {
-		// 		var bsTestString = JSON.stringify(result.entries);
-		// 		var bsList = JSON.parse(bsTestString);
+// 		// // 데이터베이스 쿼리를 실행합니다.
+// 		// tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
+// 		// 	if (!error) {
+// 		// 		var bsTestString = JSON.stringify(result.entries);
+// 		// 		var bsList = JSON.parse(bsTestString);
 
-				var query = new azure.TableQuery()
-				// .top(5)
-				.where('PartitionKey eq ?', '청년부');
+// 				var query = new azure.TableQuery()
+// 				// .top(5)
+// 				.where('PartitionKey eq ?', '청년부');
 
-				// 데이터베이스 쿼리를 실행합니다.
-				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
-					if (!error) {
-						var testString = JSON.stringify(result.entries);
-						var entries = JSON.parse(testString);
-						response.send(ejs.render(data, 
-							{data: entries}
-						));
-					}
-				});
-			// }
-		// });
+// 				// 데이터베이스 쿼리를 실행합니다.
+// 				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+// 					if (!error) {
+// 						var testString = JSON.stringify(result.entries);
+// 						var entries = JSON.parse(testString);
+// 						response.send(ejs.render(data, 
+// 							{data: entries}
+// 						));
+// 					}
+// 				});
+// 			// }
+// 		// });
 
 
-	});
-});
+// 	});
+// });
 
 app.get('/charges', function(request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
