@@ -98,7 +98,10 @@ app.get('/branch', function(request, response) {
 						// response.send(data);
 
 						response.send(ejs.render(data, 
-							{bsList: bsList}
+							{	
+								bsList: bsList,
+								maxNumber: maxLength
+							}
 						));
 						// response.send(ejs.render(data, 
 						// 	{
