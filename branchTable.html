@@ -26,7 +26,7 @@
 		<tr>
 			<td>test <%=i%></td>
 			<% branchTable.forEach( function (item, index) { %>
-				<td> check <% if (item.length > i) {%><%= item[i].name._ %><%}%></td>
+				<td> check <% if (item.length > i) {%><%= item[i].RowKey._ %><%}%></td>
 			<% }); %>
 		</tr>
 		<% } %>
