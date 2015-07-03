@@ -252,7 +252,7 @@ app.get('/profile/:id', function (request, response) {
 
 app.post('/upload/:id', function (req, res) {
 	var rowKey = req.param('id');
-	var partitionKey = req.param('partitionKey');
+	var partitionKey = req.param('PartitionKey');
 	var getString = rowKey + partitionKey;
 
 	var tableService = azure.createTableService(storageAccount, accessKey);
