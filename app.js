@@ -253,7 +253,7 @@ app.get('/profile/:id', function (request, response) {
 app.post('/upload/:id', function (req, res) {
 	var id = req.param('id');
 
-	// var tableService = azure.createTableService(storageAccount, accessKey);
+	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
 
