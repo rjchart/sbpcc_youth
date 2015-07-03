@@ -251,7 +251,9 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/upload/:id', function (req, res) {
-	var id = req.param('id');
+	var rowKey = req.param('id');
+	var partitionKey = req.param('partitionKey');
+	var getString = rowKey + partitionKey;
 
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
@@ -267,45 +269,45 @@ app.post('/upload/:id', function (req, res) {
 		
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
+				res.send(getString);
+				// var query = new azure.TableQuery()
+				// .top(1)
+				// .where('RowKey eq ?', id);
 
-				var query = new azure.TableQuery()
-				.top(1)
-				.where('RowKey eq ?', id);
+				// // 데이터베이스 쿼리를 실행합니다.
+				// tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+				// 	if (!error) {
+				// 		var testString = JSON.stringify(result.entries);
+				// 		var entries = JSON.parse(testString);
+				// 		var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries[0].RowKey._ + "/" + filename;
 
-				// 데이터베이스 쿼리를 실행합니다.
-				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
-					if (!error) {
-						var testString = JSON.stringify(result.entries);
-						var entries = JSON.parse(testString);
-						var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries[0].RowKey._ + "/" + filename;
+				// 		var entGen = azure.TableUtilities.entityGenerator;
+				// 		var entity = {
+				// 			PartitionKey: entGen.String(entries[0].PartitionKey),
+				// 			RowKey: entGen.String(entries[0].RowKey),
+				// 			// age: entGen.Int32(entries[0].age),
+				// 			// birthDay: entGen.Int32(entries[0].birthDay),
+				// 			// birthMonth: entGen.Int32(entries[0].birthMonth),
+				// 			// birthYear: entGen.Int32(entries[0].birthYear),
+				// 			// branch: entGen.String(entries[0].branch),
+				// 			// gender: entGen.String(entries[0].gender),
+				// 			// phone: entGen.String(entries[0].phone),
+				// 			photo: entGen.String(urlString)
+				// 		};
 
-						var entGen = azure.TableUtilities.entityGenerator;
-						var entity = {
-							PartitionKey: entGen.String(entries[0].PartitionKey),
-							RowKey: entGen.String(entries[0].RowKey),
-							age: entGen.Int32(entries[0].age),
-							birthDay: entGen.Int32(entries[0].birthDay),
-							birthMonth: entGen.Int32(entries[0].birthMonth),
-							birthYear: entGen.Int32(entries[0].birthYear),
-							branch: entGen.String(entries[0].branch),
-							gender: entGen.String(entries[0].gender),
-							phone: entGen.String(entries[0].phone),
-							photo: entGen.String(urlString)
-						};
-
-						// 데이터베이스에 entity를 추가합니다.
-						tableService.updateEntity('members', entity, function(error, result, response) {
-							if (!error) {
-								// var redirectID = '/profile/' + entries[0].RowKey._;
-								// res.redirect(redirectID);
-								// error handling
-								res.send('<h1>File uploaded successfully</h1>');
-							}
-							else
-								res.send(error);
-						});
-					}
-				});
+				// 		// 데이터베이스에 entity를 추가합니다.
+				// 		tableService.updateEntity('members', entity, function(error, result, response) {
+				// 			if (!error) {
+				// 				// var redirectID = '/profile/' + entries[0].RowKey._;
+				// 				// res.redirect(redirectID);
+				// 				// error handling
+				// 				res.send('<h1>File uploaded successfully</h1>');
+				// 			}
+				// 			else
+				// 				res.send(error);
+				// 		});
+				// 	}
+				// });
 			}
 		});
 	});
