@@ -12,7 +12,7 @@ var expiryDate = new Date(startDate);
 var app = express();
 
 app.use(express.cookieParser());
-app.use (express.static(__dirname + '/images'));
+// app.use (express.static(__dirname + '/images'));
 // app.use(express.limit('10mb'));
 // app.use(express.bodyParser({ uploadDir: __dirname + 'multipart'}));
 // app.use(express.bodyParser());
@@ -253,7 +253,7 @@ app.get('/profile/:id', function (request, response) {
 app.post('/upload', function (req, res) {
 	var id = req.param('id');
 
-	var tableService = azure.createTableService(storageAccount, accessKey);
+	// var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
 
