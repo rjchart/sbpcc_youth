@@ -256,18 +256,17 @@ app.post('/upload/:id', function (req, res) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
+	var filename = new Date().toISOString();
 
     form.on('part', function(part) {
 	    if (!part.filename) return;
 		
 		var size = part.byteCount;
-		var name = part.filename;
+		var name = filename;
 		var container = 'imgcontainer';
 		
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
-				// error handling
-				res.send('<h1>File uploaded successfully</h1>');
 
 				// 파일을 읽습니다.
 				fs.readFile('edit.html', 'utf8', function (error, data) {
@@ -280,6 +279,7 @@ app.post('/upload/:id', function (req, res) {
 						if (!error) {
 							var testString = JSON.stringify(result.entries);
 							var entries = JSON.parse(testString);
+							var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries.RowKey._ + "/" + filename;
 
 							response.send(ejs.render(data, 
 								{data: entries[0]}
@@ -289,14 +289,16 @@ app.post('/upload/:id', function (req, res) {
 							var entity = {
 								PartitionKey: entGen.String(entries[0].PartitionKey),
 								RowKey: entGen.String(entries[0].RowKey),
-								photo: entGen.String(entries[0].id)
+								photo: entGen.String(urlString)
 							};
 
 							// 데이터베이스에 entity를 추가합니다.
-							tableService.updateEntity('products', entity, function(error, result, response) {
+							tableService.updateEntity('members', entity, function(error, result, response) {
 								if (!error) {
 									var redirectID = '/profile/' + entries[0].RowKey._;
 									res.redirect(redirectID);
+									// error handling
+									res.send('<h1>File uploaded successfully</h1>');
 								}
 							});
 						}
