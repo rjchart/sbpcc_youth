@@ -10,7 +10,7 @@
 
 	<fieldset style="width: 250px">
 		<legend>EDIT DATA</legend>
-		<form action="/upload" enctype="multipart/form-data" method="post">
+		<form action="/upload/<%= data.RowKey%>" enctype="multipart/form-data" method="post">
 		<input type="file" name="upload"><br>
 			<img src="/Unknown.png" width="200" align="center"/><br/>
 		<input type="submit" value="Upload">
