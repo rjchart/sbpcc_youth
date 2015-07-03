@@ -141,6 +141,7 @@ app.get('/charges', function(request, response) {
 	});
 });
 
+
 app.get('/delete/:id', function(request, response) {
 	// 데이터베이스 쿼리를 실행합니다.
 	var tableService = azure.createTableService(storageAccount, accessKey);
@@ -211,6 +212,31 @@ app.get('/edit/:id', function (request, response) {
 
 		// 데이터베이스 쿼리를 실행합니다.
 		tableService.queryEntities('products', query, null, function entitiesQueried(error, result) {
+			if (!error) {
+				var testString = JSON.stringify(result.entries);
+				var entries = JSON.parse(testString);
+				// response.send(newTest[0].name._);
+				response.send(ejs.render(data, 
+					{data: entries[0]}
+				));
+			}
+		});
+	});
+});
+
+app.get('/profile/:id', function (request, response) {
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+
+
+	// 파일을 읽습니다.
+	fs.readFile('edit.html', 'utf8', function (error, data) {
+		var query = new azure.TableQuery()
+		.top(1)
+		.where('RowKey eq ?', id);
+
+		// 데이터베이스 쿼리를 실행합니다.
+		tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
 			if (!error) {
 				var testString = JSON.stringify(result.entries);
 				var entries = JSON.parse(testString);

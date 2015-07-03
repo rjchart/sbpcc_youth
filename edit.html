@@ -11,28 +11,29 @@
 		<legend>EDIT DATA</legend>
 		<table>
 			<tr>
-				<td><label>PartitionKey</label></td>
-				<td><input type="text" name="PartitionKey" value="<%= data.PartitionKey._ %>" /></td>
+				<td><label>또래</label></td>
+				<td><%= data.PartitionKey._ %> 또래</td>
 			</tr>
 			<tr>
-				<td><label>RowKey</label></td>
-				<td><input type="text" name="RowKey" value="<%= data.RowKey._ %>" /></td>
+				<td><label>이름</label></td>
+				<td><%= data.RowKey._ %></td>
 			</tr>
 			<tr>
-				<td><label>Id</label></td>
-				<td><input type="text" name="id" value="<%= data.id._ %>" /></td>
+				<td><label>브랜치</label></td>
+				<td><input type="text" name="branch" value="<%= data.branch._ %>" /></td>
 			</tr>
 			<tr>
-				<td><label>Name</label></td>
-				<td><input type="text" name="name" value="<%= data.name._ %>" /></td>
+				<td><label>성별</label></td>
+				<td><input type="text" name="gender" value="<%= data.gender._ %>" /></td>
 			</tr>
 			<tr>
-				<td><label>Model Number</label></td>
-				<td><input type="text" name="modelnumber" value="<%= data.modelnumber._ %>" /></td>
+				<td><label>전화번호</label></td>
+				<td><input type="text" name="phone" value="<%= data.phone._ %>" /></td>
 			</tr>
 			<tr>
-				<td><label>Series</label></td>
-				<td><input type="text" name="series" value="<%= data.series._ %>" /></td>
+				<td><label>생년월일</label></td>
+				<td><input type="date" name="birth" /></td>
+				<!-- value="<%= data.series._ %>" -->
 			</tr>
 		</table>
 		<input type="submit" />
