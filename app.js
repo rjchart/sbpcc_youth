@@ -257,9 +257,14 @@ app.post('/upload/:id', function (req, res) {
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
 	var filename = new Date().toISOString();
+	var getField;
 
     // form.parse(req, function(err, fields, files) {
 		// res.end(util.inspect({fields: fields, files: files}));
+
+	form.parse(req, function(err, fields, files) {
+		getField = fields;
+	});
 
 	    form.on('part', function(part) {
 		    if (!part.filename) return;
@@ -270,7 +275,7 @@ app.post('/upload/:id', function (req, res) {
 			
 			blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 				if (!error) {
-					res.send("partitionKey: " + req.fields.PartitionKey);
+					res.send("partitionKey: ");
 					// var query = new azure.TableQuery()
 					// .top(1)
 					// .where('RowKey eq ?', id);
@@ -312,7 +317,6 @@ app.post('/upload/:id', function (req, res) {
 				}
 			});
 		});
-	form.parse(req);
     // });
 
 
