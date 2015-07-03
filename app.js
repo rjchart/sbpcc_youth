@@ -240,10 +240,10 @@ app.get('/profile/:id', function (request, response) {
 			if (!error) {
 				var testString = JSON.stringify(result.entries);
 				var entries = JSON.parse(testString);
-				response.send(entries[0].RowKey._);
-				// response.send(ejs.render(data, 
-				// 	{data: entries[0]}
-				// ));
+				// response.send(entries[0].RowKey._);
+				response.send(ejs.render(data, 
+					{data: entries[0]}
+				));
 			}
 		});
 	});
