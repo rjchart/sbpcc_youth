@@ -272,7 +272,6 @@ app.post('/upload/:id', function (req, res) {
 	});
 	form.parse(req);
 	
-    // res.writeHead(200, {'content-type': 'text/html'});
 	res.send('<h1>File uploaded successfully</h1>');
 });
 
