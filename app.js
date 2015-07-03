@@ -268,41 +268,38 @@ app.post('/upload/:id', function (req, res) {
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
 
-				// 파일을 읽습니다.
-				fs.readFile('edit.html', 'utf8', function (error, data) {
-					var query = new azure.TableQuery()
-					.top(1)
-					.where('RowKey eq ?', id);
+				var query = new azure.TableQuery()
+				.top(1)
+				.where('RowKey eq ?', id);
 
-					// 데이터베이스 쿼리를 실행합니다.
-					tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
-						if (!error) {
-							var testString = JSON.stringify(result.entries);
-							var entries = JSON.parse(testString);
-							var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries.RowKey._ + "/" + filename;
+				// 데이터베이스 쿼리를 실행합니다.
+				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+					if (!error) {
+						var testString = JSON.stringify(result.entries);
+						var entries = JSON.parse(testString);
+						// var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries.RowKey._ + "/" + filename;
 
-							response.send(ejs.render(data, 
-								{data: entries[0]}
-							));
+						// response.send(ejs.render(data, 
+						// 	{data: entries[0]}
+						// ));
 
-							var entGen = azure.TableUtilities.entityGenerator;
-							var entity = {
-								PartitionKey: entGen.String(entries[0].PartitionKey),
-								RowKey: entGen.String(entries[0].RowKey),
-								photo: entGen.String(urlString)
-							};
+						// var entGen = azure.TableUtilities.entityGenerator;
+						// var entity = {
+						// 	PartitionKey: entGen.String(entries[0].PartitionKey),
+						// 	RowKey: entGen.String(entries[0].RowKey),
+						// 	photo: entGen.String(urlString)
+						// };
 
-							// 데이터베이스에 entity를 추가합니다.
-							tableService.updateEntity('members', entity, function(error, result, response) {
-								if (!error) {
-									var redirectID = '/profile/' + entries[0].RowKey._;
-									res.redirect(redirectID);
-									// error handling
-									res.send('<h1>File uploaded successfully</h1>');
-								}
-							});
-						}
-					});
+						// // 데이터베이스에 entity를 추가합니다.
+						// tableService.updateEntity('members', entity, function(error, result, response) {
+						// 	if (!error) {
+						// 		var redirectID = '/profile/' + entries[0].RowKey._;
+						// 		res.redirect(redirectID);
+								// error handling
+								res.send('<h1>File uploaded successfully</h1>');
+						// 	}
+						// });
+					}
 				});
 			}
 		});
