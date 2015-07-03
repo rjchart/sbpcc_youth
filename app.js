@@ -258,17 +258,17 @@ app.post('/upload/:id', function (req, res) {
 	var form = new multiparty.Form();
 
     form.on('part', function(part) {
-	    if (!part.filename) return;
+	 //    if (!part.filename) return;
 		
-		var size = part.byteCount;
-		var name = part.filename;
-		var container = 'imgcontainer';
+		// var size = part.byteCount;
+		// var name = part.filename;
+		// var container = 'imgcontainer';
 		
-		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
-			if (error) {
-				// error handling
-			}
-		});
+		// blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
+		// 	if (error) {
+		// 		// error handling
+		// 	}
+		// });
 	});
 	form.parse(req);
 	
