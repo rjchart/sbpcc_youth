@@ -301,6 +301,8 @@ app.post('/upload/:id', function (req, res) {
 								// error handling
 								res.send('<h1>File uploaded successfully</h1>');
 							}
+							else
+								res.send(error);
 						});
 					}
 				});
