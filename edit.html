@@ -11,7 +11,7 @@
 	<fieldset style="width: 250px">
 		<legend>EDIT DATA</legend>
 		<form action="/upload/<%= data.RowKey._%>" enctype="multipart/form-data" method="post">
-		<input type="file" name="upload" onchange="check_file()"><br>
+		<input type="file" name="upload" onchange="<%check_file()%>"><br>
 			<img src="/Unknown.png" width="200" align="center"/><br/>
 		<input type="submit" value="Upload">
 		</form>
