@@ -253,7 +253,7 @@ app.get('/profile/:id', function (request, response) {
 app.post('/upload/:id', function (req, res) {
 	// var id = req.param('id');
 	var body = req.body;
-	var partitionKey = req.param('PartitionKey');
+	// var partitionKey = req.param('PartitionKey');
 	// var getString = rowKey + partitionKey;
 
 	var tableService = azure.createTableService(storageAccount, accessKey);
@@ -261,16 +261,22 @@ app.post('/upload/:id', function (req, res) {
 	var form = new multiparty.Form();
 	var filename = new Date().toISOString();
 
-    form.on('part', function(part) {
-	    if (!part.filename) return;
+    form.parse(req, function(err, fields, files) {
+    	var partitionKey = fields.PartitionKey;
+    	res.send("pp:" + partitionKey);
+		// res.end(util.inspect({fields: fields, files: files}));
+    });
+
+  //   form.on('part', function(part) {
+	 //    if (!part.filename) return;
 		
-		var size = part.byteCount;
-		var name = filename;
-		var container = 'imgcontainer';
+		// var size = part.byteCount;
+		// var name = filename;
+		// var container = 'imgcontainer';
 		
-		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
-			if (!error) {
-				res.send("partitionKey: " + partitionKey);
+		// blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
+		// 	if (!error) {
+		// 		res.send("partitionKey: " + partitionKey);
 				// var query = new azure.TableQuery()
 				// .top(1)
 				// .where('RowKey eq ?', id);
@@ -309,10 +315,10 @@ app.post('/upload/:id', function (req, res) {
 				// 		});
 				// 	}
 				// });
-			}
-		});
-	});
-	form.parse(req);
+	// 		}
+	// 	});
+	// });
+	// form.parse(req);
 	
 });
 
