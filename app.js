@@ -251,10 +251,10 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/upload/:id', function (req, res) {
-	var rowKey = req.param('id');
+	// var id = req.param('id');
 	var body = req.body;
 	var partitionKey = body.PartitionKey;
-	var getString = rowKey + partitionKey;
+	// var getString = rowKey + partitionKey;
 
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
@@ -270,7 +270,7 @@ app.post('/upload/:id', function (req, res) {
 		
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
-				res.send(getString);
+				res.send(partitionKey);
 				// var query = new azure.TableQuery()
 				// .top(1)
 				// .where('RowKey eq ?', id);
