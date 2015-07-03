@@ -225,17 +225,6 @@ app.get('/edit/:id', function (request, response) {
 	});
 });
 
-function check_file(){
-    str=document.getElementById('fileToUpload').value.toUpperCase();
-    suffix=".JPG";
-    suffix2=".JPEG";
-    if(str.indexOf(suffix, str.length - suffix.length) == -1||
-                   str.indexOf(suffix2, str.length - suffix2.length) == -1){
-    alert('File type not allowed,\nAllowed file: *.jpg,*.jpeg');
-        document.getElementById('fileToUpload').value='';
-    }
-}
-
 app.get('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
@@ -279,6 +268,40 @@ app.post('/upload/:id', function (req, res) {
 			if (!error) {
 				// error handling
 				res.send('<h1>File uploaded successfully</h1>');
+
+				// 파일을 읽습니다.
+				fs.readFile('edit.html', 'utf8', function (error, data) {
+					var query = new azure.TableQuery()
+					.top(1)
+					.where('RowKey eq ?', id);
+
+					// 데이터베이스 쿼리를 실행합니다.
+					tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+						if (!error) {
+							var testString = JSON.stringify(result.entries);
+							var entries = JSON.parse(testString);
+
+							response.send(ejs.render(data, 
+								{data: entries[0]}
+							));
+
+							var entGen = azure.TableUtilities.entityGenerator;
+							var entity = {
+								PartitionKey: entGen.String(entries[0].PartitionKey),
+								RowKey: entGen.String(entries[0].RowKey),
+								photo: entGen.String(entries[0].id)
+							};
+
+							// 데이터베이스에 entity를 추가합니다.
+							tableService.updateEntity('products', entity, function(error, result, response) {
+								if (!error) {
+									var redirectID = '/profile/' + entries[0].RowKey._;
+									res.redirect(redirectID);
+								}
+							});
+						}
+					});
+				});
 			}
 		});
 	});
