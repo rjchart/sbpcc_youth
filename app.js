@@ -250,27 +250,27 @@ app.get('/profile/:id', function (request, response) {
 	});
 });
 
-app.post('/upload', function (req, res) {
-	// var id = request.param('id');
+app.post('/upload/:id', function (req, res) {
+	var id = req.param('id');
 
-	// var tableService = azure.createTableService(storageAccount, accessKey);
-	// var blobService = azure.createBlobService(storageAccount, accessKey);
-	// var form = new multiparty.Form();
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var blobService = azure.createBlobService(storageAccount, accessKey);
+	var form = new multiparty.Form();
 
-    // form.on('part', function(part) {
-	 //    if (!part.filename) return;
+    form.on('part', function(part) {
+	    if (!part.filename) return;
 		
-		// var size = part.byteCount;
-		// var name = part.filename;
-		// var container = 'imgcontainer';
+		var size = part.byteCount;
+		var name = part.filename;
+		var container = 'imgcontainer';
 		
-		// blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
-		// 	if (error) {
-		// 		// error handling
-		// 	}
-		// });
-	// });
-	// form.parse(req);
+		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
+			if (error) {
+				// error handling
+			}
+		});
+	});
+	form.parse(req);
 	
     // res.writeHead(200, {'content-type': 'text/html'});
 	res.send('<h1>File uploaded successfully</h1>');
