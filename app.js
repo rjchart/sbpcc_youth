@@ -275,7 +275,7 @@ app.post('/upload/:id', function (req, res) {
 		
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
-				res.send("partitionKey: ");
+				res.send("partitionKey: " + part.PartitionKey);
 				// var query = new azure.TableQuery()
 				// .top(1)
 				// .where('RowKey eq ?', id);
