@@ -277,18 +277,14 @@ app.post('/upload/:id', function (req, res) {
 					if (!error) {
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
-						// var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries.RowKey._ + "/" + filename;
+						var urlString = "https://sbpccyouth.blob.core.windows.net/" + entries[0].RowKey._ + "/" + filename;
 
-						// response.send(ejs.render(data, 
-						// 	{data: entries[0]}
-						// ));
-
-						// var entGen = azure.TableUtilities.entityGenerator;
-						// var entity = {
-						// 	PartitionKey: entGen.String(entries[0].PartitionKey),
-						// 	RowKey: entGen.String(entries[0].RowKey),
-						// 	photo: entGen.String(urlString)
-						// };
+						var entGen = azure.TableUtilities.entityGenerator;
+						var entity = {
+							PartitionKey: entGen.String(entries[0].PartitionKey),
+							RowKey: entGen.String(entries[0].RowKey),
+							photo: entGen.String(urlString)
+						};
 
 						// // 데이터베이스에 entity를 추가합니다.
 						// tableService.updateEntity('members', entity, function(error, result, response) {
