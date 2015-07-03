@@ -283,6 +283,13 @@ app.post('/upload/:id', function (req, res) {
 						var entity = {
 							PartitionKey: entGen.String(entries[0].PartitionKey),
 							RowKey: entGen.String(entries[0].RowKey),
+							age: entGen.Int32(entries[0].age),
+							birthDay: entGen.Int32(entries[0].birthDay),
+							birthMonth: entGen.Int32(entries[0].birthMonth),
+							birthYear: entGen.Int32(entries[0].birthYear),
+							branch: entGen.String(entries[0].branch),
+							gender: entGen.String(entries[0].gender),
+							phone: entGen.String(entries[0].phone),
 							photo: entGen.String(urlString)
 						};
 
