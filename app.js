@@ -12,7 +12,7 @@ var expiryDate = new Date(startDate);
 var app = express();
 
 app.use(express.cookieParser());
-// app.use (express.static(__dirname + '/images'));
+app.use (express.static(__dirname + '/images'));
 // app.use(express.limit('10mb'));
 // app.use(express.bodyParser({ uploadDir: __dirname + 'multipart'}));
 // app.use(express.bodyParser());
