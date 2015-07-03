@@ -250,8 +250,8 @@ app.get('/profile/:id', function (request, response) {
 	});
 });
 
-app.post('/upload/:id', function (req, res) {
-	var id = request.param('id');
+app.post('/upload', function (req, res) {
+	// var id = request.param('id');
 
 	// var tableService = azure.createTableService(storageAccount, accessKey);
 	// var blobService = azure.createBlobService(storageAccount, accessKey);
