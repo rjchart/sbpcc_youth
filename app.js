@@ -250,7 +250,7 @@ app.get('/profile/:id', function (request, response) {
 	});
 });
 
-app.post('/upload', function (req, res) {
+app.post('/upload/:id', function (req, res) {
 	var id = req.param('id');
 
 	// var tableService = azure.createTableService(storageAccount, accessKey);
@@ -265,14 +265,14 @@ app.post('/upload', function (req, res) {
 		var container = 'imgcontainer';
 		
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
-			if (error) {
+			if (!error) {
 				// error handling
+				res.send('<h1>File uploaded successfully</h1>');
 			}
 		});
 	});
 	form.parse(req);
 	
-	res.send('<h1>File uploaded successfully</h1>');
 });
 
 app.post('/edit/:id', function (request, response) {
