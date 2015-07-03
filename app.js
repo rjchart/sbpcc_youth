@@ -251,7 +251,11 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/upload/:id', function (req, res) {
+<<<<<<< HEAD
 	var id = req.param('id');
+=======
+	// var id = request.param('id');
+>>>>>>> 0cb02fd18584d88fe2c9bb8bb35ffba6e2886303
 
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
