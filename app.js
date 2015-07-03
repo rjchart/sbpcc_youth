@@ -225,6 +225,17 @@ app.get('/edit/:id', function (request, response) {
 	});
 });
 
+function check_file(){
+    str=document.getElementById('fileToUpload').value.toUpperCase();
+    suffix=".JPG";
+    suffix2=".JPEG";
+    if(str.indexOf(suffix, str.length - suffix.length) == -1||
+                   str.indexOf(suffix2, str.length - suffix2.length) == -1){
+    alert('File type not allowed,\nAllowed file: *.jpg,*.jpeg');
+        document.getElementById('fileToUpload').value='';
+    }
+}
+
 app.get('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');

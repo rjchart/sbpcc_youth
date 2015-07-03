@@ -11,7 +11,7 @@
 	<fieldset style="width: 250px">
 		<legend>EDIT DATA</legend>
 		<form action="/upload/<%= data.RowKey._%>" enctype="multipart/form-data" method="post">
-		<input type="file" name="upload" onchange="<%check_file()%>"><br>
+		<input type="file" name="upload" onchange="check_file()"><br>
 			<img src="/Unknown.png" width="200" align="center"/><br/>
 		<input type="submit" value="Upload">
 		</form>
@@ -65,16 +65,3 @@
 	</fieldset>
 </body>
 </html>
-
-<%
-function check_file(){
-                str=document.getElementById('fileToUpload').value.toUpperCase();
-        suffix=".JPG";
-        suffix2=".JPEG";
-        if(str.indexOf(suffix, str.length - suffix.length) == -1||
-                       str.indexOf(suffix2, str.length - suffix2.length) == -1){
-        alert('File type not allowed,\nAllowed file: *.jpg,*.jpeg');
-            document.getElementById('fileToUpload').value='';
-        }
-    }
-%>
