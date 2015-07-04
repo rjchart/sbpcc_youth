@@ -256,7 +256,7 @@ app.post('/upload/:id', function (req, res) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
-	var filename = new Date().toISOString() + ".jpg";
+	var filename = id + "__" + new Date().toISOString() + ".jpg";
 	var getField;
 
     // form.parse(req, function(err, fields, files) {
@@ -291,7 +291,7 @@ app.post('/upload/:id', function (req, res) {
 					if (!error) {
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
-						var urlString = "https://sbpccyouth.blob.core.windows.net/" + id + "/" + filename;
+						var urlString = "https://sbpccyouth.blob.core.windows.net/" + imgcontainer + "/" + filename;
 						var data = entries[0];
 
 						res.send(JSON.stringify(data));
