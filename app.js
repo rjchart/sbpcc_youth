@@ -256,7 +256,7 @@ app.post('/upload/:id', function (req, res) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
-	var filename = new Date().toISOString();
+	var filename = new Date().toISOString() + ".jpg";
 	var getField;
 
     // form.parse(req, function(err, fields, files) {
@@ -275,16 +275,15 @@ app.post('/upload/:id', function (req, res) {
 		
 		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
-				res.send("partitionKey: ");
-				// var query = new azure.TableQuery()
-				// .top(1)
-				// .where('RowKey eq ?', id);
+				var query = new azure.TableQuery()
+				.top(1)
+				.where('RowKey eq ?', id);
 
-				// // 데이터베이스 쿼리를 실행합니다.
-				// tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
-				// 	if (!error) {
-				// 		var testString = JSON.stringify(result.entries);
-				// 		var entries = JSON.parse(testString);
+				// 데이터베이스 쿼리를 실행합니다.
+				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+					if (!error) {
+						var testString = JSON.stringify(result.entries);
+						var entries = JSON.parse(testString);
 						var urlString = "https://sbpccyouth.blob.core.windows.net/" + id + "/" + filename;
 
 						var entGen = azure.TableUtilities.entityGenerator;
@@ -310,8 +309,8 @@ app.post('/upload/:id', function (req, res) {
 								res.send('<h1>File uploaded successfully</h1>');
 							}
 						});
-					// }
-				// });
+					}
+				});
 			}
 		});
 	});
