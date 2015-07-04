@@ -256,7 +256,7 @@ app.post('/upload/:id', function (req, res) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var blobService = azure.createBlobService(storageAccount, accessKey);
 	var form = new multiparty.Form();
-	var filename = id + "__" + new Date().toISOString() + ".jpg";
+	var filename = id + new Date().toISOString() + ".jpg";
 	var getField;
 
     // form.parse(req, function(err, fields, files) {
@@ -266,21 +266,14 @@ app.post('/upload/:id', function (req, res) {
 	// 	getField = fields;
 	// });
 
-	// tableService.createTableIfNotExists('장재인', function(createError, getResult, getResponse){
-	//     if(!error){
-	//         // Table exists or created
-	//     }
-	// });
-
     form.on('part', function(part) {
 	    if (!part.filename) return;
 		
 		var size = part.byteCount;
 		var name = filename;
 		var container = 'imgcontainer';
-
-
-		blobService.createBlockBlobFromStream(imgcontainer, name, part, size, function(error) {
+		
+		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
 			if (!error) {
 				var query = new azure.TableQuery()
 				.top(1)
@@ -291,7 +284,7 @@ app.post('/upload/:id', function (req, res) {
 					if (!error) {
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
-						var urlString = "https://sbpccyouth.blob.core.windows.net/" + imgcontainer + "/" + filename;
+						var urlString = "https://sbpccyouth.blob.core.windows.net/" + container + "/" + filename;
 						var data = entries[0];
 
 						res.send(JSON.stringify(data));
@@ -315,7 +308,6 @@ app.post('/upload/:id', function (req, res) {
 				});
 			}
 		});
-		
 	});
 	form.parse(req);
     // });
