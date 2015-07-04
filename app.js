@@ -266,6 +266,12 @@ app.post('/upload/:id', function (req, res) {
 	// 	getField = fields;
 	// });
 
+	// tableService.createTableIfNotExists('장재인', function(createError, getResult, getResponse){
+	//     if(!error){
+	//         // Table exists or created
+	//     }
+	// });
+
     form.on('part', function(part) {
 	    if (!part.filename) return;
 		
@@ -273,11 +279,6 @@ app.post('/upload/:id', function (req, res) {
 		var name = filename;
 		var container = 'imgcontainer';
 
-		tableService.createTableIfNotExists('장재인', function(createError, getResult, getResponse){
-		    if(!error){
-		        // Table exists or created
-		    }
-		});
 
 		blobService.createBlockBlobFromStream(imgcontainer, name, part, size, function(error) {
 			if (!error) {
