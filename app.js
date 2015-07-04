@@ -298,10 +298,10 @@ app.post('/upload/:id', function (req, res) {
 						// 데이터베이스에 entity를 추가합니다.
 						tableService.mergeEntity('members', entity, function(error, result, response) {
 							if (!error) {
-								// var redirectID = '/profile/' + entries[0].RowKey._;
-								// res.redirect(redirectID);
+								var redirectID = '/profile/' + entries[0].RowKey._;
+								res.redirect(redirectID);
 								// error handling
-								res.send('<h1>File uploaded successfully</h1>');
+								// res.send('<h1>File uploaded successfully</h1>');
 							}
 						});
 					}
