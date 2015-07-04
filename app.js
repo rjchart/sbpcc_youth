@@ -273,7 +273,7 @@ app.post('/upload/:id', function (req, res) {
 		var name = filename;
 		var container = 'imgcontainer';
 
-		tableService.createTableIfNotExists(id, function(error, result, response){
+		tableService.createTableIfNotExists('장재인', function(createError, getResult, getResponse){
 		    if(!error){
 		        // Table exists or created
 			blobService.createBlockBlobFromStream(id, name, part, size, function(error) {
