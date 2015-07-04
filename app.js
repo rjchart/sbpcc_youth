@@ -299,7 +299,8 @@ app.post('/upload/:id', function (req, res) {
 						tableService.mergeEntity('members', entity, function(error, result, response) {
 							if (!error) {
 								var redirectID = '/profile/' + id;
-								res.redirect(redirectID);
+								// res.redirect("back");
+								res.send(redirectID);
 								// error handling
 								// res.send('<h1>File uploaded successfully</h1>');
 							}
