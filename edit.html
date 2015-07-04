@@ -14,7 +14,12 @@
 		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
 		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
 		<input type="file" name="upload" accept="image/*"><br>
+			<% if(data.photo) { %>
+			<img src="<%=data.photo%>" width="200" align="center"/><br/>
+			<%}%>
+			<%else {%>
 			<img src="https://sbpccyouth.blob.core.windows.net/imgcontainer/lss_10.jpg" width="200" align="center"/><br/>
+			<%}%>
 		<input type="submit" value="Upload">
 		</form>
 		<form method="post">
