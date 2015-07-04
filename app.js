@@ -290,20 +290,13 @@ app.post('/upload/:id', function (req, res) {
 						res.send(JSON.stringify(data));
 						var entGen = azure.TableUtilities.entityGenerator;
 						var entity = {
-							PartitionKey: entGen.String("96"),
+							PartitionKey: entGen.String(entries[0].PartitionKey._),
 							RowKey: entGen.String(id),
-							age: entGen.Int32(entries[0].age._),
-							birthDay: entGen.Int32(entries[0].birthDay._),
-							birthMonth: entGen.Int32(entries[0].birthMonth._),
-							birthYear: entGen.Int32(entries[0].birthYear._),
-							branch: entGen.String(entries[0].branch._),
-							gender: entGen.String(entries[0].gender._),
-							phone: entGen.String(entries[0].phone._),
 							photo: entGen.String(urlString)
 						};
 
 						// 데이터베이스에 entity를 추가합니다.
-						tableService.insertEntity('members', entity, function(error, result, response) {
+						tableService.mergeEntity('members', entity, function(error, result, response) {
 							if (!error) {
 								// var redirectID = '/profile/' + entries[0].RowKey._;
 								// res.redirect(redirectID);
