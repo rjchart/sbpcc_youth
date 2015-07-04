@@ -287,7 +287,7 @@ app.post('/upload/:id', function (req, res) {
 						var urlString = "https://sbpccyouth.blob.core.windows.net/" + container + "/" + filename;
 						var data = entries[0];
 
-						res.send(JSON.stringify(data));
+						// res.send(JSON.stringify(data));
 						var entGen = azure.TableUtilities.entityGenerator;
 						var entity = {
 							PartitionKey: entGen.String(entries[0].PartitionKey._),
