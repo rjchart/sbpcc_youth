@@ -272,42 +272,48 @@ app.post('/upload/:id', function (req, res) {
 		var size = part.byteCount;
 		var name = filename;
 		var container = 'imgcontainer';
-		
-		blobService.createBlockBlobFromStream(container, name, part, size, function(error) {
-			if (!error) {
-				var query = new azure.TableQuery()
-				.top(1)
-				.where('RowKey eq ?', id);
 
-				// 데이터베이스 쿼리를 실행합니다.
-				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
-					if (!error) {
-						var testString = JSON.stringify(result.entries);
-						var entries = JSON.parse(testString);
-						var urlString = "https://sbpccyouth.blob.core.windows.net/" + id + "/" + filename;
-						var data = entries[0];
+		tableService.createTableIfNotExists(id, function(error, result, res){
+		    if(!error){
+		        // Table exists or created
+			blobService.createBlockBlobFromStream(id, name, part, size, function(error) {
+				if (!error) {
+					var query = new azure.TableQuery()
+					.top(1)
+					.where('RowKey eq ?', id);
 
-						res.send(JSON.stringify(data));
-						var entGen = azure.TableUtilities.entityGenerator;
-						var entity = {
-							PartitionKey: entGen.String(entries[0].PartitionKey._),
-							RowKey: entGen.String(id),
-							photo: entGen.String(urlString)
-						};
+					// 데이터베이스 쿼리를 실행합니다.
+					tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+						if (!error) {
+							var testString = JSON.stringify(result.entries);
+							var entries = JSON.parse(testString);
+							var urlString = "https://sbpccyouth.blob.core.windows.net/" + id + "/" + filename;
+							var data = entries[0];
 
-						// 데이터베이스에 entity를 추가합니다.
-						tableService.mergeEntity('members', entity, function(error, result, response) {
-							if (!error) {
-								// var redirectID = '/profile/' + entries[0].RowKey._;
-								// res.redirect(redirectID);
-								// error handling
-								res.send('<h1>File uploaded successfully</h1>');
-							}
-						});
-					}
-				});
-			}
+							res.send(JSON.stringify(data));
+							var entGen = azure.TableUtilities.entityGenerator;
+							var entity = {
+								PartitionKey: entGen.String(entries[0].PartitionKey._),
+								RowKey: entGen.String(id),
+								photo: entGen.String(urlString)
+							};
+
+							// 데이터베이스에 entity를 추가합니다.
+							tableService.mergeEntity('members', entity, function(error, result, response) {
+								if (!error) {
+									// var redirectID = '/profile/' + entries[0].RowKey._;
+									// res.redirect(redirectID);
+									// error handling
+									res.send('<h1>File uploaded successfully</h1>');
+								}
+							});
+						}
+					});
+				}
+			});
+		    }
 		});
+		
 	});
 	form.parse(req);
     // });
