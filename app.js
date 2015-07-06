@@ -254,6 +254,7 @@ app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 
+	var form = new multiparty.Form();
 	form.parse(request, function(err, fields, files) {
 		
 		// var entGen = azure.TableUtilities.entityGenerator;
