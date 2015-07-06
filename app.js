@@ -15,6 +15,7 @@ app.use(express.cookieParser());
 app.use (express.static(__dirname + '/images'));
 // app.use(express.limit('10mb'));
 // app.use(express.bodyParser({ uploadDir: __dirname + 'multipart'}));
+app.use(express.bodyParser());
 app.use(app.router);
 
 var accessKey = 'pnOhpX2pEOye58E2gtlU5gVGzUbFVk3GcNYerm4RDuNuzoqsSB06v28oy3EF/wUZo6cUq/SUNdH0AQqek6rg7Q==';
@@ -250,24 +251,23 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/profile/:id', function (request, response) {
-	var body = request.body;
 	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
 	// var id = request.param('id');
-	response.send(body.branch);
-		// var entGen = azure.TableUtilities.entityGenerator;
-		// var entity = {
-		// 	PartitionKey: entGen.String('96'),
-		// 	RowKey: entGen.String(body.RowKey),
-		// 	branch: entGen.String(body.branch)
-		// };
 
-		// // 데이터베이스에 entity를 추가합니다.
-		// tableService.insertEntity('members', entity, function(error, result, res) {
-		// 	if (!error) {
-		// 		// res.redirect("back");
-		// 		response.send("OK:");
-		// 	}
-		// });
+		var entGen = azure.TableUtilities.entityGenerator;
+		var entity = {
+			PartitionKey: entGen.String('96'),
+			RowKey: entGen.String(body.RowKey)
+		};
+
+		// 데이터베이스에 entity를 추가합니다.
+		tableService.insertEntity('members', entity, function(error, result, res) {
+			if (!error) {
+				// res.redirect("back");
+				response.send("OK:");
+			}
+		});
 
 
 });
