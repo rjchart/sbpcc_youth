@@ -266,14 +266,13 @@ app.post('/profile/:id', function (request, response) {
 			birthDay: entGen.Int32(request.param('birthDay'))
 		};
 
-		response.send("OK");
-
 		// 데이터베이스에 entity를 추가합니다.
-		// tableService.mergeEntity('members', entity, function(error, result, res) {
-		// 	if (!error) {
-		// 		// res.redirect("back");
-		// 	}
-		// });
+		tableService.mergeEntity('members', entity, function(error, result, res) {
+			if (!error) {
+				// res.redirect("back");
+				response.send("OK");
+			}
+		});
 
 
 });
