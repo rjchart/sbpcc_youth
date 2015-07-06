@@ -256,6 +256,7 @@ app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 
+	var entGen = azure.TableUtilities.entityGenerator;
 	var entity = {
 		PartitionKey: entGen.String(request.body.PartitionKey),
 		RowKey: entGen.String(id)
