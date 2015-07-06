@@ -16,6 +16,8 @@ app.use (express.static(__dirname + '/images'));
 // app.use(express.limit('10mb'));
 // app.use(express.bodyParser({ uploadDir: __dirname + 'multipart'}));
 // app.use(express.bodyParser());
+app.use(express.json())
+   .use(express.urlencoded())
 app.use(app.router);
 
 var accessKey = 'pnOhpX2pEOye58E2gtlU5gVGzUbFVk3GcNYerm4RDuNuzoqsSB06v28oy3EF/wUZo6cUq/SUNdH0AQqek6rg7Q==';
@@ -251,33 +253,13 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/profile/:id', function (request, response) {
+	var body = request.body;
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 
-	var form = new multiparty.Form();
-	form.parse(request, function(err, fields, files) {
-		var entGen = azure.TableUtilities.entityGenerator;
-		// var entity = {
-		// 	PartitionKey: entGen.String(fields.PartitionKey),
-		// 	RowKey: entGen.String(id),
-		// 	branch: entGen.String(fields.branch),
-		// 	gender: entGen.String(fields.gender),
-		// 	birthYear: entGen.Int32(fields.birthYear),
-		// 	birthMonth: entGen.Int32(fields.birthMonth),
-		// 	birthDay: entGen.Int32(fields.birthDay),
-		// 	phone: entGen.String(fields.phone)
-		// };
-		response.send("OK: " + JSON.stringyfy(fields) .gender);
+	request.send("data:" + body.phone);
 
-		// // 데이터베이스에 entity를 추가합니다.
-		// tableService.mergeEntity('members', entity, function(error, result, res) {
-		// 	if (!error) {
-		// 		// res.redirect("back");
-		// 		response.send("OK");
-		// 	}
-		// });
 
-	});
 
 });
 
