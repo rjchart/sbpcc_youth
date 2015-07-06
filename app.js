@@ -256,26 +256,26 @@ app.post('/profile/:id', function (request, response) {
 
 	var form = new multiparty.Form();
 	form.parse(request, function(err, fields, files) {
-		
-		var entGen = azure.TableUtilities.entityGenerator;
-		var entity = {
-			PartitionKey: entGen.String(fields.PartitionKey),
-			RowKey: entGen.String(id),
-			branch: entGen.String(fields.branch),
-			gender: entGen.String(fields.gender),
-			birthYear: entGen.Int32(fields.birthYear),
-			birthMonth: entGen.Int32(fields.birthMonth),
-			birthDay: entGen.Int32(fields.birthDay),
-			phone: entGen.String(fields.phone)
-		};
+		response.send("OK");
+		// var entGen = azure.TableUtilities.entityGenerator;
+		// var entity = {
+		// 	PartitionKey: entGen.String(fields.PartitionKey),
+		// 	RowKey: entGen.String(id),
+		// 	branch: entGen.String(fields.branch),
+		// 	gender: entGen.String(fields.gender),
+		// 	birthYear: entGen.Int32(fields.birthYear),
+		// 	birthMonth: entGen.Int32(fields.birthMonth),
+		// 	birthDay: entGen.Int32(fields.birthDay),
+		// 	phone: entGen.String(fields.phone)
+		// };
 
-		// 데이터베이스에 entity를 추가합니다.
-		tableService.mergeEntity('members', entity, function(error, result, res) {
-			if (!error) {
-				// res.redirect("back");
-				response.send("OK");
-			}
-		});
+		// // 데이터베이스에 entity를 추가합니다.
+		// tableService.mergeEntity('members', entity, function(error, result, res) {
+		// 	if (!error) {
+		// 		// res.redirect("back");
+		// 		response.send("OK");
+		// 	}
+		// });
 
 	});
 
