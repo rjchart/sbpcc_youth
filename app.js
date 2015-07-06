@@ -256,9 +256,9 @@ app.post('/profile/:id', function (request, response) {
 	// var id = request.param('id');
 	var form = multiparty.Form();
 
-	form.parse(request, function(err, fields, files) {
+	// form.parse(request, function(err, fields, files) {
 		// request.send("data:" + fields['PartitionKey']);
-	});
+	// });
 	// request.send("data:" + body.phone);
 
 
