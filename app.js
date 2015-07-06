@@ -256,7 +256,7 @@ app.post('/profile/:id', function (request, response) {
 
 	var form = new multiparty.Form();
 	form.parse(request, function(err, fields, files) {
-		var entGen = azure.TableUtilities.entityGenerator;
+		// var entGen = azure.TableUtilities.entityGenerator;
 		// var entity = {
 		// 	PartitionKey: entGen.String(fields.PartitionKey),
 		// 	RowKey: entGen.String(id),
@@ -267,7 +267,7 @@ app.post('/profile/:id', function (request, response) {
 		// 	birthDay: entGen.Int32(fields.birthDay),
 		// 	phone: entGen.String(fields.phone)
 		// };
-		response.send("OK: " + fields.PartitionKey);
+		response.send("OK: " + JSON.stringify(fields));
 
 		// // 데이터베이스에 entity를 추가합니다.
 		// tableService.mergeEntity('members', entity, function(error, result, res) {
