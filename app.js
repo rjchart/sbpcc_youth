@@ -257,6 +257,24 @@ app.post('/profile/:id', function (request, response) {
 	// var id = request.param('id');
 	response.send(request.body.PartitionKey);
 
+	var entity = {
+		PartitionKey: entGen.String(body.PartitionKey),
+		RowKey: entGen.String(body.RowKey),
+		branch: entGen.String(body.branch),
+		gender: entGen.String(body.gender),
+		phone: entGen.String(body.phone),
+		birthYear: entGen.Int32(body.birthYear),
+		birthMonth: entGen.Int32(body.birthMonth),
+		birthDay: entGen.Int32(body.birthDay)
+	};
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.mergeEntity('members', entity, function(error, result, response) {
+		if (!error) {
+			response.send("OKE")
+			// res.send(redirectID);
+		}
+	});
 	// form.parse(request, function(err, fields, files) {
 		// request.send("data:" + fields['PartitionKey']);
 	// });
