@@ -250,30 +250,24 @@ app.get('/profile/:id', function (request, response) {
 	});
 });
 
-app.post('/update/:id', function (request, response) {
+app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
-			PartitionKey: entGen.String(request.param('96')),
-			RowKey: entGen.String('장재인')
+			PartitionKey: entGen.String('96'),
+			RowKey: entGen.String(id)
 		};
 
-		// // 데이터베이스에 entity를 추가합니다.
-		// tableService.insertEntity('members', entity, function(error, result, res) {
-		// 	if (!error) {
-		// 		// res.redirect("back");
-		// 		// response.send("OK");
-		// 	}
-		// });
-
 		// 데이터베이스에 entity를 추가합니다.
-		// tableService.insertEntity('members', entity, function(error, result, res) {
-		// 	if (!error) {
-				response.redirect('/');
-		// 	}
-		// });
+		tableService.insertEntity('members', entity, function(error, result, res) {
+			if (!error) {
+				// res.redirect("back");
+				response.send("OK");
+			}
+		});
+
 
 });
 
