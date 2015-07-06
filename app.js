@@ -253,6 +253,7 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/profile/:id', function (request, response) {
+	var body = request.body;
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	// var id = request.param('id');
 
@@ -267,17 +268,14 @@ app.post('/profile/:id', function (request, response) {
 		birthDay: entGen.Int32(body.birthDay)
 	};
 
-	// 데이터베이스에 entity를 추가합니다.
+	데이터베이스에 entity를 추가합니다.
 	tableService.mergeEntity('members', entity, function(error, result, response) {
 		if (!error) {
 			response.send("OKE")
 			// res.send(redirectID);
 		}
 	});
-	// form.parse(request, function(err, fields, files) {
-		// request.send("data:" + fields['PartitionKey']);
-	// });
-	// request.send("data:" + body.phone);
+
 
 
 
