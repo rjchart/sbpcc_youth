@@ -260,19 +260,20 @@ app.post('/profile/:id', function (request, response) {
 			RowKey: entGen.String(id),
 			branch: entGen.String(request.param('branch')),
 			gender: entGen.String(request.param('gender')),
+			phone: entGen.String(request.param('phone')),
 			birthYear: entGen.Int32(request.param('birthYear')),
 			birthMonth: entGen.Int32(request.param('birthMonth')),
-			birthDay: entGen.Int32(request.param('birthDay')),
-			phone: entGen.String(request.param('phone'))
+			birthDay: entGen.Int32(request.param('birthDay'))
 		};
 
+		response.send("OK");
+
 		// 데이터베이스에 entity를 추가합니다.
-		tableService.mergeEntity('members', entity, function(error, result, res) {
-			if (!error) {
-				// res.redirect("back");
-				response.send("OK");
-			}
-		});
+		// tableService.mergeEntity('members', entity, function(error, result, res) {
+		// 	if (!error) {
+		// 		// res.redirect("back");
+		// 	}
+		// });
 
 
 });
