@@ -254,12 +254,12 @@ app.get('/profile/:id', function (request, response) {
 
 app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
-	// var id = request.param('id');
+	var id = request.param('id');
 
-	var entity = {
-		PartitionKey: entGen.String(request.body.PartitionKey),
-		RowKey: entGen.String(request.body.RowKey)
-	};
+	// var entity = {
+	// 	PartitionKey: entGen.String(request.body.PartitionKey),
+	// 	RowKey: entGen.String(id)
+	// };
 	// ,
 	// 	branch: entGen.String(body.branch),
 	// 	gender: entGen.String(body.gender),
@@ -267,8 +267,8 @@ app.post('/profile/:id', function (request, response) {
 	// 	birthYear: entGen.Int32(body.birthYear),
 	// 	birthMonth: entGen.Int32(body.birthMonth),
 	// 	birthDay: entGen.Int32(body.birthDay)
-
-	response.send(JSON.stringify(entity));
+	response.send("part: " + request.body.PartitionKey + "row: " + id)
+	// response.send(JSON.stringify(entity));
 
 	// 데이터베이스에 entity를 추가합니다.
 	// tableService.mergeEntity('members', entity, function(error, result, response) {
