@@ -268,7 +268,7 @@ app.post('/profile/:id', function (request, response) {
 		birthDay: entGen.Int32(body.birthDay)
 	};
 
-	데이터베이스에 entity를 추가합니다.
+	// 데이터베이스에 entity를 추가합니다.
 	tableService.mergeEntity('members', entity, function(error, result, response) {
 		if (!error) {
 			response.send("OKE")
