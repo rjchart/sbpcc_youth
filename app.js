@@ -253,12 +253,11 @@ app.get('/profile/:id', function (request, response) {
 
 app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
-	var id = request.param('id');
+	// var id = request.param('id');
 	var form = multiparty.Form();
 
-
-	form.parse(req, function(err, fields, files) {
-		request.send("data:" + fields['PartitionKey']);
+	form.parse(request, function(err, fields, files) {
+		// request.send("data:" + fields['PartitionKey']);
 	});
 	// request.send("data:" + body.phone);
 
