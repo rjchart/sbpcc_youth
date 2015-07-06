@@ -4,7 +4,6 @@ var fs = require('fs');
 var ejs = require('ejs');
 var http = require('http');
 var express = require('express');
-var bodyParser = requir('body-parser');
 var PORT = process.env.PORT || 27372;
 
 var startDate = new Date();
@@ -13,8 +12,6 @@ var expiryDate = new Date(startDate);
 var app = express();
 
 app.use(express.cookieParser());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
 app.use (express.static(__dirname + '/images'));
 
 // app.use(express.limit('10mb'));
@@ -255,11 +252,15 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/profile/:id', function (request, response) {
-	var body = request.body;
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
+	var form = multiparty.Form();
 
-	request.send("data:" + body.phone);
+
+	form.parse(req, function(err, fields, files) {
+		request.send("data:" + fields['PartitionKey']);
+	});
+	// request.send("data:" + body.phone);
 
 
 
