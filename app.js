@@ -250,7 +250,7 @@ app.get('/profile/:id', function (request, response) {
 	});
 });
 
-app.post('/profile/:id', function (request, response) {
+app.post('/profileChange/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 
