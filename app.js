@@ -4,6 +4,7 @@ var fs = require('fs');
 var ejs = require('ejs');
 var http = require('http');
 var express = require('express');
+var bodyParser = requir('body-parser');
 var PORT = process.env.PORT || 27372;
 
 var startDate = new Date();
@@ -12,9 +13,10 @@ var expiryDate = new Date(startDate);
 var app = express();
 
 app.use(express.cookieParser());
-app.use(express.json())
-   .use(express.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use (express.static(__dirname + '/images'));
+
 // app.use(express.limit('10mb'));
 // app.use(express.bodyParser({ uploadDir: __dirname + 'multipart'}));
 // app.use(express.bodyParser());

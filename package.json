@@ -25,6 +25,7 @@
     "azure-storage": "*",
     "multiparty": "^4.1.2",
     "node-uuid": "^1.4.3",
-    "ejs": "*"
+    "ejs": "*",
+    "body-parser": "^1.13.2"
   }
 }
