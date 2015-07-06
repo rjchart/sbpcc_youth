@@ -257,17 +257,23 @@ app.post('/profile/:id', function (request, response) {
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
 			PartitionKey: entGen.String(request.param('96')),
-			RowKey: entGen.String(id)
+			RowKey: entGen.String('장재인')
 		};
+
+		// // 데이터베이스에 entity를 추가합니다.
+		// tableService.insertEntity('members', entity, function(error, result, res) {
+		// 	if (!error) {
+		// 		// res.redirect("back");
+		// 		// response.send("OK");
+		// 	}
+		// });
 
 		// 데이터베이스에 entity를 추가합니다.
 		tableService.insertEntity('members', entity, function(error, result, res) {
 			if (!error) {
-				// res.redirect("back");
-				response.send("OK");
+				response.redirect('/');
 			}
 		});
-
 
 });
 
