@@ -270,7 +270,7 @@ app.post('/profile/:id', function (request, response) {
 		tableService.insertEntity('members', entity, function(error, result, res) {
 			if (!error) {
 				// res.redirect("back");
-				response.send("OK");
+				response.send("OK:" + request.param('branch'));
 			}
 		});
 
