@@ -250,24 +250,24 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/profile/:id', function (request, response) {
-	var tableService = azure.createTableService(storageAccount, accessKey);
 	var body = request.body;
+	var tableService = azure.createTableService(storageAccount, accessKey);
 	// var id = request.param('id');
+	response.send(body.branch);
+		// var entGen = azure.TableUtilities.entityGenerator;
+		// var entity = {
+		// 	PartitionKey: entGen.String('96'),
+		// 	RowKey: entGen.String(body.RowKey),
+		// 	branch: entGen.String(body.branch)
+		// };
 
-		var entGen = azure.TableUtilities.entityGenerator;
-		var entity = {
-			PartitionKey: entGen.String('96'),
-			RowKey: entGen.String(body.RowKey),
-			branch: entGen.String(body.branch)
-		};
-
-		// 데이터베이스에 entity를 추가합니다.
-		tableService.insertEntity('members', entity, function(error, result, res) {
-			if (!error) {
-				// res.redirect("back");
-				response.send("OK:");
-			}
-		});
+		// // 데이터베이스에 entity를 추가합니다.
+		// tableService.insertEntity('members', entity, function(error, result, res) {
+		// 	if (!error) {
+		// 		// res.redirect("back");
+		// 		response.send("OK:");
+		// 	}
+		// });
 
 
 });
