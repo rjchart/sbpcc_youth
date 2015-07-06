@@ -258,20 +258,21 @@ app.post('/profile/:id', function (request, response) {
 		
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
-			PartitionKey: entGen.String(entries[0].PartitionKey._),
+			PartitionKey: entGen.String(fields.PartitionKey),
 			RowKey: entGen.String(id),
-			branch: entGen.String(field.branch),
-			gender: entGen.String(field.gender),
-			birthYear: entGen.Int32(field.birthYear),
-			birthMonth: entGen.Int32(field.birthMonth),
-			birthDay: entGen.Int32(field.birthDay),
-			phone: entGen.String(field.phone)
+			branch: entGen.String(fields.branch),
+			gender: entGen.String(fields.gender),
+			birthYear: entGen.Int32(fields.birthYear),
+			birthMonth: entGen.Int32(fields.birthMonth),
+			birthDay: entGen.Int32(fields.birthDay),
+			phone: entGen.String(fields.phone)
 		};
 
 		// 데이터베이스에 entity를 추가합니다.
 		tableService.mergeEntity('members', entity, function(error, result, response) {
 			if (!error) {
-				res.redirect("back");
+				// res.redirect("back");
+				response.send("OK");
 			}
 		});
 
