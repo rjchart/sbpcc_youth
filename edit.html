@@ -48,17 +48,17 @@
 			</tr>
 			<tr>
 				<td><label>생년월일</label></td>
-				<td><select id="birthYear">
+				<td><select name="birthYear">
 					<% for(var i=75; i <99; i++) { %> 
 					<option value="<%=i%>" <% if(i==data.birthYear._) {%>selected<%}%> ><%=i%></option>
 					<% } %>
 					</select>
-					<select id="birthMonth">
+					<select name="birthMonth">
 					<% for(var i=1; i <13; i++) { %> 
 					<option value="<%=i%>" <% if(i==data.birthMonth._) {%>selected<%}%> ><%=i%></option>
 					<% } %>
 					</select>
-					<select id="birthDay">
+					<select name="birthDay">
 					<% for(var i=1; i <32; i++) { %> 
 					<option value="<%=i%>" <% if(i==data.birthDay._) {%>selected<%}%> ><%=i%></option>
 					<% } %>
