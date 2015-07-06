@@ -250,6 +250,35 @@ app.get('/profile/:id', function (request, response) {
 	});
 });
 
+app.post('/profile/:id', function (request, response) {
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+
+	form.parse(req, function(err, fields, files) {
+		
+		var entGen = azure.TableUtilities.entityGenerator;
+		var entity = {
+			PartitionKey: entGen.String(entries[0].PartitionKey._),
+			RowKey: entGen.String(id),
+			branch: entGen.String(field.branch),
+			gender: entGen.String(field.gender),
+			birthYear: entGen.Int32(field.birthYear),
+			birthMonth: entGen.Int32(field.birthMonth),
+			birthDay: entGen.Int32(field.birthDay),
+			phone: entGen.String(field.phone)
+		};
+
+		// 데이터베이스에 entity를 추가합니다.
+		tableService.mergeEntity('members', entity, function(error, result, response) {
+			if (!error) {
+				res.redirect("back");
+			}
+		});
+
+	});
+
+});
+
 app.post('/upload/:id', function (req, res) {
 	var id = req.param('id');
 
@@ -298,11 +327,8 @@ app.post('/upload/:id', function (req, res) {
 						// 데이터베이스에 entity를 추가합니다.
 						tableService.mergeEntity('members', entity, function(error, result, response) {
 							if (!error) {
-								// var redirectID = '/profile/' + id;
 								res.redirect("back");
 								// res.send(redirectID);
-								// error handling
-								// res.send('<h1>File uploaded successfully</h1>');
 							}
 						});
 					}
