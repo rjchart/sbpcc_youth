@@ -254,7 +254,7 @@ app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 
-	form.parse(req, function(err, fields, files) {
+	form.parse(request, function(err, fields, files) {
 		
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
@@ -269,7 +269,7 @@ app.post('/profile/:id', function (request, response) {
 		};
 
 		// 데이터베이스에 entity를 추가합니다.
-		tableService.mergeEntity('members', entity, function(error, result, response) {
+		tableService.mergeEntity('members', entity, function(error, result, res) {
 			if (!error) {
 				// res.redirect("back");
 				response.send("OK");
