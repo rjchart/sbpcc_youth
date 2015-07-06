@@ -255,19 +255,19 @@ app.get('/profile/:id', function (request, response) {
 app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
+	var body = request.body;
 
 	var entGen = azure.TableUtilities.entityGenerator;
 	var entity = {
 		PartitionKey: entGen.String(request.body.PartitionKey),
-		RowKey: entGen.String(id)
+		RowKey: entGen.String(id),
+		branch: entGen.String(body.branch),
+		gender: entGen.String(body.gender),
+		phone: entGen.String(body.phone),
+		birthYear: entGen.Int32(body.birthYear),
+		birthMonth: entGen.Int32(body.birthMonth),
+		birthDay: entGen.Int32(body.birthDay)
 	};
-	// ,
-	// 	branch: entGen.String(body.branch),
-	// 	gender: entGen.String(body.gender),
-	// 	phone: entGen.String(body.phone),
-	// 	birthYear: entGen.Int32(body.birthYear),
-	// 	birthMonth: entGen.Int32(body.birthMonth),
-	// 	birthDay: entGen.Int32(body.birthDay)
 
 	// response.send("part: " + request.body.PartitionKey + ", row: " + id);
 
