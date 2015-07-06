@@ -257,7 +257,13 @@ app.post('/profile/:id', function (request, response) {
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
 			PartitionKey: entGen.String('96'),
-			RowKey: entGen.String(id)
+			RowKey: entGen.String(id),
+			branch: entGen.String(request.param('branch')),
+			gender: entGen.String(request.param('gender')),
+			phone: entGen.String(request.param('phone')),
+			birthYear: entGen.Int32(request.param('birthYear')),
+			birthMonth: entGen.Int32(request.param('birthMonth')),
+			birthDay: entGen.Int32(request.param('birthDay'))
 		};
 
 		// 데이터베이스에 entity를 추가합니다.
