@@ -253,6 +253,7 @@ app.get('/profile/:id', function (request, response) {
 app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
+	var body = request.body;
 
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
@@ -270,7 +271,7 @@ app.post('/profile/:id', function (request, response) {
 		tableService.insertEntity('members', entity, function(error, result, res) {
 			if (!error) {
 				// res.redirect("back");
-				response.send("OK:" + request.param('branch'));
+				response.send("OK:" + body.branch);
 			}
 		});
 
