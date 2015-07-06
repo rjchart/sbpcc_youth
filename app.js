@@ -253,29 +253,30 @@ app.get('/profile/:id', function (request, response) {
 });
 
 app.post('/profile/:id', function (request, response) {
-	var body = request.body;
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	// var id = request.param('id');
 
 	var entity = {
-		PartitionKey: entGen.String(body.PartitionKey),
-		RowKey: entGen.String(body.RowKey),
-		branch: entGen.String(body.branch),
-		gender: entGen.String(body.gender),
-		phone: entGen.String(body.phone),
-		birthYear: entGen.Int32(body.birthYear),
-		birthMonth: entGen.Int32(body.birthMonth),
-		birthDay: entGen.Int32(body.birthDay)
+		PartitionKey: entGen.String(request.body.PartitionKey),
+		RowKey: entGen.String(request.body.RowKey)
 	};
+	// ,
+	// 	branch: entGen.String(body.branch),
+	// 	gender: entGen.String(body.gender),
+	// 	phone: entGen.String(body.phone),
+	// 	birthYear: entGen.Int32(body.birthYear),
+	// 	birthMonth: entGen.Int32(body.birthMonth),
+	// 	birthDay: entGen.Int32(body.birthDay)
+
+	response.send(JSON.stringify(entity));
 
 	// 데이터베이스에 entity를 추가합니다.
-	tableService.mergeEntity('members', entity, function(error, result, response) {
-		if (!error) {
-			response.send("OKE")
-			// res.send(redirectID);
-		}
-	});
-
+	// tableService.mergeEntity('members', entity, function(error, result, response) {
+	// 	if (!error) {
+	// 		response.send("OKE")
+	// 		// res.send(redirectID);
+	// 	}
+	// });
 
 
 
