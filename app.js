@@ -255,7 +255,7 @@ app.get('/profile/:id', function (request, response) {
 app.post('/profile/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	// var id = request.param('id');
-	var form = multiparty.Form();
+	response.send(request.body.PartitionKey);
 
 	// form.parse(request, function(err, fields, files) {
 		// request.send("data:" + fields['PartitionKey']);
