@@ -256,8 +256,8 @@ app.post('/profile/:id', function (request, response) {
 
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity = {
-			PartitionKey: entGen.String(request.param('PartitionKey')),
-			RowKey: entGen.String(id),
+			PartitionKey: entGen.String(request.param('96')),
+			RowKey: entGen.String(request.param('RowKey')),
 			branch: entGen.String(request.param('branch')),
 			gender: entGen.String(request.param('gender')),
 			phone: entGen.String(request.param('phone')),
@@ -267,7 +267,7 @@ app.post('/profile/:id', function (request, response) {
 		};
 
 		// 데이터베이스에 entity를 추가합니다.
-		tableService.mergeEntity('members', entity, function(error, result, res) {
+		tableService.insertEntity('members', entity, function(error, result, res) {
 			if (!error) {
 				// res.redirect("back");
 				response.send("OK");
