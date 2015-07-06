@@ -24,7 +24,7 @@
 		<tr>
 			<td bgcolor="#A3FFFE"></td>
 			<% branchTable.forEach( function (item, index) { %>
-				<td><% if (item.length > i) {%><%= item[i].RowKey._ %><%}%></td>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
 			<% }); %>
 		</tr>
 		<% } %>
