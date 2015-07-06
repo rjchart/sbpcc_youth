@@ -269,11 +269,11 @@ app.post('/update/:id', function (request, response) {
 		// });
 
 		// 데이터베이스에 entity를 추가합니다.
-		tableService.insertEntity('members', entity, function(error, result, res) {
-			if (!error) {
+		// tableService.insertEntity('members', entity, function(error, result, res) {
+		// 	if (!error) {
 				response.redirect('/');
-			}
-		});
+		// 	}
+		// });
 
 });
 
