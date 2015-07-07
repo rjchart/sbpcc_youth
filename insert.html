@@ -11,28 +11,43 @@
 		<legend>INSERT DATA</legend>
 		<table>
 			<tr>
-				<td><label>PartitionKey</label></td>
-				<td><input type="text" name="PartitionKey" value="data"/></td>
+				<td><label>또래</label></td>
+				<td><input type="text" name="PartitionKey" value="85"/></td>
 			</tr>
 			<tr>
-				<td><label>RowKey</label></td>
+				<td><label>이름</label></td>
 				<td><input type="text" name="RowKey" /></td>
 			</tr>
 			<tr>
-				<td><label>Id</label></td>
-				<td><input type="text" name="id" /></td>
+				<td><label>성별</label></td>
+				<td><input type="text" name="gender" /></td>
 			</tr>
 			<tr>
-				<td><label>Name</label></td>
-				<td><input type="text" name="name" /></td>
+				<td><label>브랜치</label></td>
+				<td><input type="text" name="branch" /></td>
 			</tr>
 			<tr>
-				<td><label>Model Number</label></td>
-				<td><input type="text" name="modelnumber" /></td>
+				<td><label>전화번호</label></td>
+				<td><input type="text" name="phone" /></td>
 			</tr>
 			<tr>
-				<td><label>Series</label></td>
-				<td><input type="text" name="series" /></td>
+				<td><label>생년월일</label></td>
+				<td><select name="birthYear">
+					<% for(var i=75; i <99; i++) { %> 
+					<option value="<%=i%>"><%=i%></option>
+					<% } %>
+					</select>
+					<select name="birthMonth">
+					<% for(var i=1; i <13; i++) { %> 
+					<option value="<%=i%>"><%=i%></option>
+					<% } %>
+					</select>
+					<select name="birthDay">
+					<% for(var i=1; i <32; i++) { %> 
+					<option value="<%=i%>"><%=i%></option>
+					<% } %>
+					</select>
+				</td>
 			</tr>
 		</table>
 		<input type="submit" />
