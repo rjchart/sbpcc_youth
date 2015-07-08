@@ -187,17 +187,19 @@ app.post('/insert', function (request, response) {
 	var entGen = azure.TableUtilities.entityGenerator;
 	var entity = {
 		PartitionKey: entGen.String(body.PartitionKey),
-		RowKey: entGen.String(body.RowKey),
-		id: entGen.Int32(body.id),
-		name: entGen.String(body.name),
-		modelnumber: entGen.String(body.modelnumber),
-		series: entGen.String(body.series)
+		RowKey: entGen.String(id),
+		branch: entGen.String(body.branch),
+		gender: entGen.String(body.gender),
+		phone: entGen.String(body.phone),
+		birthYear: entGen.Int32(body.birthYear),
+		birthMonth: entGen.Int32(body.birthMonth),
+		birthDay: entGen.Int32(body.birthDay)
 	};
 
 	// 데이터베이스에 entity를 추가합니다.
-	tableService.insertEntity('products', entity, function(error, result, res) {
+	tableService.insertEntity('members', entity, function(error, result, res) {
 		if (!error) {
-			response.redirect('/');
+			response.redirect('/insert');
 		}
 	});
 });
