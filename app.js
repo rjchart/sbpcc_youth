@@ -184,6 +184,7 @@ app.post('/insert', function (request, response) {
 	var body = request.body;
 	var tableService = azure.createTableService(storageAccount, accessKey);
 
+	var age = 116 - body.PartitionKey;
 	var entGen = azure.TableUtilities.entityGenerator;
 	var entity = {
 		PartitionKey: entGen.String(body.PartitionKey),
@@ -193,7 +194,8 @@ app.post('/insert', function (request, response) {
 		phone: entGen.String(body.phone),
 		birthYear: entGen.Int32(body.birthYear),
 		birthMonth: entGen.Int32(body.birthMonth),
-		birthDay: entGen.Int32(body.birthDay)
+		birthDay: entGen.Int32(body.birthDay),
+		age: entGen.Int32(age)
 	};
 
 	// 데이터베이스에 entity를 추가합니다.
