@@ -197,7 +197,7 @@ app.post('/insert', function (request, response) {
 	};
 
 	// 데이터베이스에 entity를 추가합니다.
-	tableService.insertEntity('members', entity, function(error, result, res) {
+	tableService.insertOrMergeEntity('members', entity, function(error, result, res) {
 		if (!error) {
 			response.redirect('/insert');
 		}
