@@ -175,7 +175,7 @@ app.get('/insert', function (request, response) {
 	// 파일을 읽습니다.
 	fs.readFile('insert.html', 'utf8', function (error, data) {
 		// 응답합니다.
-		response.send(data);
+		response.send(ejs.render(data));
 	});
 });
 
