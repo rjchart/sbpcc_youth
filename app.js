@@ -23,10 +23,20 @@ app.use(app.router);
 var accessKey = 'pnOhpX2pEOye58E2gtlU5gVGzUbFVk3GcNYerm4RDuNuzoqsSB06v28oy3EF/wUZo6cUq/SUNdH0AQqek6rg7Q==';
 var storageAccount = 'sbpccyouth';
 
-function getBranchArray(branchData, members) {
+function getOldBranchMember(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._) {
+		if (item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
+function getYoungBranchMember(branchData, members) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		if (item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
 			branchArray.push(item);
 		}
 	});
@@ -91,13 +101,13 @@ app.get('/branch', function(request, response) {
 						var maxLength = 0;
 						bsList.forEach (function (item, index) {
 							// var branchName = item.charge._;
-							var getList = getBranchArray(item, entries);
+							var getList = getOldBranchMember(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							branchTable.push(getList);
 						});
 
-						// var get = getBranchArray('빛과기쁨',entries);
+						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
 						// response.send(data);
 
@@ -161,13 +171,13 @@ app.get('/testb', function(request, response) {
 						***/
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
-							var getList = getBranchArray(item, entries);
+							var getList = getOldBranchMember(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							branchTable.push(getList);
 						});
 
-						// var get = getBranchArray('빛과기쁨',entries);
+						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
 						// response.send(data);
 
