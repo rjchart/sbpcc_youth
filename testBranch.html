@@ -13,10 +13,10 @@
 	<table>
 	<thead>
 		<tr>
-			<th>header</th>
-			<th>header</th>
-			<th>header</th>
-			<th>header</th>
+			<th>브랜치 이름</th>
+ 			<% bsList.forEach( function (item, index) { %>
+			<th><%= item.charge._ %></th>
+			<% }); %>
 		</tr>
 	</thead>
 	<tfoot>
@@ -38,35 +38,20 @@
 
 	<tbody>
 		<tr>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
+			<th  >브랜치장</th>
+ 			<% bsList.forEach( function (item, index) { %>
+			<td><%= item.name._ %></td>
+			<% }); %>
 		</tr>
-		<tr class="alt">
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
+
+		<% for(var i = 0; i < maxNumber; i++) { %>
+		<tr<% if (i%2 != 0) {%> class="alt"<%}%>>
+			<td></td>
+			<% branchTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
+			<% }); %>
 		</tr>
-		<tr>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-		</tr>
-		<tr class="alt">
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-		</tr>
-		<tr>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-			<td>data</td>
-		</tr>
+		<% } %>
 	</tbody>
 	</table>
 	</div>
