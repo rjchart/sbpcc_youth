@@ -191,6 +191,7 @@ app.get('/testb', function(request, response) {
 						response.send(ejs.render(data, 
 							{	
 								bsList: bsList,
+								maxNumber: maxLength,
 								// maxYoungNumber: maxYoungLength,
 								branchTable: branchTable
 								// branchYounghTable: branchYounghTable
