@@ -206,6 +206,12 @@ app.post('/insert', function (request, response) {
 	});
 });
 
+app.get('/test', function (request, response) {
+	fs.readFile('test.html', 'utf8', function (error, data) {
+		response.send(data);
+	});
+});
+
 app.get('/edit/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
