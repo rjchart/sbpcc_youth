@@ -193,7 +193,7 @@ app.get('/testb', function(request, response) {
 								bsList: bsList,
 								maxNumber: maxLength,
 								maxYoungNumber: maxYoungLength,
-								branchTable: branchTable
+								branchTable: branchTable,
 								branchYounghTable: branchYounghTable
 							}
 						));
