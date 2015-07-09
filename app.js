@@ -166,7 +166,7 @@ app.get('/testb', function(request, response) {
 						var branchTable = [];
 						var maxLength = 0;
 						var maxYoungLength = 0;
-						var branchYounghTable = [];
+						var branchYoungTable = [];
 
 						/***
 							청년부 정보를 브랜치별로 정리한다.
@@ -180,7 +180,7 @@ app.get('/testb', function(request, response) {
 							if (maxYoungLength < getYoungList.length)
 								maxYoungLength = getYoungList.length;
 							branchTable.push(getList);
-							branchYounghTable.push(getYoungList);
+							branchYoungTable.push(getYoungList);
 						});
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
@@ -194,7 +194,7 @@ app.get('/testb', function(request, response) {
 								maxNumber: maxLength,
 								maxYoungNumber: maxYoungLength,
 								branchTable: branchTable,
-								branchYounghTable: branchYounghTable
+								branchYoungTable: branchYoungTable
 							}
 						));
 					}
