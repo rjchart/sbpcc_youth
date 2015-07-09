@@ -189,9 +189,9 @@ app.get('/testb', function(request, response) {
 						response.send(ejs.render(data, 
 							{	
 								bsList: bsList,
-								maxYoungNumber: maxYoungLength,
-								branchTable: branchTable,
-								branchYounghTable: branchYounghTable
+								// maxYoungNumber: maxYoungLength,
+								branchTable: branchTable
+								// branchYounghTable: branchYounghTable
 							}
 						));
 					}
