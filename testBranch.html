@@ -54,10 +54,10 @@
 		</tr>
 		<% } %>
 		<tr height="1">
-			<td style="background: #E1EEF4" colspan="<%=bsList.length+1 %>">
+			<td style="background: #E0EDF3" colspan="<%=bsList.length+1 %>">
 		</tr>
 		<% for(var i = 0; i < maxYoungNumber; i++) { %>
-		<tr<% if (i%2 == 0) {%> class="alt"<%}%>>
+		<tr<% if ((i+maxNumber)%2 == 0) {%> class="alt"<%}%>>
 			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber%>">청 1부</td> <%}%>
 			<% branchYoungTable.forEach( function (item, index) { %>
 				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
