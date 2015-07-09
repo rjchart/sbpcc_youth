@@ -53,7 +53,9 @@
 			<% }); %>
 		</tr>
 		<% } %>
-		<tr></tr>
+		<tr height="2">
+			<td style="background: #000000" colspan="<%=bsList.length+1 %>">
+		</tr>
 		<% for(var i = 0; i < maxYoungNumber; i++) { %>
 		<tr<% if (i%2 == 0) {%> class="alt"<%}%>>
 			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber%>">청 1부</td> <%}%>
