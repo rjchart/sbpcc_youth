@@ -163,8 +163,8 @@ app.get('/testb', function(request, response) {
 						var entries = JSON.parse(testString);
 
 						var get, checkList;
-						var branchTable = [];
-						var maxLength = 0;
+						var branchTable = [], branchYounghTable = [];
+						var maxLength = 0, maxYoungLength = 0;
 
 						/***
 							청년부 정보를 브랜치별로 정리한다.
@@ -172,9 +172,13 @@ app.get('/testb', function(request, response) {
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
 							var getList = getOldBranchMember(item, entries);
+							var getYoungList = getYoungBranchMember(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
+							if (maxYoungLength < getYoungList.length)
+								maxYoungLength = getYoungList.length;
 							branchTable.push(getList);
+							branchYounghTable.push(getYoungList);
 						});
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
@@ -185,8 +189,9 @@ app.get('/testb', function(request, response) {
 						response.send(ejs.render(data, 
 							{	
 								bsList: bsList,
-								maxNumber: maxLength,
-								branchTable: branchTable
+								maxYoungNumber: maxYoungLength,
+								branchTable: branchTable,
+								branchYounghTable: branchYounghTable
 							}
 						));
 					}
