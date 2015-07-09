@@ -174,13 +174,13 @@ app.get('/testb', function(request, response) {
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
 							var getList = getOldBranchMember(item, entries);
-							// var getYoungList = getYoungBranchMember(item, entries);
+							var getYoungList = getYoungBranchMember(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
-							// if (maxYoungLength < getYoungList.length)
-							// 	maxYoungLength = getYoungList.length;
+							if (maxYoungLength < getYoungList.length)
+								maxYoungLength = getYoungList.length;
 							branchTable.push(getList);
-							// branchYounghTable.push(getYoungList);
+							branchYounghTable.push(getYoungList);
 						});
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
@@ -192,9 +192,9 @@ app.get('/testb', function(request, response) {
 							{	
 								bsList: bsList,
 								maxNumber: maxLength,
-								// maxYoungNumber: maxYoungLength,
+								maxYoungNumber: maxYoungLength,
 								branchTable: branchTable
-								// branchYounghTable: branchYounghTable
+								branchYounghTable: branchYounghTable
 							}
 						));
 					}
