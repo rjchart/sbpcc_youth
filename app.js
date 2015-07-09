@@ -27,8 +27,8 @@ function getBranchArray(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
 		if (item.branch._ == branchData.charge._) {
-			// if (item.RowKey._ == branchData.name._)
-			// 	continue;
+			if (item.RowKey._ == branchData.name._)
+				continue;
 			branchArray.push(item);
 		}
 	});
