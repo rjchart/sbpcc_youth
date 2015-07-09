@@ -27,8 +27,8 @@ function getBranchArray(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
 		if (item.branch._ == branchData.charge._) {
-			if (item.RowKey._ == branchData.name._)
-				continue;
+			// if (item.RowKey._ == branchData.name._)
+			// 	continue;
 			branchArray.push(item);
 		}
 	});
@@ -163,7 +163,7 @@ app.get('/testb', function(request, response) {
 						***/
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
-							var getList = getBranchArray(branchName, entries);
+							var getList = getBranchArray(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							branchTable.push(getList);
