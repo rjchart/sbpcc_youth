@@ -23,11 +23,14 @@ app.use(app.router);
 var accessKey = 'pnOhpX2pEOye58E2gtlU5gVGzUbFVk3GcNYerm4RDuNuzoqsSB06v28oy3EF/wUZo6cUq/SUNdH0AQqek6rg7Q==';
 var storageAccount = 'sbpccyouth';
 
-function getBranchArray(branchName, members) {
+function getBranchArray(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.branch._ == branchName)
+		if (item.branch._ == branchData.charge._) {
+			if (item.RowKey._ == branchData.name._)
+				continue;
 			branchArray.push(item);
+		}
 	});
 	return branchArray;
 }
@@ -89,8 +92,8 @@ app.get('/branch', function(request, response) {
 						var branchTable = [];
 						var maxLength = 0;
 						bsList.forEach (function (item, index) {
-							var branchName = item.charge._;
-							var getList = getBranchArray(branchName, entries);
+							// var branchName = item.charge._;
+							var getList = getBranchArray(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							branchTable.push(getList);
