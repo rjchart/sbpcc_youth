@@ -47,13 +47,13 @@
 
 		<% for(var i = 0; i < maxNumber; i++) { %>
 		<tr<% if (i%2 == 0) {%> class="alt"<%}%>>
-			<% if (i==0) {%>  <td rowspan="<%=maxNumber%>"></td> <%}%>
+			<% if (i==0) {%>  <td rowspan="<%=maxNumber%>">청 2부</td> <%}%>
 			<% branchTable.forEach( function (item, index) { %>
 				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
 			<% }); %>
 		</tr>
 		<% } %>
-
+		
 	</tbody>
 	</table>
 	</div>

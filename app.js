@@ -164,8 +164,9 @@ app.get('/testb', function(request, response) {
 
 						var get, checkList;
 						var branchTable = [];
-						var maxLength = 0, maxYoungLength = 0;
-						var branchYounghTable = []
+						var maxLength = 0;
+						var maxYoungLength = 0;
+						var branchYounghTable = [];
 
 						/***
 							청년부 정보를 브랜치별로 정리한다.
