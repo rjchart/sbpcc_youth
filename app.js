@@ -134,7 +134,7 @@ app.get('/branch', function(request, response) {
 						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
 						// response.send(data);
-						response.send(entries[0].keys());
+						response.send(JSON.stringify(entries[0].keys()));
 
 						// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
 						// response.send(ejs.render(data, 
