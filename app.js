@@ -149,10 +149,14 @@ app.get('/branch', function(request, response) {
 							var branchName = item.charge._;
 							var getList = getOldBranchMember(item, entries, attendSet);
 							var getYoungList = getYoungBranchMember(item, entries, attendSet);
+							var armyList = getArmyMember(item, entries);
+							var otherList = getArmyMember(item, entries);
+
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							if (maxYoungLength < getYoungList.length)
 								maxYoungLength = getYoungList.length;
+							
 							branchTable.push(getList);
 							branchYoungTable.push(getYoungList);
 						});
