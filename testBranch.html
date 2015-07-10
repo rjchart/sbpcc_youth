@@ -61,6 +61,17 @@
 			<% }); %>
 		</tr>
 		<% } %>
+		<tr height="1">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+1 %>">
+		</tr>
+		<% for(var i = 0; i < maxArmy; i++) { %>
+		<tr<% if ((i+maxNumber+maxYoungNumber)%2 == 0) {%> class="alt"<%}%>>
+			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxArmy%>">군입대자</td> <%}%>
+			<% armyTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
+			<% }); %>
+		</tr>
+		<% } %>
 
 	</tbody>
 	</table>
