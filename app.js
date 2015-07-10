@@ -150,7 +150,7 @@ app.get('/branch', function(request, response) {
 							var getList = getOldBranchMember(item, entries, attendSet);
 							var getYoungList = getYoungBranchMember(item, entries, attendSet);
 							var armyList = getArmyMember(item, entries);
-							var otherList = getArmyMember(item, entries);
+							var otherList = getOtherMember(item, entries);
 
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
