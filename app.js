@@ -26,7 +26,15 @@ var storageAccount = 'sbpccyouth';
 function getOldBranchMember(branchData, members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.hasOwnProperty("attend") && item.attend._ >= attendValue && item.branch._ == branchData.charge._ 
+		var attendOk = false;
+		if (item.hasOwnProperty("attend")) {
+			if (item.attend._ >= attendValue)
+				attendOk = true;
+		}
+		else if (attendValue == 0)
+			attendOk = true;
+
+		if (attendOk && item.branch._ == branchData.charge._ 
 			&& item.RowKey._ != branchData.name._ && item.age._ > 26) {
 			if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
 				branchArray.push(item);
