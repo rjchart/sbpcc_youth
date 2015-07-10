@@ -156,7 +156,9 @@ app.get('/branch', function(request, response) {
 								maxLength = getList.length;
 							if (maxYoungLength < getYoungList.length)
 								maxYoungLength = getYoungList.length;
-							
+							if (maxArmy < armyList.length) maxArmy = armyList.length;
+							if (maxOther < otherList.length) maxOther = otherList.length;
+
 							branchTable.push(getList);
 							branchYoungTable.push(getYoungList);
 						});
