@@ -73,6 +73,18 @@
 		</tr>
 		<% } %>
 
+		<tr height="1">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+1 %>">
+		</tr>
+		<% for(var i = 0; i < maxOther; i++) { %>
+		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy)%2 == 0) {%> class="alt"<%}%>>
+			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxOther%>">유학자 및 지방근무자</td> <%}%>
+			<% otherTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
+			<% }); %>
+		</tr>
+		<% } %>
+
 	</tbody>
 	</table>
 	</div>
