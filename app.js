@@ -161,6 +161,8 @@ app.get('/branch', function(request, response) {
 
 							branchTable.push(getList);
 							branchYoungTable.push(getYoungList);
+							armyTable.push(armyList);
+							otherTable.push(otherList);
 						});
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
