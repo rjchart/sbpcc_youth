@@ -26,7 +26,7 @@ var storageAccount = 'sbpccyouth';
 function getOldBranchMember(branchData, members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.hasOwnProperty("attend") && item.attend._ > attendValue && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
+		if (item.hasOwnProperty("attend") && item.attend._ >= attendValue && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
 			branchArray.push(item);
 		}
 	});
@@ -38,7 +38,7 @@ function getYoungBranchMember(branchData, members, attendValue) {
 	members.forEach (function (item, index) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
-		if (item.hasOwnProperty("attend") && item.attend._ > attendValue && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
+		if (item.hasOwnProperty("attend") && item.attend._ >= attendValue && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
 			branchArray.push(item);
 		}
 	});
