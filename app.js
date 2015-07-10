@@ -50,7 +50,7 @@ function getArmyMember(branchData, members) {
 	members.forEach (function (item, index) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
-		if (item.hasOwnProperty("attendDesc") && item.attendDesc._ == '군대') {
+		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.attendDesc._ == '군대') {
 			branchArray.push(item);
 		}
 	});
@@ -62,7 +62,7 @@ function getOtherMember(branchData, members) {
 	members.forEach (function (item, index) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
-		if (item.hasOwnProperty("attendDesc") && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
+		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
 			branchArray.push(item);
 		}
 	});
