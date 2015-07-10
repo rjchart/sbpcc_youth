@@ -72,20 +72,29 @@ app.get('/', function(request, response) {
 });
 
 app.get('/branch', function(request, response) {
+	// get table service from azure database
 	var tableService = azure.createTableService(storageAccount, accessKey);
 
+	// branchTable.html을 읽어들인다.
+	fs.readFile('testBranch.html', 'utf8', function (error, data) {
 
-	fs.readFile('branchTable.html', 'utf8', function (error, data) {
+		/*****
+			Branch의 개수 만큼 데이터를 가져오기 위해서 임원 중 BS 데이터를 가져온다.
+		*****/
+
+		// 브랜치에서 BS의 데이터를 가져오는 쿼리 생성.
 		var branchQuery = new azure.TableQuery()
 		// .top(5)
 		.where('part eq ?', 'BS');
 
-		// 데이터베이스 쿼리를 실행합니다.
+		// 데이터베이스 쿼리를 실행.
 		tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
 			if (!error) {
+				// 가져온 데이터를 읽어들일 수 있도록 수정한다.
 				var bsTestString = JSON.stringify(result.entries);
 				var bsList = JSON.parse(bsTestString);
 
+				// 모든 청년부 데이터를 가져온다.
 				var query = new azure.TableQuery();
 				// .top(5)
 				// .where('age ge ?', '{18}');
@@ -93,29 +102,43 @@ app.get('/branch', function(request, response) {
 				// 데이터베이스 쿼리를 실행합니다.
 				tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
 					if (!error) {
-
+						// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
 						var testString = JSON.stringify(result.entries);
 						var entries = JSON.parse(testString);
+
 						var get, checkList;
 						var branchTable = [];
 						var maxLength = 0;
+						var maxYoungLength = 0;
+						var branchYoungTable = [];
+
+						/***
+							청년부 정보를 브랜치별로 정리한다.
+						***/
 						bsList.forEach (function (item, index) {
-							// var branchName = item.charge._;
+							var branchName = item.charge._;
 							var getList = getOldBranchMember(item, entries);
+							var getYoungList = getYoungBranchMember(item, entries);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
+							if (maxYoungLength < getYoungList.length)
+								maxYoungLength = getYoungList.length;
 							branchTable.push(getList);
+							branchYoungTable.push(getYoungList);
 						});
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
 						// response.send(data);
 
+						// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
 						response.send(ejs.render(data, 
 							{	
 								bsList: bsList,
 								maxNumber: maxLength,
-								branchTable: branchTable
+								maxYoungNumber: maxYoungLength,
+								branchTable: branchTable,
+								branchYoungTable: branchYoungTable
 							}
 						));
 					}
