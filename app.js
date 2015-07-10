@@ -177,7 +177,11 @@ app.get('/branch', function(request, response) {
 								maxNumber: maxLength,
 								maxYoungNumber: maxYoungLength,
 								branchTable: branchTable,
-								branchYoungTable: branchYoungTable
+								branchYoungTable: branchYoungTable,
+								armyTable: armyTable,
+								otherTable: otherTable,
+								maxArmy: maxArmy,
+								maxOther: maxOther
 							}
 						));
 					}
