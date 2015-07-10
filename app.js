@@ -45,6 +45,30 @@ function getYoungBranchMember(branchData, members, attendValue) {
 	return branchArray;
 }
 
+function getArmyMember(branchData, members) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		// if (item.keys().indexof('attend') <= -1)
+		// 	continue;
+		if (item.hasOwnProperty("attendDesc") && item.attendDesc._ == '군대') {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
+function getOtherMember(branchData, members) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		// if (item.keys().indexof('attend') <= -1)
+		// 	continue;
+		if (item.hasOwnProperty("attendDesc") && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
 app.get('/', function(request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 
@@ -114,8 +138,9 @@ app.get('/branch', function(request, response) {
 						var get, checkList;
 						var branchTable = [];
 						var maxLength = 0;
-						var maxYoungLength = 0;
+						var maxYoungLength = 0, maxArmy = 0, maxOther = 0;
 						var branchYoungTable = [];
+						var armyTable = [], otherTable = [];
 
 						/***
 							청년부 정보를 브랜치별로 정리한다.
