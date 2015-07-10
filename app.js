@@ -23,22 +23,22 @@ app.use(app.router);
 var accessKey = 'pnOhpX2pEOye58E2gtlU5gVGzUbFVk3GcNYerm4RDuNuzoqsSB06v28oy3EF/wUZo6cUq/SUNdH0AQqek6rg7Q==';
 var storageAccount = 'sbpccyouth';
 
-function getOldBranchMember(branchData, members) {
+function getOldBranchMember(branchData, members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.hasOwnProperty("attend") && item.attend._ > 0 && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
+		if (item.hasOwnProperty("attend") && item.attend._ > attendValue && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
 			branchArray.push(item);
 		}
 	});
 	return branchArray;
 }
 
-function getYoungBranchMember(branchData, members) {
+function getYoungBranchMember(branchData, members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
-		if (item.hasOwnProperty("attend") && item.attend._ > 0 && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
+		if (item.hasOwnProperty("attend") && item.attend._ > attendValue && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
 			branchArray.push(item);
 		}
 	});
@@ -76,6 +76,9 @@ app.get('/', function(request, response) {
 app.get('/branch', function(request, response) {
 	// get table service from azure database
 	var tableService = azure.createTableService(storageAccount, accessKey);
+	var attendSet = request.param('attendValue');
+	if (!attendSet)
+		attendSet = 0;
 
 	// branchTable.html을 읽어들인다.
 	fs.readFile('testBranch.html', 'utf8', function (error, data) {
@@ -119,8 +122,8 @@ app.get('/branch', function(request, response) {
 						***/
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
-							var getList = getOldBranchMember(item, entries);
-							var getYoungList = getYoungBranchMember(item, entries);
+							var getList = getOldBranchMember(item, entries, attendSet);
+							var getYoungList = getYoungBranchMember(item, entries, attendSet);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							if (maxYoungLength < getYoungList.length)
@@ -199,8 +202,8 @@ app.get('/testb', function(request, response) {
 						***/
 						bsList.forEach (function (item, index) {
 							var branchName = item.charge._;
-							var getList = getOldBranchMember(item, entries);
-							var getYoungList = getYoungBranchMember(item, entries);
+							var getList = getOldBranchMember(item, entries, attendSet);
+							var getYoungList = getYoungBranchMember(item, entries, attendSet);
 							if (maxLength < getList.length) 
 								maxLength = getList.length;
 							if (maxYoungLength < getYoungList.length)
