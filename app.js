@@ -367,7 +367,9 @@ app.post('/profile/:id', function (request, response) {
 		phone: entGen.String(body.phone),
 		birthYear: entGen.Int32(body.birthYear),
 		birthMonth: entGen.Int32(body.birthMonth),
-		birthDay: entGen.Int32(body.birthDay)
+		birthDay: entGen.Int32(body.birthDay),
+		attend: entGen.Int32(body.attend),
+		attendDesc: entGen.String(body.attendDesc)
 	};
 
 	// response.send("part: " + request.body.PartitionKey + ", row: " + id);
