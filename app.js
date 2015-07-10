@@ -26,8 +26,9 @@ var storageAccount = 'sbpccyouth';
 function getOldBranchMember(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		// if (item["attend"] != undefined)	
-		// 	continue;
+		if (item["attend"] != undefined) {
+			continue;
+		}
 		if (item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
 			branchArray.push(item);
 		}
