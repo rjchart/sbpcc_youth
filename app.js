@@ -402,7 +402,7 @@ app.post('/profile/:id', function (request, response) {
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.mergeEntity('members', entity, function(error, result, res) {
 		if (!error) {
-			response.redirect("back");
+			response.redirect("/branch");
 		}
 	});
 
