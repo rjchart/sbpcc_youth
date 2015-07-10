@@ -26,8 +26,8 @@ var storageAccount = 'sbpccyouth';
 function getOldBranchMember(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.keys().indexof('attend') <= -1)
-			continue;
+		// if (item.keys().indexof('attend') <= -1)
+		// 	continue;
 		if (item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ > 26) {
 			branchArray.push(item);
 		}
@@ -38,8 +38,8 @@ function getOldBranchMember(branchData, members) {
 function getYoungBranchMember(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		if (item.keys().indexof('attend') <= -1)
-			continue;
+		// if (item.keys().indexof('attend') <= -1)
+		// 	continue;
 		if (item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
 			branchArray.push(item);
 		}
@@ -134,17 +134,18 @@ app.get('/branch', function(request, response) {
 						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
 						// response.send(data);
+						response.send(entries[0].keys());
 
 						// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
-						response.send(ejs.render(data, 
-							{	
-								bsList: bsList,
-								maxNumber: maxLength,
-								maxYoungNumber: maxYoungLength,
-								branchTable: branchTable,
-								branchYoungTable: branchYoungTable
-							}
-						));
+						// response.send(ejs.render(data, 
+						// 	{	
+						// 		bsList: bsList,
+						// 		maxNumber: maxLength,
+						// 		maxYoungNumber: maxYoungLength,
+						// 		branchTable: branchTable,
+						// 		branchYoungTable: branchYoungTable
+						// 	}
+						// ));
 					}
 				});
 			}
