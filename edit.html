@@ -78,7 +78,7 @@
 			</tr>
 			<tr>
 				<td><label>출석 비고</label></td>
-				<td><input type="text" name="attendDesc" value="<%= data.attendDesc._ %>" /></td>
+				<td><input type="text" name="attendDesc" <% if (data.attendDesc._) {%>value="<%= data.attendDesc._ %>"<%}%> /></td>
 			</tr>
 		</table>
 		<input type="submit" />
