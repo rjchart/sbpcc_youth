@@ -65,7 +65,7 @@ function getYoungBranchMember(branchData, members, attendValue) {
 	return branchArray;
 }
 
-function getEtcMember(members, attendValue) {
+function getEtcOldMember(members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
 		var attendOk = false;
@@ -76,7 +76,25 @@ function getEtcMember(members, attendValue) {
 		else if (attendValue == 0)
 			attendOk = true;
 
-		if (attendOk && item.branch._ == '기타') {
+		if (attendOk && item.branch._ == '기타' && item.age._ > 26) {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
+function getEtcYoungMember(members, attendValue) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		var attendOk = false;
+		if (item.hasOwnProperty("attend")) {
+			if (item.attend._ >= attendValue)
+				attendOk = true;
+		}
+		else if (attendValue == 0)
+			attendOk = true;
+
+		if (attendOk && item.branch._ == '기타' && item.age._ <= 26) {
 			branchArray.push(item);
 		}
 	});
@@ -203,8 +221,12 @@ app.get('/branch', function(request, response) {
 							otherTable.push(otherList);
 						});
 
-						var etcList = getEtcMember(entries,attendSet);
+						var etcList = getEtcOldMember(entries,attendSet);
 						branchTable.push(etcList);
+
+						var etcList2 = getEtcYoungMember(entries,attendSet);
+						branchYoungTable.push(etcList2);
+						
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
