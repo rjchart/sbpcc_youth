@@ -54,7 +54,7 @@
 		</tr>
 		<% } %>
 		<tr height="1">
-			<td style="background: #D1DEE4" colspan="<%=bsList.length+1 %>">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
 		</tr>
 		<% for(var i = 0; i < maxYoungNumber; i++) { %>
 		<tr<% if ((i+maxNumber)%2 == 0) {%> class="alt"<%}%>>
@@ -65,7 +65,7 @@
 		</tr>
 		<% } %>
 		<tr height="1">
-			<td style="background: #D1DEE4" colspan="<%=bsList.length+1 %>">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
 		</tr>
 		<% for(var i = 0; i < maxArmy; i++) { %>
 		<tr<% if ((i+maxNumber+maxYoungNumber)%2 == 0) {%> class="alt"<%}%>>
@@ -73,11 +73,12 @@
 			<% armyTable.forEach( function (item, index) { %>
 				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
 			<% }); %>
+			<td></td>
 		</tr>
 		<% } %>
 
 		<tr height="1">
-			<td style="background: #D1DEE4" colspan="<%=bsList.length+1 %>">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
 		</tr>
 		<% for(var i = 0; i < maxOther; i++) { %>
 		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy)%2 == 0) {%> class="alt"<%}%>>
@@ -85,6 +86,7 @@
 			<% otherTable.forEach( function (item, index) { %>
 				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
 			<% }); %>
+			<td></td>
 		</tr>
 		<% } %>
 
