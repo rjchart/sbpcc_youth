@@ -65,6 +65,24 @@ function getYoungBranchMember(branchData, members, attendValue) {
 	return branchArray;
 }
 
+function getEtcMember(members, attendValue) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		var attendOk = false;
+		if (item.hasOwnProperty("attend")) {
+			if (item.attend._ >= attendValue)
+				attendOk = true;
+		}
+		else if (attendValue == 0)
+			attendOk = true;
+
+		if (attendOk && item.branch._ == '기타') {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
 function getArmyMember(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
@@ -184,6 +202,9 @@ app.get('/branch', function(request, response) {
 							armyTable.push(armyList);
 							otherTable.push(otherList);
 						});
+
+						var etcList = getEtcMember(entries,attendSet);
+						branchTable.push(etcList);
 
 						// var get = getOldBranchMember('빛과기쁨',entries);
 						// response.send(JSON.stringify(branchTable));	
