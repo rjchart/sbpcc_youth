@@ -2,6 +2,26 @@
 <html>
 <head>
 	<title>Edit Page</title>
+	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
+	<script type="text/javascript">
+		function AddFriend() {
+			var number = document.check.number.value;
+			number++;
+			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" value="' + number + '">'
+			// $.ajax({
+			// 	url: "/endPoint",
+			// 	type: "post",
+			// 	data: name,
+			// 	dataType: "json",
+			// 	success: function(data) {
+			// 		document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+			// 	},
+			// 	error: function(request) {
+			// 		alert("실패");
+			// 	}
+			// });
+		}
+    </script>
 </head>
 <body>
 	<h1>Edit Page</h1>
@@ -84,6 +104,12 @@
 		<input type="submit" />
 		</form>
 	</fieldset>
+	<form action="/addFriend" name="check" method="post">
+		<div id="addFriendNumber"><input type="hidden" name="number" value="0"></div>
+		<input type="button" value="추가" onclick="AddFriend()">
+	</form>
+	<div>친구추가</div>
+
 	<div><a href="/branch">브랜치로</a></div>
 </body>
 </html>
