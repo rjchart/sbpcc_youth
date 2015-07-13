@@ -17,7 +17,7 @@
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">'
 
 			// document.getElementById("addFriend").innerHTML = addFriendString;
-			
+
 			// $.ajax({
 			// 	url: "/endPoint",
 			// 	type: "post",
@@ -115,9 +115,14 @@
 		</form>
 	</fieldset>
 
-	<form action="/addFriend" name="check" method="post">
+	<form action="/" name="check" method="post">
 		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
 		<input type="button" value="추가" onclick="AddFriend()">
+	</form>
+
+	<form action="/addFriend" method="post">
+		<div>친구추가</div>
+		<div id="addFriend"><input type="text" name="friend00"></div>
 	</form>
 
 	<div><a href="/branch">브랜치로</a></div>
