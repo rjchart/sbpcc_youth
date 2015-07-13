@@ -163,8 +163,7 @@ app.get('/testAjax', function(request, response) {
 app.post('/endpoint', function(req, res){
 	var obj = {};
 	console.log('body: ' + JSON.stringify(req.body));
-	res.ContentType('json');
-	res.send({ some: JSON.stringify({response:'json'}) });
+	res.send(req.body);
 });
  
 
