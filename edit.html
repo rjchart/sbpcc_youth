@@ -9,12 +9,11 @@
 			var addFriendString = '<input type="text" name="friend00">';
 			number++;
 
-			for (var i=0; i<number-1; i++) {
-				var get = i+1;
-				addFriendString = addFriendString + '<br/><input type="text" name="friend0' + get + '">'
+			for (var i=1; i<number; i++) {
+				addFriendString = addFriendString + '<br/><input type="text" name="friend0' + i + '">';
 			}
 
-			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">'
+			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
 
 			document.getElementById("addFriend").innerHTML = addFriendString;
 
@@ -120,10 +119,10 @@
 		<input type="button" value="추가" onclick="AddFriend()">
 	</form>
 
-	<form action="/addFriend" method="post">
+	<form action="/addFriend/<%= data.RowKey._%>" method="post">
 		<div>친구추가</div>
 		<div id="addFriendCount"><input type="hidden" id="friendNum" value="1"></div>
-		<div id="addFriend/<%= data.RowKey._%>"><input type="text" name="friend00"></div>
+		<div id="addFriend"><input type="text" name="friend00"></div>
 		<input type="submit">
 	</form>
 
