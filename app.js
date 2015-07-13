@@ -547,12 +547,12 @@ app.post('/addFriend/:id', function (request, response) {
 		var entity1 = {
 			PartitionKey: entGen.String("friend"),
 			RowKey: entGen.String(id),
-			friend: entGen.String(body.friend[i])
+			friend: entGen.String(body.friend[0])
 		};
 
 		var entity2 = {
 			PartitionKey: entGen.String("friend"),
-			RowKey: entGen.String(body.friend[i]),
+			RowKey: entGen.String(body.friend[0]),
 			friend: entGen.String(id)
 		};
 
