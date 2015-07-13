@@ -11,7 +11,9 @@
 					data: name,
 					dataType: "json",
 					success: function(data) {
-						document.getElementById("result").innerHTML = data["name"]+"님 반갑습니다.";
+						var getValue = JSON.stringify(data);
+						var get = JSON.parse(getValue);
+						document.getElementById("result").innerHTML = JSON.stringify(data)+"님 반갑습니다.";
 					},
 					error: function(request) {
 						alert("실패");
