@@ -559,7 +559,7 @@ app.post('/addFriend/:id', function (request, response) {
 		// };
 
 		batch.insertOrMergeEntity(entity1, {echoContent: true});
-		batch.insertOrMergeEntity(entity2, {echoContent: true});
+		// batch.insertOrMergeEntity(entity2, {echoContent: true});
 
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.executeBatch('friends', batch, function(error, result, res) {
