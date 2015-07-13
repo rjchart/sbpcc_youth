@@ -163,7 +163,7 @@ app.get('/testAjax', function(request, response) {
 app.post('/endpoint', function(req, res){
 	var obj = {};
 	console.log('body: ' + JSON.stringify(req.body));
-	res.send(req.body);
+	res.send(req.body[name]);
 });
  
 
@@ -526,8 +526,38 @@ app.post('/profile/:id', function (request, response) {
 		}
 	});
 
+});
 
 
+app.post('/addFriend?:id', function (request, response) {
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+	var body = request.body;
+
+	// var entGen = azure.TableUtilities.entityGenerator;
+	// var entity = {
+	// 	PartitionKey: entGen.String(body.PartitionKey),
+	// 	RowKey: entGen.String(id),
+	// 	branch: entGen.String(body.branch),
+	// 	gender: entGen.String(body.gender),
+	// 	phone: entGen.String(body.phone),
+	// 	birthYear: entGen.Int32(body.birthYear),
+	// 	birthMonth: entGen.Int32(body.birthMonth),
+	// 	birthDay: entGen.Int32(body.birthDay),
+	// 	attend: entGen.Int32(body.attend),
+	// 	attendDesc: entGen.String(body.attendDesc)
+	// };
+
+	// response.send("part: " + request.body.PartitionKey + ", row: " + id);
+
+	// response.send(JSON.stringify(entity));
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.mergeEntity('members', entity, function(error, result, res) {
+		if (!error) {
+			response.redirect("/branch");
+		}
+	});
 });
 
 app.post('/upload/:id', function (req, res) {
