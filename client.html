@@ -11,7 +11,7 @@
 					data: name,
 					dataType: "json",
 					success: function(data) {
-						document.getElementById("result").innerHTML = JSON.stringify(data)+"님 반갑습니다.";
+						document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
 					},
 					error: function(request) {
 						alert("실패");
