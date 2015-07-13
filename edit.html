@@ -5,7 +5,7 @@
 	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
 	<script type="text/javascript">
 		function AddFriend() {
-			var number = document.check.number.value;
+			var number = document.check.addFriendNumber.number.value;
 			number++;
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" value="' + number + '">'
 			// $.ajax({
@@ -105,7 +105,7 @@
 		</form>
 	</fieldset>
 	<form action="/addFriend" name="check" method="post">
-		<div id="addFriendNumber"><input type="hidden" name="number" value="0"></div>
+		<div id="addFriendNumber"><input type="hidden" id="number" value="0"></div>
 		<input type="button" value="추가" onclick="AddFriend()">
 	</form>
 	<div>친구추가</div>
