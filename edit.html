@@ -6,11 +6,11 @@
 	<script type="text/javascript">
 		function AddFriend() {
 			var number = document.check.number.value;
-			var addFriendString = '<input type="text" name="friend00">';
+			var addFriendString = '<input type="text" name="friend[0]">';
 			number++;
 
 			for (var i=1; i<number; i++) {
-				addFriendString = addFriendString + '<br/><input type="text" name="friend0' + i + '">';
+				addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
 			}
 
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
