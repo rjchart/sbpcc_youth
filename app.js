@@ -153,6 +153,20 @@ app.get('/', function(request, response) {
 	});
 });
 
+app.get('/testAjax', function(request, response) {
+
+	fs.readFile('client.html', 'utf8', function (error, data) {
+		response.send(data);
+	});
+});
+
+app.post('/endpoint', function(req, res){
+	var obj = {};
+	console.log('body: ' + JSON.stringify(req.body));
+	res.send(req.body);
+});
+ 
+
 app.get('/branch', function(request, response) {
 	// get table service from azure database
 	var tableService = azure.createTableService(storageAccount, accessKey);
