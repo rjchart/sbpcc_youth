@@ -547,16 +547,16 @@ app.post('/addFriend/:id', function (request, response) {
 	// 	;
 	// }
 		var entity1 = {
-			PartitionKey: entGen.String("aa"),
+			PartitionKey: entGen.String(id),
 			RowKey: entGen.String("body"),
 			friend: entGen.String("friend")
 		};
 
-		var entity2 = {
-			PartitionKey: entGen.String("aa"),
-			RowKey: entGen.String("id"),
-			friend: entGen.String("friend")
-		};
+		// var entity2 = {
+		// 	PartitionKey: entGen.String("aa"),
+		// 	RowKey: entGen.String("id"),
+		// 	friend: entGen.String("friend")
+		// };
 
 		batch.insertOrMergeEntity(entity1, {echoContent: true});
 		batch.insertOrMergeEntity(entity2, {echoContent: true});
