@@ -13,7 +13,7 @@
 					success: function(data) {
 						var getValue = JSON.stringify(data);
 						var get = JSON.parse(getValue);
-						document.getElementById("result").innerHTML = JSON.stringify(data)+"님 반갑습니다.";
+						document.getElementById("result").innerHTML = get.name+"님 반갑습니다.";
 					},
 					error: function(request) {
 						alert("실패");
