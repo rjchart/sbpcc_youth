@@ -163,7 +163,7 @@ app.get('/testAjax', function(request, response) {
 app.post('/endpoint', function(req, res){
 	var obj = {};
 	console.log('body: ' + JSON.stringify(req.body));
-	res.send({"name":req.body["name"]});
+	res.send(req.body);
 });
  
 
