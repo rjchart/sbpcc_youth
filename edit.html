@@ -11,7 +11,7 @@
 
 			for (var i=0; i<number-1; i++) {
 				var get = i+1;
-				addFriendString = addFriendString + '<br/><input type="text" name="friend' + string.format("%02d",get) + '">';
+				addFriendString = addFriendString + '<br/><input type="text" name="friend' + String.format("{0:d}",get) + '">';
 			}
 
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
