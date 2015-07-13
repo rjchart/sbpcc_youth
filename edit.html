@@ -11,7 +11,7 @@
 
 			for (var i=0; i<number-1; i++) {
 				var get = i+1;
-				addFriendString = addFriendString + '<input type="text" name="friend0' + get + '">'
+				addFriendString = addFriendString + '<br/><input type="text" name="friend0' + get + '">'
 			}
 
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">'
@@ -113,8 +113,11 @@
 		<input type="submit" />
 		</form>
 	</fieldset>
-	<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
-	<input type="button" value="추가" onclick="AddFriend()">
+
+	<form action="/" name="check" method="post">
+		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
+		<input type="button" value="추가" onclick="AddFriend()">
+	</form>
 
 	<form action="/addFriend" name="check" method="post">
 		<div>친구추가</div>
