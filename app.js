@@ -542,8 +542,8 @@ app.post('/addFriend/:id', function (request, response) {
 
 
 	var batch = new azure.TableBatch();
-	for (var i=0; i<1; i++) {
-		var entGen = azure.TableUtilities.entityGenerator;
+	var entGen = azure.TableUtilities.entityGenerator;
+	for (var i = 0; i < 1; i++){
 		var entity1 = {
 			PartitionKey: entGen.String(id),
 			RowKey: entGen.String(body.friend[0]),
