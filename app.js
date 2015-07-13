@@ -542,7 +542,7 @@ app.post('/addFriend/:id', function (request, response) {
 
 
 	var batch = new azure.TableBatch();
-	for (var i=0; i<body.friendNum; i++) {
+	for (var i=0; i<1; i++) {
 		var entGen = azure.TableUtilities.entityGenerator;
 		var entity1 = {
 			PartitionKey: entGen.String(id),
@@ -557,7 +557,7 @@ app.post('/addFriend/:id', function (request, response) {
 		};
 
 		batch.insertOrMergeEntity(entity1, {echoContent: true});
-		batch.insertOrMergeEntity(entity2, {echoContent: true});
+		batch.insertOrMergeEntity(entity2, {echoContent: true});	
 	}
 
 	// 데이터베이스에 entity를 추가합니다.
