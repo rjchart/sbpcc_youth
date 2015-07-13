@@ -540,23 +540,25 @@ app.post('/addFriend/:id', function (request, response) {
 	    }
 	});
 
-	var entGen = azure.TableUtilities.entityGenerator;
-	var entity1 = {
-		PartitionKey: entGen.String("friend"),
-		RowKey: entGen.String(id),
-		friend: entGen.String(body.friend[0])
-	};
-
-	var entity2 = {
-		PartitionKey: entGen.String("friend"),
-		RowKey: entGen.String(body.friend[0]),
-		friend: entGen.String(id)
-	};
 
 	var batch = new azure.TableBatch();
+	body.friend.forEach (function (item, index) {
+		var entGen = azure.TableUtilities.entityGenerator;
+		var entity1 = {
+			PartitionKey: entGen.String("friend"),
+			RowKey: entGen.String(id),
+			friend: entGen.String(item)
+		};
 
-	batch.insertOrMergeEntity(entity1, {echoContent: true});
-	batch.insertOrMergeEntity(entity2, {echoContent: true});
+		var entity2 = {
+			PartitionKey: entGen.String("friend"),
+			RowKey: entGen.String(item),
+			friend: entGen.String(id)
+		};
+
+		batch.insertOrMergeEntity(entity1, {echoContent: true});
+		batch.insertOrMergeEntity(entity2, {echoContent: true});
+	});
 
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.executeBatch('friends', batch, function(error, result, res) {
