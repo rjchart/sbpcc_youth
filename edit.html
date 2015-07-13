@@ -6,8 +6,17 @@
 	<script type="text/javascript">
 		function AddFriend() {
 			var number = document.check.number.value;
+			var addFriendString = '<input type="text" name="friend00">';
 			number++;
+
+			for (var i=0; i<number-1; i++) {
+				var get = i+1;
+				addFriendString = addFriendString + '<input type="text" name="friend0' + get + '">'
+			}
+
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">'
+
+			document.getElementById("addFriend").innerHTML = '<input type="hidden" id="number" value="' + number + '">'
 			// $.ajax({
 			// 	url: "/endPoint",
 			// 	type: "post",
@@ -104,12 +113,13 @@
 		<input type="submit" />
 		</form>
 	</fieldset>
-	<form action="/addFriend" name="check" method="post">
-		<div id="addFriendNumber"><input type="hidden" id="number" value="0"></div>
-		<input type="button" value="추가" onclick="AddFriend()">
-	</form>
-	<div>친구추가</div>
+	<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
+	<input type="button" value="추가" onclick="AddFriend()">
 
+	<form action="/addFriend" name="check" method="post">
+		<div>친구추가</div>
+		<div id="addFriend"><input type="text" name="friend00"></div>
+	</form>
 	<div><a href="/branch">브랜치로</a></div>
 </body>
 </html>
