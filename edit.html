@@ -157,7 +157,7 @@
 	<h3>팔로우 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <follows.length; i++) { %> 
-		<li><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('get')"></li>
+		<li><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=follows[i].PartitionKey._%>')"></li>
 	<% } %>
 	</ul>
 	</form>
