@@ -550,16 +550,17 @@ app.post('/addFriend/:id', function (request, response) {
 			relation: entGen.String("friend")
 		};
 
-		// var entity2 = {
-		// 	PartitionKey: entGen.String("aa"),
-		// 	RowKey: entGen.String("id"),
-		// 	friend: entGen.String("friend")
-		// };
+		var entity2 = {
+			PartitionKey: entGen.String("aa"),
+			RowKey: entGen.String(body.friend[i]),
+			relation: entGen.String("friend")
+		};
 
 		batch.insertOrMergeEntity(entity1, {echoContent: true});
-		// batch.insertOrMergeEntity(entity2, {echoContent: true});
+		batch.insertOrMergeEntity(entity2, {echoContent: true});
 
 	}
+	
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.executeBatch('friends', batch, function(error, result, res) {
 		if (!error) {
