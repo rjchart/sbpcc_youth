@@ -31,6 +31,35 @@
 			// 	}
 			// });
 		}
+
+		function AddFollow(name) {
+			alert(name);
+			// var number = document.check.number.value;
+			// var addFriendString = '<input type="text" name="friend[0]">';
+			// number++;
+
+			// for (var i=1; i<number; i++) {
+			// 	addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
+			// }
+
+			// document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
+			// document.getElementById("addFriendCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
+
+			// document.getElementById("addFriend").innerHTML = addFriendString;
+
+			// $.ajax({
+			// 	url: "/endPoint",
+			// 	type: "post",
+			// 	data: name,
+			// 	dataType: "json",
+			// 	success: function(data) {
+			// 		document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+			// 	},
+			// 	error: function(request) {
+			// 		alert("실패");
+			// 	}
+			// });
+		}
     </script>
 </head>
 <body>
@@ -119,16 +148,19 @@
 	<h3>친구 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <friends.length; i++) { %> 
-		<li><%=friends[i].RowKey._%></li>
+		<li><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a></li>
 	<% } %>
 	</ul>
 
+
+	<form action="/" name="follows" method="post">
 	<h3>팔로우 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <follows.length; i++) { %> 
-		<li><%=follows[i].PartitionKey._%></li>
+		<li><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow(<%=follows[i].PartitionKey%>)"></li>
 	<% } %>
 	</ul>
+	</form>
 
 	<form action="/" name="check" method="post">
 		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
