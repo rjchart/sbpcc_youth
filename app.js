@@ -489,8 +489,8 @@ app.get('/profile/:id', function (request, response) {
 				var entries = JSON.parse(testString);
 				// response.send(entries[0].RowKey._);
 
-				var friendQuery = new azure.TableQuery();
-				.where('PartitionKey eq ?', id);
+				// var friendQuery = new azure.TableQuery();
+				// .where('PartitionKey eq ?', id);
 
 
 				// 데이터베이스 쿼리를 실행합니다.
