@@ -123,8 +123,9 @@
 	<h3>친구 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <friends.length; i++) { %> 
-		<li>-<%=friends[i].RowKey._%></li>
+		<li><%=friends[i].RowKey._%></li>
 	<% } %>
+	</ul>
 
 	<form action="/addFriend/<%= data.RowKey._%>" method="post">
 		<div>친구추가</div>
