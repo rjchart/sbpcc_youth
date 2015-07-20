@@ -488,9 +488,24 @@ app.get('/profile/:id', function (request, response) {
 				var testString = JSON.stringify(result.entries);
 				var entries = JSON.parse(testString);
 				// response.send(entries[0].RowKey._);
-				response.send(ejs.render(data, 
-					{data: entries[0]}
-				));
+
+				var friendQuery = new azure.TableQuery();
+				.where('PartitionKey eq ?', id);
+
+
+				// 데이터베이스 쿼리를 실행합니다.
+				tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error2, result2) {
+					if (!error) {
+						var resultString = JSON.stringify(result2.entries);
+						var friendsList = JSON.parse(resultString);
+						response.send(ejs.render(data, 
+							{
+								data: entries[0],
+							 	friends: friendsList
+							}
+						));
+					}
+				};
 			}
 		});
 	});
@@ -550,13 +565,14 @@ app.post('/addFriend/:id', function (request, response) {
 			relation: entGen.String("friend")
 		};
 
-		var entity2 = {
-			PartitionKey: entGen.String(id),
-			relation: entGen.String("friend")
-		};
+		// var entity2 = {
+		// 	PartitionKey: entGen.String(id),
+		// 	RowKey: entGen.String(body.friend[i] + "abc"),
+		// 	relation: entGen.String("friend")
+		// };
 
 		batch.insertOrMergeEntity(entity1, {echoContent: true});
-		batch.insertOrMergeEntity(entity2, {echoContent: true});
+		// batch.insertOrMergeEntity(entity2, {echoContent: true});
 
 	}
 
