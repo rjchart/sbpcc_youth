@@ -115,10 +115,6 @@
 		</form>
 	</fieldset>
 
-	<form action="/" name="check" method="post">
-		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
-		<input type="button" value="추가" onclick="AddFriend()">
-	</form>
 
 	<h3>친구 리스트</h3>
 	<ul style="list-style-type:disc">
@@ -127,6 +123,10 @@
 	<% } %>
 	</ul>
 
+	<form action="/" name="check" method="post">
+		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
+		<input type="button" value="추가" onclick="AddFriend()">
+	</form>
 	<form action="/addFriend/<%= data.RowKey._%>" method="post">
 		<div>친구추가</div>
 		<div id="addFriendCount"><input type="hidden" name="friendNum" value="1"></div>

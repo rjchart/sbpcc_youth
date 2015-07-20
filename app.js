@@ -492,27 +492,39 @@ app.get('/profile/:id', function (request, response) {
 				var friendQuery = new azure.TableQuery()
 				.where('PartitionKey eq ?', id);
 
-
 				// 데이터베이스 쿼리를 실행합니다.
 				tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error2, result2) {
 					if (!error) {
 						var resultString = JSON.stringify(result2.entries);
 						var friendsList = JSON.parse(resultString);
-						response.send(ejs.render(data, 
-							{
-								data: entries[0],
-							 	friends: friendsList
-							})
-						);
+
+						var followQuery = new azure.TableQuery()
+						.where('RowKey eq ?', id);
+
+						// 데이터베이스 쿼리를 실행합니다.
+						tableService.queryEntities('friends', followQuery, null, function entitiesQueried(error3, result3) {
+							if (!error) {
+								var followString = JSON.stringify(result3.entries);
+								var followsList = JSON.parse(followString);
+								response.send(ejs.render(data, 
+									{
+										data: entries[0],
+									 	friends: friendsList,
+									 	follows: followsList
+									})
+								);
+							}
+						});
+
+						// response.send(ejs.render(data, 
+						// 	{
+						// 		data: entries[0],
+						// 	 	friends: friendsList
+						// 	})
+						// );
 					}
 				});
 
-				// response.send(ejs.render(data, 
-				// 			{
-				// 				data: entries[0]
-				// 			 	// friends: friendsList
-				// 			})
-				// );
 			}
 		});
 	});
