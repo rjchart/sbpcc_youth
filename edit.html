@@ -35,6 +35,11 @@
 		function AddFollow(name, name02) {
 			console.log(name);
 			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
 			// var number = document.check.number.value;
 			// var addFriendString = '<input type="text" name="friend[0]">';
 			// number++;
@@ -48,18 +53,18 @@
 
 			// document.getElementById("addFriend").innerHTML = addFriendString;
 
-			// $.ajax({
-			// 	url: "/addFollow",
-			// 	type: "post",
-			// 	data: name,
-			// 	dataType: "json",
-			// 	success: function(data) {
-			// 		document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
-			// 	},
-			// 	error: function(request) {
-			// 		alert("실패");
-			// 	}
-			// });
+			$.ajax({
+				url: "/endPoint",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
 		}
     </script>
 </head>
@@ -145,7 +150,7 @@
 		</form>
 	</fieldset>
 
-
+	<h3 id="result">check</h3>
 	<h3>친구 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <friends.length; i++) { %> 
