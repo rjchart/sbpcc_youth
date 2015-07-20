@@ -32,8 +32,9 @@
 			// });
 		}
 
-		function AddFollow(name) {
+		function AddFollow(name, name02) {
 			console.log(name);
+			console.log(name02);
 			// var number = document.check.number.value;
 			// var addFriendString = '<input type="text" name="friend[0]">';
 			// number++;
@@ -48,7 +49,7 @@
 			// document.getElementById("addFriend").innerHTML = addFriendString;
 
 			// $.ajax({
-			// 	url: "/endPoint",
+			// 	url: "/addFollow",
 			// 	type: "post",
 			// 	data: name,
 			// 	dataType: "json",
@@ -157,7 +158,7 @@
 	<h3>팔로우 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <follows.length; i++) { %> 
-		<li><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=follows[i].PartitionKey._%>')"></li>
+		<li><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>')"></li>
 	<% } %>
 	</ul>
 	</form>
