@@ -505,7 +505,7 @@ app.get('/profile/:id', function (request, response) {
 							}
 						));
 					}
-				};
+				});
 			}
 		});
 	});
