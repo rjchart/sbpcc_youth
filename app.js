@@ -507,6 +507,7 @@ app.get('/profile/:id', function (request, response) {
 								var followString = JSON.stringify(result3.entries);
 								var followsList = JSON.parse(followString);
 								var newFollowsList = [];
+								var haters = [];
 								followsList.forEach (function (item, index) {
 									var isExist = false;
 									friendsList.forEach (function (item2, index2) {
@@ -520,7 +521,8 @@ app.get('/profile/:id', function (request, response) {
 									{
 										data: entries[0],
 									 	friends: friendsList,
-									 	follows: newFollowsList
+									 	follows: newFollowsList,
+									 	haters: friendsList
 									})
 								);
 							}
