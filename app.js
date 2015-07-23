@@ -499,7 +499,7 @@ app.get('/profile/:id', function (request, response) {
 						var friendsList = JSON.parse(resultString);
 
 						var followQuery = new azure.TableQuery()
-						.where('RowKey eq ? and relation eq friend', id);
+						.where('RowKey eq ? and relation eq ?', id, 'friend');
 
 						// 데이터베이스 쿼리를 실행합니다.
 						tableService.queryEntities('friends', followQuery, null, function entitiesQueried(error3, result3) {
