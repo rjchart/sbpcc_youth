@@ -516,13 +516,11 @@ app.get('/profile/:id', function (request, response) {
 									if (isExist == false)
 										newFollowsList.push(item);
 								});
-								var haters = [];
 								response.send(ejs.render(data, 
 									{
 										data: entries[0],
 									 	friends: friendsList,
-									 	follows: newFollowsList,
-									 	haters: haters;
+									 	follows: newFollowsList
 									})
 								);
 							}
