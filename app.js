@@ -506,11 +506,21 @@ app.get('/profile/:id', function (request, response) {
 							if (!error) {
 								var followString = JSON.stringify(result3.entries);
 								var followsList = JSON.parse(followString);
+								var newFollowsList = [];
+								followsList.forEach (function (item, index) {
+									var isExist = false;
+									friendsList.forEach (function (item2, index2) {
+										if (item.RowKey._ == item2.PartitionKey._)
+											isExist = true;
+									});	
+									if (isExist == false)
+										newFollowsList.push(item);
+								});
 								response.send(ejs.render(data, 
 									{
 										data: entries[0],
 									 	friends: friendsList,
-									 	follows: followsList
+									 	follows: newFollowsList
 									})
 								);
 							}
@@ -592,6 +602,48 @@ app.post('/followFriend', function (request, response){
 }); 
 
 app.post('/addFriend/:id', function (request, response) {
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+	var body = request.body;
+
+	tableService.createTableIfNotExists('friends', function(error, result, res){
+	    if(!error){
+	        // Table exists or created
+	    }
+	});
+
+
+	var batch = new azure.TableBatch();
+	var entGen = azure.TableUtilities.entityGenerator;
+	for (var i = 0; i < body.friend.length; i++){
+		if (body.friend[i] != "") {
+			var entity1 = {
+				PartitionKey: entGen.String(id),
+				RowKey: entGen.String(body.friend[i]),
+				relation: entGen.String("friend")
+			};
+
+			// var entity2 = {
+			// 	PartitionKey: entGen.String(id),
+			// 	RowKey: entGen.String(body.friend[i] + "abc"),
+			// 	relation: entGen.String("friend")
+			// };
+
+			batch.insertOrMergeEntity(entity1, {echoContent: true});
+			// batch.insertOrMergeEntity(entity2, {echoContent: true});
+		}
+	}
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.executeBatch('friends', batch, function(error, result, res) {
+		if (!error) {
+			response.redirect("back");
+		}
+	});
+});
+
+
+app.post('/addHater/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 	var body = request.body;

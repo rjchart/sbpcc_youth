@@ -180,6 +180,17 @@
 		<input type="submit">
 	</form>
 
+	<form action="/" name="check2" method="post">
+		<div id="addHaterNumber"><input type="hidden" id="number" value="1"></div>
+		<input type="button" value="추가" onclick="AddHater()">
+	</form>
+	<form action="/AddHater/<%= data.RowKey._%>" method="post">
+		<div>친구추가</div>
+		<div id="AddHaterCount"><input type="hidden" name="haterNum" value="1"></div>
+		<div id="AddHater"><input type="text" name="hater[0]"></div>
+		<input type="submit">
+	</form>
+
 	<div><a href="/branch">브랜치로</a></div>
 </body>
 </html>
