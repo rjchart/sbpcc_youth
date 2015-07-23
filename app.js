@@ -510,7 +510,7 @@ app.get('/profile/:id', function (request, response) {
 								followsList.forEach (function (item, index) {
 									var isExist = false;
 									friendsList.forEach (function (item2, index2) {
-										if (item.RowKey._ == item2.PartitionKey._)
+										if (item.PartitionKey._ == item2.RowKey._)
 											isExist = true;
 									});	
 									if (isExist == false)
