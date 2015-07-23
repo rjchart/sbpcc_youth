@@ -490,7 +490,7 @@ app.get('/profile/:id', function (request, response) {
 				// response.send(entries[0].RowKey._);
 
 				var friendQuery = new azure.TableQuery()
-				.where('PartitionKey eq ?', id);
+				.where('PartitionKey eq ? and relation eq ?', id, 'friend');
 
 				// 데이터베이스 쿼리를 실행합니다.
 				tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error2, result2) {
@@ -499,7 +499,7 @@ app.get('/profile/:id', function (request, response) {
 						var friendsList = JSON.parse(resultString);
 
 						var followQuery = new azure.TableQuery()
-						.where('RowKey eq ?', id);
+						.where('RowKey eq ? and relation eq friend', id);
 
 						// 데이터베이스 쿼리를 실행합니다.
 						tableService.queryEntities('friends', followQuery, null, function entitiesQueried(error3, result3) {
