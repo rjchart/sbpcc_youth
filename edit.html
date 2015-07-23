@@ -32,6 +32,21 @@
 			// });
 		}
 
+		function AddHater() {
+			var number = document.check.number.value;
+			var addFriendString = '<input type="text" name="Hater[0]">';
+			number++;
+
+			for (var i=1; i<number; i++) {
+				addFriendString = addFriendString + '<br/><input type="text" name="Hater[' + i + ']">';
+			}
+
+			document.getElementById("addHaterNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
+			document.getElementById("addHaterCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
+
+			document.getElementById("addHater").innerHTML = addFriendString;
+		}
+
 		function AddFollow(name, name02) {
 			console.log(name);
 			console.log(name02);
@@ -159,7 +174,6 @@
 	<% } %>
 	</ul>
 
-
 	<form action="/" name="follows" method="post">
 	<h3>팔로우 리스트</h3>
 	<ul style="list-style-type:disc">
@@ -168,6 +182,13 @@
 	<% } %>
 	</ul>
 	</form>
+
+	<h3>싫어하는 사람 리스트</h3>
+	<ul style="list-style-type:disc">
+	<% for(var i=0; i <haters.length; i++) { %> 
+		<li style="display:inline"><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a></li>
+	<% } %>
+	</ul>
 
 	<form action="/" name="check" method="post">
 		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
