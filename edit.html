@@ -32,6 +32,21 @@
 			// });
 		}
 
+		function AddHater() {
+			var number = document.check.number.value;
+			var addHaterString = '<input type="text" name="Hater[0]">';
+			number++;
+
+			for (var i=1; i<number; i++) {
+				addHaterString = addHaterString + '<br/><input type="text" name="Hater[' + i + ']">';
+			}
+
+			document.getElementById("addHaterNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
+			document.getElementById("addHaterCount").innerHTML = '<input type="hidden" name="haterNum" value="' + number + '">';
+
+			document.getElementById("addHater").innerHTML = addHaterString;
+		}
+
 		function AddFollow(name, name02) {
 			console.log(name);
 			console.log(name02);
@@ -167,7 +182,7 @@
 	<% } %>
 	</ul>
 	</form>
-	
+
 	<h3>싫어하는 사람 리스트</h3>
 	<ul style="list-style-type:disc">
 	<% for(var i=0; i <haters.length; i++) { %> 
