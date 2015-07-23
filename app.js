@@ -165,7 +165,7 @@ app.post('/endpoint', function(req, res){
 	console.log('body: ' + JSON.stringify(req.body));
 	res.send(req.body);
 });
- 
+
 
 app.get('/branch', function(request, response) {
 	// get table service from azure database
@@ -562,6 +562,34 @@ app.post('/profile/:id', function (request, response) {
 
 });
 
+app.post('/followFriend', function (request, response){
+	var obj = {};
+
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
+
+	tableService.createTableIfNotExists('friends', function(error, result, res){
+	    if(!error){
+	        // Table exists or created
+	    }
+	});
+
+	var entGen = azure.TableUtilities.entityGenerator;
+	var entity1 = {
+		PartitionKey: entGen.String(body.name),
+		RowKey: entGen.String(body.friend),
+		relation: entGen.String("friend")
+	};
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.insertOrMergeEntity('friends', entity1, function(error, result, res) {
+		if (!error) {
+			response.send(request.body);
+		}
+	});	
+
+	
+}); 
 
 app.post('/addFriend/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
