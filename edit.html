@@ -59,7 +59,9 @@
 				data: data,
 				dataType: "json",
 				success: function(data) {
-					document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+					// document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+					var alertString = data.friend + "님이 친구로 추가되었습니다."
+					alert(alertString);
 				},
 				error: function(request) {
 					alert("실패");
