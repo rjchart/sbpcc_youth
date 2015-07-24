@@ -169,7 +169,7 @@
 
 	<fieldset style="width: 60%">
 		<legend>친구 정보</legend>
-		<table style="width: 100%">
+		<table style="width: 100%; text-align: center">
 			<tr>
 				<% for(var i=0; i <friends.length; i++) { %> 
 					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a></td>
@@ -181,13 +181,21 @@
 		</table>
 	</fieldset>
 
+
 	<form action="/" name="follows" method="post">
-	<h3>팔로우 리스트</h3>
-	<ul style="list-style-type:disc">
-	<% for(var i=0; i <follows.length; i++) { %> 
-		<li><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>')"></li>
-	<% } %>
-	</ul>
+	<fieldset style="width: 60%">
+		<legend>친구 정보</legend>
+		<table style="width: 100%; text-align: center">
+			<tr>
+				<% for(var i=0; i <follows.length; i++) { %> 
+					<td><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>')"></td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+			</tr>
+		</table>
+	</fieldset>
 	</form>
 
 	<h3>싫어하는 사람 리스트</h3>
