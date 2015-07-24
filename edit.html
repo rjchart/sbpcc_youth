@@ -202,12 +202,12 @@
 		<legend>싫어하는 사람 정보</legend>
 		<table style="width: 100%; text-align: center">
 			<tr>
-				<% for(var i=0; i <haters.length; i++) { %> 
+				<% var j = 0; for(var i=0; i <haters.length; i++) { %> 
 					<td><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a></td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
-				<% } %>
+				<% j = i; } %>
 			</tr>
 		</table>
 	</fieldset>
