@@ -167,12 +167,17 @@
 		</form>
 	</fieldset>
 
-	<h3>친구 리스트</h3>
-	<ul style="list-style-type:disc">
-	<% for(var i=0; i <friends.length; i++) { %> 
-		<li style="display:inline"><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a><br/>삭제</li>
-	<% } %>
-	</ul>
+	<fieldset style="width: 100%">
+		<legend>친구 정보</legend>
+		<table>
+			<tr>
+				<td>
+				<% for(var i=0; i <friends.length; i++) { %> 
+					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a></td>
+				<% } %>	
+				</td>
+		</table>
+	</fieldset>
 
 	<form action="/" name="follows" method="post">
 	<h3>팔로우 리스트</h3>
