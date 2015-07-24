@@ -184,7 +184,7 @@
 
 	<form action="/" name="follows" method="post">
 	<fieldset style="width: 60%">
-		<legend>친구 정보</legend>
+		<legend>팔로우 정보</legend>
 		<table style="width: 100%; text-align: center">
 			<tr>
 				<% for(var i=0; i <follows.length; i++) { %> 
@@ -198,12 +198,19 @@
 	</fieldset>
 	</form>
 
-	<h3>싫어하는 사람 리스트</h3>
-	<ul style="list-style-type:disc">
-	<% for(var i=0; i <haters.length; i++) { %> 
-		<li style="display:inline"><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a></li>
-	<% } %>
-	</ul>
+	<fieldset style="width: 60%">
+		<legend>싫어하는 사람 정보</legend>
+		<table style="width: 100%; text-align: center">
+			<tr>
+				<% for(var i=0; i <haters.length; i++) { %> 
+					<td><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a></td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+			</tr>
+		</table>
+	</fieldset>
 
 	<form action="/" name="check" method="post">
 		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
