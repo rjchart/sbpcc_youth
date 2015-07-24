@@ -515,7 +515,18 @@ app.get('/profile/:id', function (request, response) {
 						tableService.queryEntities('friends', followQuery, null, function entitiesQueried(error3, result3) {
 							if (!error) {
 								var followString = JSON.stringify(result3.entries);
-								var followsList = JSON.parse(followString);
+								var followsRelationList = JSON.parse(followString);
+								var followsList = [];
+								var followsHatersList = [];
+								followsRelationList.forEach(function (item, index) {
+									if (item.relation._ == "friend") {
+										followsList.push(item);
+									}
+									else if (item.relation._ == "hater") {
+										followsHatersList.push(item);
+									}
+								});
+
 								var newFollowsList = [];
 								var haters = [];
 								followsList.forEach (function (item, index) {
@@ -527,12 +538,23 @@ app.get('/profile/:id', function (request, response) {
 									if (isExist == false)
 										newFollowsList.push(item);
 								});
+
+								followsHatersList.forEach (function (item, index) {
+									var isExist = false;
+									hatersList.forEach (function (item2, index2) {
+										if (item.PartitionKey._ == item2.RowKey._)
+											isExist = true;
+									});	
+									if (isExist == false)
+										haters.push(item);
+								});
 								response.send(ejs.render(data, 
 									{
 										data: entries[0],
 									 	friends: friendsList,
 									 	follows: newFollowsList,
-									 	haters: hatersList
+									 	haters: hatersList,
+									 	followsHaters: haters
 									})
 								);
 							}

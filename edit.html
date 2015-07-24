@@ -177,6 +177,9 @@
 						</tr><tr>
 					<%}%>
 				<% } %>
+				<% for (var i = 0; i < 3 - ((friends.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
 			</tr>
 		</table>
 	</fieldset>
@@ -193,6 +196,9 @@
 						</tr><tr>
 					<%}%>
 				<% } %>
+				<% for (var i = 0; i < 3 - ((follows.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
 			</tr>
 		</table>
 	</fieldset>
@@ -214,6 +220,26 @@
 			</tr>
 		</table>
 	</fieldset>
+
+
+	<form action="/" name="hates" method="post">
+	<fieldset style="width: 60%">
+		<legend>미움 받는 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <followsHaters.length; i++) { %> 
+					<td><%=followsHaters[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsHaters[i].PartitionKey._%>')"></td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((followsHaters.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
 
 	<form action="/" name="check" method="post">
 		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
