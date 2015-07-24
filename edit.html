@@ -171,11 +171,13 @@
 		<legend>친구 정보</legend>
 		<table style="width: 100%">
 			<tr>
-				<td>
 				<% for(var i=0; i <friends.length; i++) { %> 
 					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a></td>
-				<% } %>	
-				</td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+			</tr>
 		</table>
 	</fieldset>
 
