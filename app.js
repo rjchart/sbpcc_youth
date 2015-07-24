@@ -653,18 +653,18 @@ app.post('/addHater/:id', function (request, response) {
 
 	var batch = new azure.TableBatch();
 	var entGen = azure.TableUtilities.entityGenerator;
-	for (var i = 0; i < body.friend.length; i++){
-		if (body.friend[i] != "") {
+	for (var i = 0; i < body.hater.length; i++){
+		if (body.hater[i] != "") {
 			var entity1 = {
 				PartitionKey: entGen.String(id),
-				RowKey: entGen.String(body.friend[i]),
-				relation: entGen.String("friend")
+				RowKey: entGen.String(body.hater[i]),
+				relation: entGen.String("hater")
 			};
 
 			// var entity2 = {
 			// 	PartitionKey: entGen.String(id),
-			// 	RowKey: entGen.String(body.friend[i] + "abc"),
-			// 	relation: entGen.String("friend")
+			// 	RowKey: entGen.String(body.hater[i] + "abc"),
+			// 	relation: entGen.String("hater")
 			// };
 
 			batch.insertOrMergeEntity(entity1, {echoContent: true});
