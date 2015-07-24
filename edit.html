@@ -6,12 +6,14 @@
 	<script type="text/javascript">
 		function AddFriend() {
 			var number = document.check.number.value;
-			var addFriendString = '<input type="text" name="friend[0]">';
+			var addFriendString = document.getElementById("addFriend").innerHTML;
+			addFriendString = addFriendString + '<br/><input type="text" name="friend[' + number + ']">';
 			number++;
+			
 
-			for (var i=1; i<number; i++) {
-				addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
-			}
+			// for (var i=1; i<number; i++) {
+			// 	addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
+			// }
 
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
 			document.getElementById("addFriendCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
