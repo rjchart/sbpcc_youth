@@ -169,7 +169,7 @@
 
 	<fieldset style="width: 60%">
 		<legend>친구 정보</legend>
-		<table style="width: 100%; text-align: center">
+		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <friends.length; i++) { %> 
 					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a></td>
@@ -185,7 +185,7 @@
 	<form action="/" name="follows" method="post">
 	<fieldset style="width: 60%">
 		<legend>팔로우 정보</legend>
-		<table style="width: 100%; text-align: center">
+		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <follows.length; i++) { %> 
 					<td><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>')"></td>
@@ -200,15 +200,15 @@
 
 	<fieldset style="width: 60%">
 		<legend>싫어하는 사람 정보</legend>
-		<table style="width: 100%; text-align: center">
+		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
-				<% var j = 0; for(var i=0; i <haters.length; i++) { %> 
+				<% for(var i=0; i <haters.length; i++) { %> 
 					<td><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a></td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
-				<% j = i; } %>
-				<% for (var i = 0; i < 3 - (j%4); i++) {%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((haters.length-1)%4); i++) {%>
 					<td></td>
 				<%}%>
 			</tr>
