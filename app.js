@@ -490,16 +490,26 @@ app.get('/profile/:id', function (request, response) {
 				// response.send(entries[0].RowKey._);
 
 				var friendQuery = new azure.TableQuery()
-				.where('PartitionKey eq ? and relation eq ?', id, 'friend');
+				.where('PartitionKey eq ?', id);
 
 				// 데이터베이스 쿼리를 실행합니다.
 				tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error2, result2) {
 					if (!error) {
 						var resultString = JSON.stringify(result2.entries);
-						var friendsList = JSON.parse(resultString);
+						var relationList = JSON.parse(resultString);
+						var friendsList = [];
+						var hatersList = [];
+						relationList.forEach(function (item, index) {
+							if (item.relation._ == "friend") {
+								friendsList.push(item);
+							}
+							else if (item.relation._ == "hater") {
+								hatersList.push(item);
+							}
+						});
 
 						var followQuery = new azure.TableQuery()
-						.where('RowKey eq ? and relation eq ?', id, 'friend');
+						.where('RowKey eq ?', id);
 
 						// 데이터베이스 쿼리를 실행합니다.
 						tableService.queryEntities('friends', followQuery, null, function entitiesQueried(error3, result3) {
@@ -522,7 +532,7 @@ app.get('/profile/:id', function (request, response) {
 										data: entries[0],
 									 	friends: friendsList,
 									 	follows: newFollowsList,
-									 	haters: haters
+									 	haters: hatersList
 									})
 								);
 							}
