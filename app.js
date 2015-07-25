@@ -647,7 +647,7 @@ app.post('/removeFriend', function (request, response){
 	tableService.deleteEntity('friends', entity1, function(error, result, res) {
 		if (!error) {
 			// response.send(request.body);
-			response.redirect(request.URL);
+			response.redirect("back");
 		}
 	});	
 }); 
