@@ -6,15 +6,8 @@
 	<script type="text/javascript">
 		function AddFriend() {
 			var number = document.check.number.value;
-			// var addFriendString = document.getElementById("addFriend").innerHTML;
-			// addFriendString = addFriendString + '<br/><input type="text" name="friend[' + number + ']">';
 			document.getElementById("addFriend").innerHTML += '<br/><input type="text" name="friend[' + number + ']">';
 			number++;
-
-
-			// for (var i=1; i<number; i++) {
-			// 	addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
-			// }
 
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
 			document.getElementById("addFriendCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
@@ -44,18 +37,6 @@
 				name: name,
 				friend: name02
 			}
-			// var number = document.check.number.value;
-			// var addFriendString = '<input type="text" name="friend[0]">';
-			// number++;
-
-			// for (var i=1; i<number; i++) {
-			// 	addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
-			// }
-
-			// document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
-			// document.getElementById("addFriendCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
-
-			// document.getElementById("addFriend").innerHTML = addFriendString;
 
 			$.ajax({
 				url: "/followFriend",
@@ -65,6 +46,30 @@
 				success: function(data) {
 					// document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
 					var alertString = data.friend + "님이 친구로 추가되었습니다."
+					alert(alertString);
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+		}
+
+		function RemoveFriend(name, name02) {
+			console.log(name);
+			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
+
+			$.ajax({
+				url: "/removeFriend",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					var alertString = data.friend + "님이 친구에서 제거되었습니다."
 					alert(alertString);
 				},
 				error: function(request) {
@@ -156,12 +161,16 @@
 		</form>
 	</fieldset>
 
+
+	<form action="/" name="friends" method="post">
 	<fieldset style="width: 60%">
 		<legend>친구 정보</legend>
 		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <friends.length; i++) { %> 
-					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a></td>
+					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a>
+					<input type="button" value="제거" onclick="RemoveFriend('<%=data.RowKey._%>','<%=friends[i].PartitionKey._%>')">
+					</td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
@@ -172,6 +181,7 @@
 			</tr>
 		</table>
 	</fieldset>
+	</form>
 
 
 	<form action="/" name="follows" method="post">

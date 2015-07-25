@@ -625,8 +625,30 @@ app.post('/followFriend', function (request, response){
 			response.send(request.body);
 		}
 	});	
+}); 
 
-	
+app.post('/removeFriend', function (request, response){
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
+
+	tableService.createTableIfNotExists('friends', function(error, result, res){
+	    if(!error){
+	        // Table exists or created
+	    }
+	});
+
+	var entGen = azure.TableUtilities.entityGenerator;
+	var entity1 = {
+		PartitionKey: entGen.String(body.name),
+		RowKey: entGen.String(body.friend)
+	};
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.deleteEntity('friends', entity1, function(error, result, res) {
+		if (!error) {
+			response.send(request.body);
+		}
+	});	
 }); 
 
 app.post('/addFriend/:id', function (request, response) {
