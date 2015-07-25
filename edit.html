@@ -9,7 +9,7 @@
 			var addFriendString = document.getElementById("addFriend").innerHTML;
 			addFriendString = addFriendString + '<br/><input type="text" name="friend[' + number + ']">';
 			number++;
-			
+
 
 			// for (var i=1; i<number; i++) {
 			// 	addFriendString = addFriendString + '<br/><input type="text" name="friend[' + i + ']">';
@@ -19,19 +19,6 @@
 			document.getElementById("addFriendCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
 
 			document.getElementById("addFriend").innerHTML = addFriendString;
-
-			// $.ajax({
-			// 	url: "/endPoint",
-			// 	type: "post",
-			// 	data: name,
-			// 	dataType: "json",
-			// 	success: function(data) {
-			// 		document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
-			// 	},
-			// 	error: function(request) {
-			// 		alert("실패");
-			// 	}
-			// });
 		}
 
 		function AddHater() {
