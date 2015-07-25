@@ -78,6 +78,31 @@
 				}
 			});
 		}
+
+		function RemoveHater(name, name02) {
+			console.log(name);
+			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
+
+			$.ajax({
+				url: "/removeHater",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					console.log("success");
+					var alertString = data.friend + "님이 싫어하는 사람에서 제거되었습니다."
+					alert(alertString);
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+		}
     </script>
 </head>
 <body>
@@ -204,12 +229,15 @@
 	</fieldset>
 	</form>
 
+	<form action="/" name="haters" method="post">
 	<fieldset style="width: 60%">
 		<legend>싫어하는 사람 정보</legend>
 		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <haters.length; i++) { %> 
-					<td><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a></td>
+					<td><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a>
+					<input type="button" value="제거" onclick="RemoveHater('<%=data.RowKey._%>','<%=haters[i].RowKey._%>')">
+					</td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
@@ -220,7 +248,7 @@
 			</tr>
 		</table>
 	</fieldset>
-
+	</form>
 
 	<form action="/" name="hates" method="post">
 	<fieldset style="width: 60%">
