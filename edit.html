@@ -169,7 +169,7 @@
 			<tr>
 				<% for(var i=0; i <friends.length; i++) { %> 
 					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a>
-					<input type="button" value="제거" onclick="RemoveFriend('<%=data.RowKey._%>','<%=friends[i].PartitionKey._%>')">
+					<input type="button" value="제거" onclick="RemoveFriend('<%=data.RowKey._%>','<%=friends[i].RowKey._%>')">
 					</td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
