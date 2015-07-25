@@ -6,8 +6,9 @@
 	<script type="text/javascript">
 		function AddFriend() {
 			var number = document.check.number.value;
-			var addFriendString = document.getElementById("addFriend").innerHTML;
-			addFriendString = addFriendString + '<br/><input type="text" name="friend[' + number + ']">';
+			// var addFriendString = document.getElementById("addFriend").innerHTML;
+			// addFriendString = addFriendString + '<br/><input type="text" name="friend[' + number + ']">';
+			document.getElementById("addFriend").innerHTML += '<br/><input type="text" name="friend[' + number + ']">';
 			number++;
 
 
@@ -18,7 +19,6 @@
 			document.getElementById("addFriendNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
 			document.getElementById("addFriendCount").innerHTML = '<input type="hidden" name="friendNum" value="' + number + '">';
 
-			document.getElementById("addFriend").innerHTML = addFriendString;
 		}
 
 		function AddHater() {
@@ -234,10 +234,11 @@
 		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
 		<input type="button" value="추가" onclick="AddFriend()">
 	</form>
+
 	<form action="/addFriend/<%= data.RowKey._%>" method="post">
 		<div>친구추가</div>
 		<div id="addFriendCount"><input type="hidden" name="friendNum" value="1"></div>
-		<div id="addFriend"><input type="text" name="friend[0]" value=""></div>
+		<div id="addFriend"><input type="text" name="friend[0]"></div>
 		<input type="submit">
 	</form>
 
