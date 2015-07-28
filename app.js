@@ -697,7 +697,6 @@ app.post('/addFriend/:id', function (request, response) {
 	});
 });
 
-
 app.post('/addHater/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
@@ -718,6 +717,47 @@ app.post('/addHater/:id', function (request, response) {
 				PartitionKey: entGen.String(id),
 				RowKey: entGen.String(body.hater[i]),
 				relation: entGen.String("hater")
+			};
+
+			// var entity2 = {
+			// 	PartitionKey: entGen.String(id),
+			// 	RowKey: entGen.String(body.hater[i] + "abc"),
+			// 	relation: entGen.String("hater")
+			// };
+
+			batch.insertOrMergeEntity(entity1, {echoContent: true});
+			// batch.insertOrMergeEntity(entity2, {echoContent: true});
+		}
+	}
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.executeBatch('friends', batch, function(error, result, res) {
+		if (!error) {
+			response.redirect("back");
+		}
+	});
+});
+
+app.post('/addFamily/:id', function (request, response) {
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+	var body = request.body;
+
+	tableService.createTableIfNotExists('friends', function(error, result, res){
+	    if(!error){
+	        // Table exists or created
+	    }
+	});
+
+
+	var batch = new azure.TableBatch();
+	var entGen = azure.TableUtilities.entityGenerator;
+	for (var i = 0; i < body.family.length; i++){
+		if (body.family[i] != "") {
+			var entity1 = {
+				PartitionKey: entGen.String(id),
+				RowKey: entGen.String(body.family[i]),
+				relation: entGen.String("family")
 			};
 
 			// var entity2 = {
