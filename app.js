@@ -166,6 +166,13 @@ app.post('/endpoint', function(req, res){
 	res.send(req.body);
 });
 
+app.get('/makebranch', function(request, response){
+	fs.readFile('make_branch.html', 'utf8', function (error, data) {
+		if (!error) {
+			response.send(data);
+		}
+	}
+});
 
 
 app.get('/branch', function(request, response) {
