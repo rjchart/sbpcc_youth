@@ -166,6 +166,15 @@ app.post('/endpoint', function(req, res){
 	res.send(req.body);
 });
 
+app.post('/make_branch', function(request, response){
+
+	fs.readFile('make_branch.html', 'utf8', function (error, data) {
+		if (!error) {
+			response.send(data);
+		}
+	}
+});
+
 
 app.get('/branch', function(request, response) {
 	// get table service from azure database

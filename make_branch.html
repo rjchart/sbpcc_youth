@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Make Branch Page</title>
+	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
+	<script type="text/javascript">
+		function AddBS() {
+			var number = document.check.number.value;
+			document.getElementById("addBS").innerHTML += '<br/><input type="text" name="BS[' + number + ']">';
+			number++;
+
+			document.getElementById("addBSNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
+
+		}
+		
+		function AddFollow(name, name02) {
+			console.log(name);
+			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
+
+			$.ajax({
+				url: "/followFriend",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					// document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+					var alertString = data.friend + "님이 친구로 추가되었습니다."
+					alert(alertString);
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+		}
+
+		function RemoveFriend(name, name02) {
+			console.log(name);
+			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
+
+			$.ajax({
+				url: "/removeFriend",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					console.log("success");
+					var alertString = data.friend + "님이 친구에서 제거되었습니다."
+					alert(alertString);
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+		}
+
+		function RemoveHater(name, name02) {
+			console.log(name);
+			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
+
+			$.ajax({
+				url: "/removeFriend",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					console.log("success");
+					var alertString = data.friend + "님이 싫어하는 사람에서 제거되었습니다."
+					alert(alertString);
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+		}
+
+		function RemoveFamily(name, name02) {
+			console.log(name);
+			console.log(name02);
+			var params = "name="+name+"&friend=name02";
+			var data = {
+				name: name,
+				friend: name02
+			}
+
+			$.ajax({
+				url: "/removeFriend",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					console.log("success");
+					var alertString = data.friend + "님이 가족에서 제거되었습니다."
+					alert(alertString);
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+		}
+    </script>
+</head>
+<body>
+	<h1>브랜치 편성 페이지</h1>
+	<hr />
+
+	<fieldset style="width: 60%">
+		<legend>BS 등록</legend>
+		<form action="/" name="makeBranch" method="post">
+			<input type="button" value="추가" onclick="AddBS()">
+			<div id="addBSNumber"><input type="hidden" id="number" value="1"></div>
+			<div id="addBS"><input type="text" name="bs[0]"></div>
+			<input type="submit">
+		</form>
+	</fieldset>
+
+</body>
+</html>
