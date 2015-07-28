@@ -5,14 +5,14 @@
 	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
 	<script type="text/javascript">
 		function AddBS() {
-			var number = document.check.number.value;
+			var number = document.makeBranch.number.value;
 			document.getElementById("addBS").innerHTML += '<br/><input type="text" name="BS[' + number + ']">';
 			number++;
 
 			document.getElementById("addBSNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
 
 		}
-		
+
 		function AddFollow(name, name02) {
 			console.log(name);
 			console.log(name02);
@@ -123,7 +123,7 @@
 		<form action="/" name="makeBranch" method="post">
 			<input type="button" value="추가" onclick="AddBS()">
 			<div id="addBSNumber"><input type="hidden" id="number" value="1"></div>
-			<div id="addBS"><input type="text" name="bs[0]"></div>
+			<div id="addBS"><input type="text" name="BS[0]"></div>
 			<input type="submit">
 		</form>
 	</fieldset>
