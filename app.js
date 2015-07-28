@@ -499,12 +499,16 @@ app.get('/profile/:id', function (request, response) {
 						var relationList = JSON.parse(resultString);
 						var friendsList = [];
 						var hatersList = [];
+						var familiesList = [];
 						relationList.forEach(function (item, index) {
 							if (item.relation._ == "friend") {
 								friendsList.push(item);
 							}
 							else if (item.relation._ == "hater") {
 								hatersList.push(item);
+							}
+							else if (item.relation._ == "family") {
+								familiesList.push(item);
 							}
 						});
 
@@ -518,6 +522,7 @@ app.get('/profile/:id', function (request, response) {
 								var followsRelationList = JSON.parse(followString);
 								var followsList = [];
 								var followsHatersList = [];
+								var followsFamilies = [];
 								followsRelationList.forEach(function (item, index) {
 									if (item.relation._ == "friend") {
 										followsList.push(item);
@@ -525,10 +530,14 @@ app.get('/profile/:id', function (request, response) {
 									else if (item.relation._ == "hater") {
 										followsHatersList.push(item);
 									}
+									else if (item.relation._ == "family") {
+										followsFamilies.push(item);
+									}
 								});
 
 								var newFollowsList = [];
 								var haters = [];
+								var families = [];
 								followsList.forEach (function (item, index) {
 									var isExist = false;
 									friendsList.forEach (function (item2, index2) {
@@ -548,8 +557,16 @@ app.get('/profile/:id', function (request, response) {
 									if (isExist == false)
 										haters.push(item);
 								});
-								var families = [];
-								var familiesList = [];
+
+								followsFamilies.forEach (function (item, index) {
+									var isExist = false;
+									familiesList.forEach (function (item2, index2) {
+										if (item.PartitionKey._ == item2.RowKey._)
+											isExist = true;
+									});	
+									if (isExist == false)
+										families.push(item);
+								});
 								response.send(ejs.render(data, 
 									{
 										data: entries[0],
