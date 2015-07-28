@@ -583,6 +583,7 @@ app.post('/profile/:id', function (request, response) {
 		birthYear: entGen.Int32(body.birthYear),
 		birthMonth: entGen.Int32(body.birthMonth),
 		birthDay: entGen.Int32(body.birthDay),
+		love: entGen.String(body.love),
 		attend: entGen.Int32(body.attend),
 		attendDesc: entGen.String(body.attendDesc)
 	};
