@@ -171,7 +171,7 @@ app.get('/makebranch', function(request, response){
 		if (!error) {
 			response.send(data);
 		}
-	}
+	});
 });
 
 
