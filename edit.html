@@ -169,7 +169,7 @@
 			</tr>
 			<tr>
 				<td><label>애인</label></td>
-				<td><input type="text" name="love" value="<%= data.love._ %>" /></td>
+				<td><input type="text" name="love" <% if(data.photo) { %>value="<%= data.love._ %>"<%}%> /></td>
 			</tr>
 			<tr>
 				<td><label>출석 빈도</label></td>
