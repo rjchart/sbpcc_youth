@@ -548,6 +548,8 @@ app.get('/profile/:id', function (request, response) {
 									if (isExist == false)
 										haters.push(item);
 								});
+								var families = [];
+								var familiesList = [];
 								response.send(ejs.render(data, 
 									{
 										data: entries[0],
@@ -555,6 +557,8 @@ app.get('/profile/:id', function (request, response) {
 									 	follows: newFollowsList,
 									 	haters: hatersList,
 									 	followsHaters: haters
+									 	families: familiesList,
+									 	followsFamilies: families
 									})
 								);
 							}
