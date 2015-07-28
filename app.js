@@ -556,7 +556,7 @@ app.get('/profile/:id', function (request, response) {
 									 	friends: friendsList,
 									 	follows: newFollowsList,
 									 	haters: hatersList,
-									 	followsHaters: haters
+									 	followsHaters: haters,
 									 	families: familiesList,
 									 	followsFamilies: families
 									})
