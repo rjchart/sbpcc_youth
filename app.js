@@ -272,6 +272,7 @@ app.post('/make_branch', function(request, response){
 					var branchYoungTable = [];
 					var armyTable = [], otherTable = [];
 					var attendSet = 0;
+					var newBSList = [];
 
 					var i = 0;
 					entries.forEach (function (item, index) {
@@ -281,6 +282,7 @@ app.post('/make_branch', function(request, response){
 							if (item.RowKey._ == item2) {
 								item.branch._ = item2;
 								isBS = true;
+								newBSList.push(item);
 								return;
 							}
 						});
@@ -296,12 +298,11 @@ app.post('/make_branch', function(request, response){
 					/***
 						청년부 정보를 브랜치별로 정리한다.
 					***/
-					bsList.forEach (function (item, index) {
-						var branchName = item;
-						var getOlderList = makeOldBranchMember(item, entries, attendSet);
-						var getYoungList = makeYoungBranchMember(item, entries, attendSet);
-						var armyList = makeArmyMember(item, entries);
-						var otherList = makeOtherMember(item, entries);
+					newBSList.forEach (function (item, index) {
+						var getOlderList = getOldBranchMember(item, entries, attendSet);
+						var getYoungList = getYoungBranchMember(item, entries, attendSet);
+						var armyList = getArmyMember(item, entries);
+						var otherList = getOtherMember(item, entries);
 
 						if (maxLength < getOlderList.length) 
 							maxLength = getOlderList.length;
