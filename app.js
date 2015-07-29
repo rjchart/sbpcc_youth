@@ -914,28 +914,28 @@ app.post('/addFriend/:id', function (request, response) {
 
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.executeBatch('friends', batch, function(error2, result2, res2) {
-		if (!error) {
+		if (!error2) {
 			var friendQuery = new azure.TableQuery()
 			.where('PartitionKey eq ?', id);
 
 			// 데이터베이스 쿼리를 실행합니다.
-			tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error2, result2) {
-				if (!error) {
+			tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
+				if (!error3) {
 					var resultString = JSON.stringify(result2.entries);
 					var relationList = JSON.parse(resultString);
-					var friends = [];
-					relation.forEach(function (item, index) {
-						friends.push(item.RowKey._);
-					});
+					// var friends = [];
+					// relation.forEach(function (item, index) {
+					// 	friends.push(item.RowKey._);
+					// });
 
-					var entityFriend = {
-						PartitionKey: entGen.String(body.PartitionKey),
-						RowKey: entGen.String(id),
-						friends: entGen.String(JSON.stringify(friends))
-					};
-					tableService.insertOrMergeEntity('members',entityFriend, function(error3, result3, res3) {
+					// var entityFriend = {
+					// 	PartitionKey: entGen.String(body.PartitionKey),
+					// 	RowKey: entGen.String(id),
+					// 	friends: entGen.String(JSON.stringify(friends))
+					// };
+					// tableService.insertOrMergeEntity('members',entityFriend, function(error3, result3, res3) {
 						response.redirect("back");
-					});
+					// });
 
 				}
 			});
