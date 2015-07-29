@@ -883,6 +883,7 @@ function MakeRelation(tableService, body, relation, key, response) {
 	var friendQuery = new azure.TableQuery()
 	.where('PartitionKey eq ? and relation eq ?', body.RowKey, relation);
 
+	var entGen = azure.TableUtilities.entityGenerator;
 	// 데이터베이스 쿼리를 실행합니다.
 	tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
 		if (!error3) {
@@ -898,13 +899,13 @@ function MakeRelation(tableService, body, relation, key, response) {
 				RowKey: entGen.String(body.RowKey)
 			};
 
-			// entityFriend[key] = entGen.String(JSON.stringify(friends));
+			entityFriend[key] = entGen.String(JSON.stringify(friends));
 
-			// tableService.insertOrMergeEntity('members',entityFriend, function(error4, result4, res4) {
-			// 	if (!error4) {
+			tableService.insertOrMergeEntity('members',entityFriend, function(error4, result4, res4) {
+				if (!error4) {
 					response.redirect("back");
-			// 	}
-			// });
+				}
+			});
 
 		}
 	});
