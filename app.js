@@ -809,7 +809,10 @@ app.post('/profile/:id', function (request, response) {
 		birthDay: entGen.Int32(body.birthDay),
 		love: entGen.String(body.love),
 		attend: entGen.Int32(body.attend),
-		attendDesc: entGen.String(body.attendDesc)
+		attendDesc: entGen.String(body.attendDesc),
+		friends: entGen.String(JSON.stringify(body.friends)),
+		haters: entGen.String(JSON.stringify(body.haters)),
+		families: entGen.String(JSON.stringify(body.families))
 	};
 
 	// response.send("part: " + request.body.PartitionKey + ", row: " + id);
