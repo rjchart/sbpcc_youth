@@ -76,7 +76,7 @@ function makeOldBranchMember(branchData, members, attendValue) {
 		else if (attendValue == 0)
 			attendOk = true;
 
-		if (attendOk && item.branch._ == branchData && item.RowKey._ != branchData && item.age._ > 26) {
+		if (attendOk && item.branch._ == branchData.branch._ && item.RowKey._ != branchData.RowKey._ && item.age._ > 26) {
 			if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
 				branchArray.push(item);
 			if (!item.hasOwnProperty("attendDesc"))
@@ -97,7 +97,7 @@ function makeYoungBranchMember(branchData, members, attendValue) {
 		else if (attendValue == 0)
 			attendOk = true;
 
-		if (attendOk && item.branch._ == branchData && item.RowKey._ != branchData && item.age._ <= 26) {
+		if (attendOk && item.branch._ == branchData.branch._ && item.RowKey._ != branchData.RowKey._ && item.age._ <= 26) {
 			if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
 				branchArray.push(item);
 			if (!item.hasOwnProperty("attendDesc"))
@@ -172,7 +172,7 @@ function makeArmyMember(branchData, members) {
 	members.forEach (function (item, index) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
-		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData && item.RowKey._ != branchData && item.attendDesc._ == '군대') {
+		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData.branch._ && item.RowKey._ != branchData.RowKey._ && item.attendDesc._ == '군대') {
 			branchArray.push(item);
 		}
 	});
@@ -184,7 +184,7 @@ function makeOtherMember(branchData, members) {
 	members.forEach (function (item, index) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
-		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData && item.RowKey._ != branchData && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
+		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData.branch._ && item.RowKey._ != branchData.RowKey._ && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
 			branchArray.push(item);
 		}
 	});
@@ -298,7 +298,7 @@ app.post('/make_branch', function(request, response){
 					/***
 						청년부 정보를 브랜치별로 정리한다.
 					***/
-					bsList.forEach (function (item, index) {
+					newBSList.forEach (function (item, index) {
 						var getOlderList = makeOldBranchMember(item, entries, attendSet);
 						var getYoungList = makeYoungBranchMember(item, entries, attendSet);
 						var armyList = makeArmyMember(item, entries);
@@ -316,6 +316,25 @@ app.post('/make_branch', function(request, response){
 						armyTable.push(armyList);
 						otherTable.push(otherList);
 					});
+
+					// bsList.forEach (function (item, index) {
+					// 	var getOlderList = makeOldBranchMember(item, entries, attendSet);
+					// 	var getYoungList = makeYoungBranchMember(item, entries, attendSet);
+					// 	var armyList = makeArmyMember(item, entries);
+					// 	var otherList = makeOtherMember(item, entries);
+
+					// 	if (maxLength < getOlderList.length) 
+					// 		maxLength = getOlderList.length;
+					// 	if (maxYoungLength < getYoungList.length)
+					// 		maxYoungLength = getYoungList.length;
+					// 	if (maxArmy < armyList.length) maxArmy = armyList.length;
+					// 	if (maxOther < otherList.length) maxOther = otherList.length;
+
+					// 	branchTable.push(getOlderList);
+					// 	branchYoungTable.push(getYoungList);
+					// 	armyTable.push(armyList);
+					// 	otherTable.push(otherList);
+					// });
 
 					var etcList = getEtcOldMember(entries,attendSet);
 					branchTable.push(etcList);
