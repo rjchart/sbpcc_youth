@@ -280,7 +280,7 @@ app.post('/make_branch', function(request, response){
 						var _ary = [];
 						var isBS = false;
 
-						entries['happy'] = entGen.Int32(100);
+						item['happy'] = entGen.Int32(100);
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
 								item.branch._ = item2;
