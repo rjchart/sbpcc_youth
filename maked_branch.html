@@ -10,7 +10,6 @@
 </head>
 <body>
 	<!-- <h1>브랜치 명단</h1> -->
-	<p><%=newBS%></p>
 	<div class="datagrid">
 	<table>
 	<caption>브랜치 명단</caption>
@@ -18,7 +17,7 @@
 		<tr>
 			<th>브랜치 이름</th>
  			<% bsList.forEach( function (item, index) { %>
-			<th><%= item %></th>
+			<th><%= item.branch._ %></th>
 			<% }); %>
 			<th>기타</th>
 		</tr>
@@ -42,7 +41,7 @@
 		<tr>
 			<th>브랜치장</th>
  			<% bsList.forEach( function (item, index) { %>
-			<td><a href="/profile/<%= item%>"><%= item %></a></td>
+			<td><a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %></a></td>
 			<% }); %>
 			<th>없음</th>
 		</tr>
