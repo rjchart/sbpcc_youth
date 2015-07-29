@@ -326,7 +326,7 @@ app.post('/make_branch', function(request, response){
 					// ));
 					response.send(ejs.render(data, 
 						{	
-							bsList: body.BS
+							bsList: bsList
 						}
 					));
 				}
