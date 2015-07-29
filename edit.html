@@ -49,6 +49,8 @@
 			console.log(name02);
 			var params = "name="+name+"&friend=name02";
 			var data = {
+				PartitionKey: <%= data.PartitionKey._%>,
+				RowKey: <%= data.RowKey._%>,
 				name: name,
 				friend: name02
 			}

@@ -828,6 +828,43 @@ app.post('/profile/:id', function (request, response) {
 
 });
 
+function MakeRelation(tableService, body, relation, key, response, request) {
+	var friendQuery = new azure.TableQuery()
+	.where('PartitionKey eq ? and relation eq ?', body.RowKey, relation);
+
+	var entGen = azure.TableUtilities.entityGenerator;
+	// 데이터베이스 쿼리를 실행합니다.
+	tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
+		if (!error3) {
+			var resultString = JSON.stringify(result3.entries);
+			var relationList = JSON.parse(resultString);
+			var friends = [];
+			relationList.forEach(function (item, index) {
+				friends.push(item.RowKey._);
+			});
+
+			var entityFriend = {
+				PartitionKey: entGen.String(body.PartitionKey),
+				RowKey: entGen.String(body.RowKey)
+			};
+
+			entityFriend[key] = entGen.String(JSON.stringify(friends));
+
+			tableService.insertOrMergeEntity('members',entityFriend, function(error4, result4, res4) {
+				if (!error4) {
+					if (request)
+						response.send(request.body);
+					else
+						response.redirect("back");
+				}
+			});
+
+		}
+	});
+	return;
+}
+
+
 app.post('/followFriend', function (request, response){
 	var obj = {};
 
@@ -879,42 +916,6 @@ app.post('/removeFriend', function (request, response){
 		}
 	});	
 }); 
-
-function MakeRelation(tableService, body, relation, key, response, request) {
-	var friendQuery = new azure.TableQuery()
-	.where('PartitionKey eq ? and relation eq ?', body.RowKey, relation);
-
-	var entGen = azure.TableUtilities.entityGenerator;
-	// 데이터베이스 쿼리를 실행합니다.
-	tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
-		if (!error3) {
-			var resultString = JSON.stringify(result3.entries);
-			var relationList = JSON.parse(resultString);
-			var friends = [];
-			relationList.forEach(function (item, index) {
-				friends.push(item.RowKey._);
-			});
-
-			var entityFriend = {
-				PartitionKey: entGen.String(body.PartitionKey),
-				RowKey: entGen.String(body.RowKey)
-			};
-
-			entityFriend[key] = entGen.String(JSON.stringify(friends));
-
-			tableService.insertOrMergeEntity('members',entityFriend, function(error4, result4, res4) {
-				if (!error4) {
-					if (request)
-						response.send(request.body);
-					else
-						response.redirect("back");
-				}
-			});
-
-		}
-	});
-	return;
-}
 
 app.post('/addFriend/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
