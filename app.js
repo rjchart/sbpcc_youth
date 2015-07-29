@@ -889,14 +889,14 @@ function MakeRelation(tableService, body, relation, key, response) {
 			var resultString = JSON.stringify(result3.entries);
 			var relationList = JSON.parse(resultString);
 			var friends = [];
-			// relationList.forEach(function (item, index) {
-			// 	friends.push(item.RowKey._);
-			// });
+			relationList.forEach(function (item, index) {
+				friends.push(item.RowKey._);
+			});
 
-			// var entityFriend = {
-			// 	PartitionKey: entGen.String(body.PartitionKey),
-			// 	RowKey: entGen.String(body.RowKey)
-			// };
+			var entityFriend = {
+				PartitionKey: entGen.String(body.PartitionKey),
+				RowKey: entGen.String(body.RowKey)
+			};
 
 			// entityFriend[key] = entGen.String(JSON.stringify(friends));
 
