@@ -277,7 +277,7 @@ app.post('/make_branch', function(request, response){
 					entries.forEach (function (item, index) {
 						var _ary = [];
 						var isBS = false;
-						bsList.every(function(value, index, _ary) {
+						bsList.every(function(element[item2, index, _ary]) {
 							if (item.RowKey._ == item2) {
 								item.branch._ = item2;
 								isBS = true;
