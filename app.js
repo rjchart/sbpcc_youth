@@ -266,37 +266,37 @@ app.post('/make_branch', function(request, response){
 					var armyTable = [], otherTable = [];
 					var bsList = body.BS;
 
-					// var i = 0;
-					// entries.forEach (function (item, index) {
-					// 	item.branch._ = bsList[i];
-					// 	i++;
-					// 	if (i >= bsList.length)
-					// 		i = 0;
-					// });
+					var i = 0;
+					entries.forEach (function (item, index) {
+						item.branch._ = bsList[i];
+						i++;
+						if (i >= bsList.length)
+							i = 0;
+					});
 
 
-					// /***
-					// 	청년부 정보를 브랜치별로 정리한다.
-					// ***/
-					// bsList.forEach (function (item, index) {
-					// 	var branchName = item;
-					// 	var getOlderList = makeOldBranchMember(item, entries, 0);
-					// 	var getYoungList = makeYoungBranchMember(item, entries, 0);
-					// 	var armyList = makeArmyMember(item, entries);
-					// 	var otherList = makeOtherMember(item, entries);
+					/***
+						청년부 정보를 브랜치별로 정리한다.
+					***/
+					bsList.forEach (function (item, index) {
+						var branchName = item;
+						var getOlderList = makeOldBranchMember(item, entries, 0);
+						var getYoungList = makeYoungBranchMember(item, entries, 0);
+						var armyList = makeArmyMember(item, entries);
+						var otherList = makeOtherMember(item, entries);
 
-					// 	if (maxLength < getOlderList.length) 
-					// 		maxLength = getOlderList.length;
-					// 	if (maxYoungLength < getYoungList.length)
-					// 		maxYoungLength = getYoungList.length;
-					// 	if (maxArmy < armyList.length) maxArmy = armyList.length;
-					// 	if (maxOther < otherList.length) maxOther = otherList.length;
+						if (maxLength < getOlderList.length) 
+							maxLength = getOlderList.length;
+						if (maxYoungLength < getYoungList.length)
+							maxYoungLength = getYoungList.length;
+						if (maxArmy < armyList.length) maxArmy = armyList.length;
+						if (maxOther < otherList.length) maxOther = otherList.length;
 
-					// 	branchTable.push(getOlderList);
-					// 	branchYoungTable.push(getYoungList);
-					// 	armyTable.push(armyList);
-					// 	otherTable.push(otherList);
-					// });
+						branchTable.push(getOlderList);
+						branchYoungTable.push(getYoungList);
+						armyTable.push(armyList);
+						otherTable.push(otherList);
+					});
 
 					// var etcList = getEtcOldMember(entries,attendSet);
 					// branchTable.push(etcList);
