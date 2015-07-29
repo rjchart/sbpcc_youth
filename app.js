@@ -282,7 +282,7 @@ app.post('/make_branch', function(request, response){
 							if (item.RowKey._ == item2) {
 								item.branch._ = item2;
 								isBS = true;
-								// newBSList.push(item);
+								newBSList.push(item);
 								return;
 							}
 						});
