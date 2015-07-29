@@ -921,7 +921,7 @@ app.post('/addFriend/:id', function (request, response) {
 			// 데이터베이스 쿼리를 실행합니다.
 			tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
 				if (!error3) {
-					var resultString = JSON.stringify(result2.entries);
+					var resultString = JSON.stringify(result3.entries);
 					var relationList = JSON.parse(resultString);
 					// var friends = [];
 					// relation.forEach(function (item, index) {
