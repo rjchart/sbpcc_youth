@@ -912,7 +912,7 @@ app.post('/removeFriend', function (request, response){
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.deleteEntity('friends', entity1, function(error, result, res) {
 		if (!error) {
-			response.send(request.body);
+			MakeRelation(tableService, body, body.relation, body.key, response, request);
 		}
 	});	
 }); 

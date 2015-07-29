@@ -80,7 +80,9 @@
 				PartitionKey: '<%= data.PartitionKey._%>',
 				RowKey: '<%= data.RowKey._%>',
 				name: name,
-				friend: name02
+				friend: name02,
+				relation: 'friend',
+				key: 'friends'
 			}
 
 			$.ajax({
@@ -107,7 +109,9 @@
 				PartitionKey: '<%= data.PartitionKey._%>',
 				RowKey: '<%= data.RowKey._%>',
 				name: name,
-				friend: name02
+				friend: name02,
+				relation: 'hater',
+				key: 'haters'
 			}
 
 			$.ajax({
@@ -134,7 +138,9 @@
 				PartitionKey: '<%= data.PartitionKey._%>',
 				RowKey: '<%= data.RowKey._%>',
 				name: name,
-				friend: name02
+				friend: name02,
+				relation: 'family',
+				key: 'families'
 			}
 
 			$.ajax({
