@@ -298,11 +298,11 @@ app.post('/make_branch', function(request, response){
 					/***
 						청년부 정보를 브랜치별로 정리한다.
 					***/
-					newBSList.forEach (function (item, index) {
-						var getOlderList = getOldBranchMember(item, entries, attendSet);
-						var getYoungList = getYoungBranchMember(item, entries, attendSet);
-						var armyList = getArmyMember(item, entries);
-						var otherList = getOtherMember(item, entries);
+					bsList.forEach (function (item, index) {
+						var getOlderList = makeOldBranchMember(item, entries, attendSet);
+						var getYoungList = makeYoungBranchMember(item, entries, attendSet);
+						var armyList = makeArmyMember(item, entries);
+						var otherList = makeOtherMember(item, entries);
 
 						if (maxLength < getOlderList.length) 
 							maxLength = getOlderList.length;
@@ -332,6 +332,7 @@ app.post('/make_branch', function(request, response){
 					// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
 					response.send(ejs.render(data, 
 						{	
+							newBS: newBSList,
 							bsList: bsList,
 							maxNumber: maxLength,
 							maxYoungNumber: maxYoungLength,
