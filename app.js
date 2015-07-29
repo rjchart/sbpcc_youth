@@ -332,7 +332,7 @@ app.post('/make_branch', function(request, response){
 					// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
 					response.send(ejs.render(data, 
 						{	
-							newBS: newBSList,
+							newBS: JSON.stringify(newBSList),
 							bsList: bsList,
 							maxNumber: maxLength,
 							maxYoungNumber: maxYoungLength,
