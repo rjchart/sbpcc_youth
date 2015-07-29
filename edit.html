@@ -370,6 +370,7 @@
 
 	<form action="/addFriend/<%= data.RowKey._%>" method="post">
 		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
 		<div>친구추가</div>
 		<div id="addFriendCount"><input type="hidden" name="friendNum" value="1"></div>
 		<div id="addFriend"><input type="text" name="friend[0]"></div>
