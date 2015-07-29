@@ -916,7 +916,7 @@ app.post('/addFriend/:id', function (request, response) {
 	tableService.executeBatch('friends', batch, function(error2, result2, res2) {
 		if (!error2) {
 			var friendQuery = new azure.TableQuery()
-			.where('PartitionKey eq ? and relation', id, 'friend');
+			.where('PartitionKey eq ? and relation eq ?', id, 'friend');
 
 			// 데이터베이스 쿼리를 실행합니다.
 			tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
