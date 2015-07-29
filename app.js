@@ -886,9 +886,9 @@ function MakeRelation(tableService, body, relation, key, response) {
 	// 데이터베이스 쿼리를 실행합니다.
 	tableService.queryEntities('friends', friendQuery, null, function entitiesQueried(error3, result3) {
 		if (!error3) {
-			// var resultString = JSON.stringify(result3.entries);
-			// var relationList = JSON.parse(resultString);
-			// var friends = [];
+			var resultString = JSON.stringify(result3.entries);
+			var relationList = JSON.parse(resultString);
+			var friends = [];
 			// relationList.forEach(function (item, index) {
 			// 	friends.push(item.RowKey._);
 			// });
