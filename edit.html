@@ -397,6 +397,8 @@
 		<input type="button" value="추가" onclick="AddHater()">
 	</form>
 	<form action="/AddHater/<%= data.RowKey._%>" method="post">
+		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
 		<div>싫어하는 사람 추가</div>
 		<div id="AddHaterCount"><input type="hidden" name="haterNum" value="1"></div>
 		<div id="AddHater"><input type="text" name="hater[0]"></div>
@@ -408,6 +410,8 @@
 		<input type="button" value="추가" onclick="AddFamily()">
 	</form>
 	<form action="/AddFamily/<%= data.RowKey._%>" method="post">
+		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
 		<div>가족 추가</div>
 		<div id="AddFamilyCount"><input type="hidden" name="familyNum" value="1"></div>
 		<div id="AddFamily"><input type="text" name="family[0]"></div>
