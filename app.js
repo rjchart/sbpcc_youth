@@ -265,6 +265,7 @@ app.post('/make_branch', function(request, response){
 					var branchYoungTable = [];
 					var armyTable = [], otherTable = [];
 					var bsList = body.BS;
+					var attendSet = 0;
 
 					var i = 0;
 					entries.forEach (function (item, index) {
@@ -280,8 +281,8 @@ app.post('/make_branch', function(request, response){
 					***/
 					bsList.forEach (function (item, index) {
 						var branchName = item;
-						var getOlderList = makeOldBranchMember(item, entries, 0);
-						var getYoungList = makeYoungBranchMember(item, entries, 0);
+						var getOlderList = makeOldBranchMember(item, entries, attendSet);
+						var getYoungList = makeYoungBranchMember(item, entries, attendSet);
 						var armyList = makeArmyMember(item, entries);
 						var otherList = makeOtherMember(item, entries);
 
