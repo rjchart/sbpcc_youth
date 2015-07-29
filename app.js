@@ -244,6 +244,13 @@ app.post('/make_branch', function(request, response){
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
 	var body = request.body;
+	var bsList = [];
+
+	for (var i = 0; i < body.BS.length; i++){
+		if (body.BS[i] != "") {
+			bsList.push(body.BS[i]);
+		}
+	}
 	fs.readFile('maked_branch.html', 'utf8', function (error, data) {
 		if (!error) {
 
@@ -264,7 +271,6 @@ app.post('/make_branch', function(request, response){
 					var maxYoungLength = 0, maxArmy = 0, maxOther = 0;
 					var branchYoungTable = [];
 					var armyTable = [], otherTable = [];
-					var bsList = body.BS;
 					var attendSet = 0;
 
 					var i = 0;
