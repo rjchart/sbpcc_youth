@@ -333,7 +333,9 @@ app.post('/make_branch', function(request, response){
 					// ));
 					response.send(ejs.render(data, 
 						{	
-							bsList: bsList
+							bsList: bsList,
+							maxNumber: maxLength,
+							branchTable: branchTable
 						}
 					));
 				}
