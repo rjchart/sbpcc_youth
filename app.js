@@ -887,7 +887,7 @@ app.post('/followFriend', function (request, response){
 	// 데이터베이스에 entity를 추가합니다.
 	tableService.insertOrMergeEntity('friends', entity1, function(error, result, res) {
 		if (!error) {
-			MakeRelation(tableService, body, 'friend', 'friends', response, request);
+			MakeRelation(tableService, body, 'friend', 'friends', response, null);
 			// response.send(request.body);
 		}
 	});	
