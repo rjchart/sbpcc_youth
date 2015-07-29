@@ -318,26 +318,26 @@ app.post('/make_branch', function(request, response){
 					// response.send(JSON.stringify(entries[0]));
 
 					// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
-					// response.send(ejs.render(data, 
-					// 	{	
-					// 		bsList: body.BS,
-					// 		maxNumber: maxLength,
-					// 		maxYoungNumber: maxYoungLength,
-					// 		branchTable: branchTable,
-					// 		branchYoungTable: branchYoungTable,
-					// 		armyTable: armyTable,
-					// 		otherTable: otherTable,
-					// 		maxArmy: maxArmy,
-					// 		maxOther: maxOther
-					// 	}
-					// ));
 					response.send(ejs.render(data, 
 						{	
 							bsList: bsList,
 							maxNumber: maxLength,
-							branchTable: branchTable
+							maxYoungNumber: maxYoungLength,
+							branchTable: branchTable,
+							branchYoungTable: branchYoungTable,
+							armyTable: armyTable,
+							otherTable: otherTable,
+							maxArmy: maxArmy,
+							maxOther: maxOther
 						}
 					));
+					// response.send(ejs.render(data, 
+					// 	{	
+					// 		bsList: bsList,
+					// 		maxNumber: maxLength,
+					// 		branchTable: branchTable
+					// 	}
+					// ));
 				}
 			});
 					// bsList: bsList,
