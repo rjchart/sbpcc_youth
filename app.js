@@ -274,10 +274,13 @@ app.post('/make_branch', function(request, response){
 					var attendSet = 0;
 					var newBSList = [];
 
+					var entGen = azure.TableUtilities.entityGenerator;
 					var i = 0;
 					entries.forEach (function (item, index) {
 						var _ary = [];
 						var isBS = false;
+
+						entries['happy'] = entGen.Int32(100);
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
 								item.branch._ = item2;
@@ -316,25 +319,6 @@ app.post('/make_branch', function(request, response){
 						armyTable.push(armyList);
 						otherTable.push(otherList);
 					});
-
-					// bsList.forEach (function (item, index) {
-					// 	var getOlderList = makeOldBranchMember(item, entries, attendSet);
-					// 	var getYoungList = makeYoungBranchMember(item, entries, attendSet);
-					// 	var armyList = makeArmyMember(item, entries);
-					// 	var otherList = makeOtherMember(item, entries);
-
-					// 	if (maxLength < getOlderList.length) 
-					// 		maxLength = getOlderList.length;
-					// 	if (maxYoungLength < getYoungList.length)
-					// 		maxYoungLength = getYoungList.length;
-					// 	if (maxArmy < armyList.length) maxArmy = armyList.length;
-					// 	if (maxOther < otherList.length) maxOther = otherList.length;
-
-					// 	branchTable.push(getOlderList);
-					// 	branchYoungTable.push(getYoungList);
-					// 	armyTable.push(armyList);
-					// 	otherTable.push(otherList);
-					// });
 
 					var etcList = getEtcOldMember(entries,attendSet);
 					branchTable.push(etcList);
