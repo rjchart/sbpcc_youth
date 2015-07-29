@@ -275,10 +275,22 @@ app.post('/make_branch', function(request, response){
 
 					var i = 0;
 					entries.forEach (function (item, index) {
-						item.branch._ = bsList[i];
-						i++;
-						if (i >= bsList.length)
-							i = 0;
+						var _ary = [];
+						var isBS = false;
+						bsList.every(function(value, index, _ary) {
+							if (item.RowKey._ == item2) {
+								item.branch._ = item2;
+								isBS = true;
+								return false;
+							}
+							return true;
+						});
+						if (!isBS) {
+							item.branch._ = bsList[i];
+							i++;
+							if (i >= bsList.length)
+								i = 0;
+						}
 					});
 
 
