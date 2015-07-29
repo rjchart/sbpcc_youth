@@ -226,6 +226,10 @@
 				<td><label>출석 비고</label></td>
 				<td><input type="text" name="attendDesc" <% if (data.attendDesc) {%>value="<%= data.attendDesc._ %>"<%}%> /></td>
 			</tr>
+
+			<% for(var i=0; i <friends.length; i++) { %> 
+				<input type="hidden" name="friend[<%=i%>]" value="<%=friends[i].RowKey._%>">
+			<% } %>
 		</table>
 		<input type="submit" />
 		</form>
