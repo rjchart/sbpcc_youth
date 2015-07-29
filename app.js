@@ -174,6 +174,31 @@ app.get('/make_branch', function(request, response){
 	});
 });
 
+app.post('/make_branch', function(request, response){
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+	var body = request.body;
+	fs.readFile('maked_branch.html', 'utf8', function (error, data) {
+		if (!error) {
+
+					// bsList: bsList,
+					// maxNumber: maxLength,
+					// maxYoungNumber: maxYoungLength,
+					// branchTable: branchTable,
+					// branchYoungTable: branchYoungTable,
+					// armyTable: armyTable,
+					// otherTable: otherTable,
+					// maxArmy: maxArmy,
+					// maxOther: maxOther
+			response.send(ejs.render(data, 
+				{	
+					bsList: body.BS
+				}
+			));
+		}
+	});
+});
+
 
 app.get('/branch', function(request, response) {
 	// get table service from azure database
