@@ -923,19 +923,21 @@ app.post('/addFriend/:id', function (request, response) {
 				if (!error3) {
 					var resultString = JSON.stringify(result3.entries);
 					var relationList = JSON.parse(resultString);
-					// var friends = [];
-					// relation.forEach(function (item, index) {
-					// 	friends.push(item.RowKey._);
-					// });
+					var friends = [];
+					relation.forEach(function (item, index) {
+						friends.push(item.RowKey._);
+					});
 
-					// var entityFriend = {
-					// 	PartitionKey: entGen.String(body.PartitionKey),
-					// 	RowKey: entGen.String(id),
-					// 	friends: entGen.String(JSON.stringify(friends))
-					// };
-					// tableService.insertOrMergeEntity('members',entityFriend, function(error3, result3, res3) {
-						response.redirect("back");
-					// });
+					var entityFriend = {
+						PartitionKey: entGen.String(body.PartitionKey),
+						RowKey: entGen.String(id),
+						friends: entGen.String(JSON.stringify(friends))
+					};
+					tableService.insertOrMergeEntity('members',entityFriend, function(error4, result4, res4) {
+						if (!error4) {
+							response.redirect("back");
+						}
+					});
 
 				}
 			});
