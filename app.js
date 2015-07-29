@@ -298,11 +298,11 @@ app.post('/make_branch', function(request, response){
 						otherTable.push(otherList);
 					});
 
-					// var etcList = getEtcOldMember(entries,attendSet);
-					// branchTable.push(etcList);
+					var etcList = getEtcOldMember(entries,attendSet);
+					branchTable.push(etcList);
 
-					// var etcList2 = getEtcYoungMember(entries,attendSet);
-					// branchYoungTable.push(etcList2);
+					var etcList2 = getEtcYoungMember(entries,attendSet);
+					branchYoungTable.push(etcList2);
 					
 
 					// var get = getOldBranchMember('빛과기쁨',entries);
