@@ -881,7 +881,7 @@ app.post('/followFriend', function (request, response){
 	var entity1 = {
 		PartitionKey: entGen.String(body.name),
 		RowKey: entGen.String(body.friend),
-		relation: entGen.String("friend")
+		relation: entGen.String(body.relation)
 	};
 
 	// 데이터베이스에 entity를 추가합니다.

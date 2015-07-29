@@ -44,7 +44,7 @@
 			document.getElementById("addFamily").innerHTML = addHaterString;
 		}
 
-		function AddFollow(name, name02) {
+		function AddFollow(name, name02, relation) {
 			console.log(name);
 			console.log(name02);
 			var params = "name="+name+"&friend=name02";
@@ -52,7 +52,8 @@
 				PartitionKey: '<%= data.PartitionKey._%>',
 				RowKey: '<%= data.RowKey._%>',
 				name: name,
-				friend: name02
+				friend: name02,
+				relation: relation
 			}
 
 			$.ajax({
@@ -62,7 +63,7 @@
 				dataType: "json",
 				success: function(data) {
 					// document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
-					var alertString = data.friend + "님이 친구로 추가되었습니다."
+					var alertString = data.friend + "님이 추가되었습니다."
 					alert(alertString);
 				},
 				error: function(request) {
@@ -76,6 +77,8 @@
 			console.log(name02);
 			var params = "name="+name+"&friend=name02";
 			var data = {
+				PartitionKey: '<%= data.PartitionKey._%>',
+				RowKey: '<%= data.RowKey._%>',
 				name: name,
 				friend: name02
 			}
@@ -101,6 +104,8 @@
 			console.log(name02);
 			var params = "name="+name+"&friend=name02";
 			var data = {
+				PartitionKey: '<%= data.PartitionKey._%>',
+				RowKey: '<%= data.RowKey._%>',
 				name: name,
 				friend: name02
 			}
@@ -126,6 +131,8 @@
 			console.log(name02);
 			var params = "name="+name+"&friend=name02";
 			var data = {
+				PartitionKey: '<%= data.PartitionKey._%>',
+				RowKey: '<%= data.RowKey._%>',
 				name: name,
 				friend: name02
 			}
@@ -272,7 +279,7 @@
 		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <follows.length; i++) { %> 
-					<td><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>')"></td>
+					<td><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>', 'friend')"></td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
@@ -312,7 +319,7 @@
 		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <followsHaters.length; i++) { %> 
-					<td><%=followsHaters[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsHaters[i].PartitionKey._%>')"></td>
+					<td><%=followsHaters[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsHaters[i].PartitionKey._%>', 'hater')"></td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
@@ -352,7 +359,7 @@
 		<table style="width: 100%; table-layout:fixed; text-align: center">
 			<tr>
 				<% for(var i=0; i <followsFamilies.length; i++) { %> 
-					<td><%=followsFamilies[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsFamilies[i].PartitionKey._%>')"></td>
+					<td><%=followsFamilies[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsFamilies[i].PartitionKey._%>', 'family')"></td>
 					<%if ((i+1)%4 == 0) {%>
 						</tr><tr>
 					<%}%>
