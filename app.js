@@ -65,6 +65,48 @@ function getYoungBranchMember(branchData, members, attendValue) {
 	return branchArray;
 }
 
+function makeOldBranchMember(branchData, members, attendValue) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		var attendOk = false;
+		if (item.hasOwnProperty("attend")) {
+			if (item.attend._ >= attendValue)
+				attendOk = true;
+		}
+		else if (attendValue == 0)
+			attendOk = true;
+
+		if (attendOk && item.branch._ == branchData && item.RowKey._ != branchData && item.age._ > 26) {
+			if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
+				branchArray.push(item);
+			if (!item.hasOwnProperty("attendDesc"))
+				branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
+function makeYoungBranchMember(branchData, members, attendValue) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		var attendOk = false;
+		if (item.hasOwnProperty("attend")) {
+			if (item.attend._ >= attendValue)
+				attendOk = true;
+		}
+		else if (attendValue == 0)
+			attendOk = true;
+
+		if (attendOk && item.branch._ == branchData && item.RowKey._ != branchData && item.age._ <= 26) {
+			if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
+				branchArray.push(item);
+			if (!item.hasOwnProperty("attendDesc"))
+				branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
 function getEtcOldMember(members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
@@ -119,6 +161,30 @@ function getOtherMember(branchData, members) {
 		// if (item.keys().indexof('attend') <= -1)
 		// 	continue;
 		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
+function makeArmyMember(branchData, members) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		// if (item.keys().indexof('attend') <= -1)
+		// 	continue;
+		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData && item.RowKey._ != branchData && item.attendDesc._ == '군대') {
+			branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
+function makeOtherMember(branchData, members) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		// if (item.keys().indexof('attend') <= -1)
+		// 	continue;
+		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData && item.RowKey._ != branchData && (item.attendDesc._ == '유학' || item.attendDesc._ == '직장')) {
 			branchArray.push(item);
 		}
 	});
@@ -181,6 +247,85 @@ app.post('/make_branch', function(request, response){
 	fs.readFile('maked_branch.html', 'utf8', function (error, data) {
 		if (!error) {
 
+			// 모든 청년부 데이터를 가져온다.
+			var query = new azure.TableQuery();
+
+
+			// 데이터베이스 쿼리를 실행합니다.
+			tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+				if (!error) {
+					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+					var testString = JSON.stringify(result.entries);
+					var entries = JSON.parse(testString);
+
+					var get, checkList;
+					var branchTable = [];
+					var maxLength = 0;
+					var maxYoungLength = 0, maxArmy = 0, maxOther = 0;
+					var branchYoungTable = [];
+					var armyTable = [], otherTable = [];
+					var bsList = body.BS;
+
+					var i = 0;
+					entries.forEach (function (item, index) {
+						item.branch._ = bsList[i];
+						i++;
+						if (i >= bsList.length)
+							i = 0;
+					});
+
+
+					/***
+						청년부 정보를 브랜치별로 정리한다.
+					***/
+					bsList.forEach (function (item, index) {
+						var branchName = item;
+						var getOlderList = makeOldBranchMember(item, entries, 0);
+						var getYoungList = makeYoungBranchMember(item, entries, 0);
+						var armyList = makeArmyMember(item, entries);
+						var otherList = makeOtherMember(item, entries);
+
+						if (maxLength < getOlderList.length) 
+							maxLength = getOlderList.length;
+						if (maxYoungLength < getYoungList.length)
+							maxYoungLength = getYoungList.length;
+						if (maxArmy < armyList.length) maxArmy = armyList.length;
+						if (maxOther < otherList.length) maxOther = otherList.length;
+
+						branchTable.push(getOlderList);
+						branchYoungTable.push(getYoungList);
+						armyTable.push(armyList);
+						otherTable.push(otherList);
+					});
+
+					var etcList = getEtcOldMember(entries,attendSet);
+					branchTable.push(etcList);
+
+					var etcList2 = getEtcYoungMember(entries,attendSet);
+					branchYoungTable.push(etcList2);
+					
+
+					// var get = getOldBranchMember('빛과기쁨',entries);
+					// response.send(JSON.stringify(branchTable));	
+					// response.send(data);
+					// response.send(JSON.stringify(entries[0]));
+
+					// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
+					response.send(ejs.render(data, 
+						{	
+							bsList: body.BS,
+							maxNumber: maxLength,
+							maxYoungNumber: maxYoungLength,
+							branchTable: branchTable,
+							branchYoungTable: branchYoungTable,
+							armyTable: armyTable,
+							otherTable: otherTable,
+							maxArmy: maxArmy,
+							maxOther: maxOther
+						}
+					));
+				}
+			});
 					// bsList: bsList,
 					// maxNumber: maxLength,
 					// maxYoungNumber: maxYoungLength,
@@ -190,11 +335,11 @@ app.post('/make_branch', function(request, response){
 					// otherTable: otherTable,
 					// maxArmy: maxArmy,
 					// maxOther: maxOther
-			response.send(ejs.render(data, 
-				{	
-					bsList: body.BS
-				}
-			));
+			// response.send(ejs.render(data, 
+			// 	{	
+			// 		bsList: body.BS
+			// 	}
+			// ));
 		}
 	});
 });
