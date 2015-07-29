@@ -228,7 +228,13 @@
 			</tr>
 
 			<% for(var i=0; i <friends.length; i++) { %> 
-				<input type="hidden" name="friend[<%=i%>]" value="<%=friends[i].RowKey._%>">
+				<input type="hidden" name="friends[<%=i%>]" value="<%=friends[i].RowKey._%>">
+			<% } %>
+			<% for(var i=0; i <haters.length; i++) { %> 
+				<input type="hidden" name="haters[<%=i%>]" value="<%=haters[i].RowKey._%>">
+			<% } %>
+			<% for(var i=0; i <families.length; i++) { %> 
+				<input type="hidden" name="families[<%=i%>]" value="<%=families[i].RowKey._%>">
 			<% } %>
 		</table>
 		<input type="submit" />
