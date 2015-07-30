@@ -304,7 +304,7 @@ function CheckHappiness(branchList) {
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
-			branchPower += member.important._;
+			branchPower += member.power._;
 		});
 		branchPowerList.push(branchPower);
 	});
@@ -361,22 +361,44 @@ app.post('/make_branch', function(request, response){
 						item['order'] = entGen.Int32(50);
 						item['important'] = entGen.Int32(0);
 
+						var importantValue = 0, powerValue = 0;
 						if (!item.attend)
-							item['important'] = entGen.Int32(5);
+							importantValue = 5;
 						else if (item.attend._ == 0)
-							item['important'] = entGen.Int32(5);
+							importantValue = 5;
 						else if (item.attend._ == 1)
-							item['important'] = entGen.Int32(10);
+							importantValue = 10;
 						else if (item.attend._ == 2)
-							item['important'] = entGen.Int32(30);
+							importantValue = 30;
 						else if (item.attend._ == 3)
-							item['important'] = entGen.Int32(70);
+							importantValue = 70;
 						else if (item.attend._ == 4)
-							item['important'] = entGen.Int32(100);
+							importantValue = 100;
 						else if (item.attend._ == 5)
-							item['important'] = entGen.Int32(120);
+							importantValue = 120;
 						else
-							item['important'] = entGen.Int32(0);
+							importantValue = 0;
+
+						item['important'] = entGen.Int32(importantValue);
+
+						if (!item.tension)
+							powerValue = importantValue * .1;
+						else if (item.tension._ == 0)
+							powerValue = importantValue * .1;
+						else if (item.tension._ == 1)
+							powerValue = importantValue * .5;
+						else if (item.tension._ == 2)
+							powerValue = importantValue;
+						else if (item.tension._ == 3)
+							powerValue = importantValue * 1.5;
+						else if (item.tension._ == 4)
+							powerValue = importantValue * 2;
+						else if (item.tension._ == 5)
+							powerValue = importantValue * 2.5;
+						else
+							powerValue = 0;
+
+						item['power'] = entGen.Int32((int)powerValue);
 
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
