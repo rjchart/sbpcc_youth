@@ -527,11 +527,10 @@ app.get('/save_current_branch/:id', function (request, response) {
 
 	// 브랜치에서 BS의 데이터를 가져오는 쿼리 생성.
 	var branchQuery = new azure.TableQuery()
-	// .top(5)
 	.where('part eq ?', 'BS');
 
 	// 데이터베이스 쿼리를 실행.
-	tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
+	tableService.queryEntities('charges', branchQuery, null, function (error, result) {
 		if (!error) {
 			// 가져온 데이터를 읽어들일 수 있도록 수정한다.
 			var bsTestString = JSON.stringify(result.entries);
@@ -540,7 +539,7 @@ app.get('/save_current_branch/:id', function (request, response) {
 			var query = new azure.TableQuery();
 
 			// 데이터베이스 쿼리를 실행합니다.
-			tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+			tableService.queryEntities('members', query, null, function (error, result) {
 				if (!error) {
 					response.send("success");
 				// 	// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
