@@ -96,6 +96,11 @@
 			<td></td>
 		</tr>
 		<% } %>
+		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy+maxOther)%2 == 0) {%> class="alt"<%}%>>
+			<% for (var i = 0; i < branchPowerList.length; i++) {%>
+				<td><%=branchPowerList[i]%></td>
+			<%}%>
+		</tr>
 
 	</tbody>
 	</table>

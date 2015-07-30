@@ -260,8 +260,10 @@ app.get('/make_branch', function(request, response){
 
 function CheckHappiness(branchList) {
 	var entGen = azure.TableUtilities.entityGenerator;
+	var branchPowerList = [];
 
 	branchList.forEach(function (branch, branchIndex) {
+		var branchPower = 0;
 		branch.forEach(function (member, index) {
 			var happyValue = 100;
 			var friends = [], haters = [], families = [];
@@ -281,14 +283,14 @@ function CheckHappiness(branchList) {
 							return true;
 					});
 					if (isFriend)
-						happyValue += 10;
+						happyValue += member2.important._ * 2;
 
 					var isHater = haters.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
 					});
 					if (isHater) {
-						happyValue -= 50;
+						happyValue -= member2.important._ * 10;
 						member2.order._ -= 20;
 					}
 
@@ -302,9 +304,12 @@ function CheckHappiness(branchList) {
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
+			branchPower += member.important._;
 		});
+		branchPowerList.push(branchPower);
 	});
 
+	return branchPowerList;
 }
 
 app.post('/make_branch', function(request, response){
@@ -354,6 +359,31 @@ app.post('/make_branch', function(request, response){
 
 						item['happy'] = entGen.Int32(100);
 						item['order'] = entGen.Int32(50);
+
+						switch (item.attend._) {
+							case 0:
+								item['important'] = entGen.Int32(5);
+								break;
+							case 1:
+								item['important'] = entGen.Int32(10);
+								break;
+							case 2:
+								item['important'] = entGen.Int32(30);
+								break;
+							case 3:
+								item['important'] = entGen.Int32(70);
+								break;
+							case 4:
+								item['important'] = entGen.Int32(100);
+								break;
+							case 5:
+								item['important'] = entGen.Int32(120);
+								break;
+							default:
+								item['important'] = entGen.Int32(0);
+								break;
+
+						}
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
@@ -405,7 +435,7 @@ app.post('/make_branch', function(request, response){
 						allTable.push(allList);
 					});
 
-					CheckHappiness(allTable);
+					var branchPowerList = CheckHappiness(allTable);
 
 					// allList.forEach (function (branch, index) {
 
@@ -435,7 +465,8 @@ app.post('/make_branch', function(request, response){
 							armyTable: armyTable,
 							otherTable: otherTable,
 							maxArmy: maxArmy,
-							maxOther: maxOther
+							maxOther: maxOther,
+							branchPowerList: branchPowerList
 						}
 					));
 					// response.send(ejs.render(data, 
