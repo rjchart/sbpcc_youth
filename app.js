@@ -303,7 +303,7 @@ function CheckHappiness(branchList) {
 					}
 
 					if (index2 == 0 && member.oldbranch._ == member2.oldbranch._) {
-						member.order -= 20;
+						member.order._ -= 20;
 					}
 				}
 			});
