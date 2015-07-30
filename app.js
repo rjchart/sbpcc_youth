@@ -399,7 +399,7 @@ app.post('/make_branch', function(request, response){
 						else
 							powerValue = 0;
 
-						// item['power'] = entGen.Int32((int)powerValue);
+						item['power'] = entGen.Int32(powerValue);
 
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
