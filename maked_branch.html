@@ -55,7 +55,7 @@
 			<th>브랜치장</th>
  			<% bsList.forEach( function (item, index) { %>
 			<td <% if (item.happy._ < 90) {%>style="background:#FF0000"<%} else if (item.order._ < 50) {%>style="background:#00FF00"<%}%>>
-				<a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %>(<%=item.oldbranch._%>)</a>
+				<a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %>(<%=item.order._%>)</a>
 			</td>
 			<% }); %>
 			<th>없음</th>
@@ -79,7 +79,7 @@
 			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber%>">청 1부</td> <%}%>
 			<% branchYoungTable.forEach( function (item, index) { %>
 				<td <% if (item.length > i && item[i].happy._ < 90) {%>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ < 50) {%>style="background:#00FF00"<%}%>>
-					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._%>)</a><%}%>
+					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].order._%>)</a><%}%>
 				</td>
 			<% }); %>
 		</tr>

@@ -302,8 +302,7 @@ function CheckHappiness(branchList) {
 						member2.order._ -= 40;
 					}
 
-					if (index2 == 0 && member.oldbranch._ == member2.oldbranch._) {
-						member.order._ -= 20;
+					if (index == 0 && member.oldbranch._ == member2.oldbranch._) {
 						member2.order._ -= 20;
 					}
 				}
