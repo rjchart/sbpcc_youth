@@ -361,7 +361,9 @@ app.post('/make_branch', function(request, response){
 						item['order'] = entGen.Int32(50);
 						item['important'] = entGen.Int32(0);
 
-						if (item.attend._ == 0)
+						if (!item.attend)
+							item['important'] = entGen.Int32(5);
+						else if (item.attend._ == 0)
 							item['important'] = entGen.Int32(5);
 						else if (item.attend._ == 1)
 							item['important'] = entGen.Int32(10);
