@@ -241,6 +241,17 @@
 				<td><label>출석 비고</label></td>
 				<td><input type="text" name="attendDesc" <% if (data.attendDesc) {%>value="<%= data.attendDesc._ %>"<%}%> /></td>
 			</tr>
+			<tr>
+				<td><label>성격</label></td>
+				<td><select name="tension">
+					<option value="0" <% if(data.tension && data.tension._==0) {%>selected<%}%> >분위기 다운</option>
+					<option value="1" <% if(data.tension && data.tension._==1) {%>selected<%}%> >내성적임</option>
+					<option value="2" <% if(data.tension && data.tension._==2) {%>selected<%}%> >무난함</option>
+					<option value="3" <% if(data.tension && data.tension._==3) {%>selected<%}%> >외향적임</option>
+					<option value="4" <% if(data.tension && data.tension._==4) {%>selected<%}%> >분위기 메이커</option>
+					</select>
+				</td>
+			</tr>
 
 			<% for(var i=0; i <friends.length; i++) { %> 
 				<input type="hidden" name="friends[<%=i%>]" value="<%=friends[i].RowKey._%>">
