@@ -258,17 +258,18 @@ app.get('/make_branch', function(request, response){
 	});
 });
 
-function CheckHappiness(branchList) {
+function CheckHappiness(branchList, AllList) {
 	console.log("testCheckHappiness");
 	var entGen = azure.TableUtilities.entityGenerator;
 	branchList.forEach(function (branch, branchIndex) {
+		var allBranchMember = AllList[branchIndex];
 		branch.forEach(function (member, index) {
 			var happyValue = 110;
 			var orderValue = 50;
 			var friends = JSON.parse(member.friends._);
 			var haters = JSON.parse(member.haters._);
 
-			branch.forEach(function (member2, index2) {
+			allBranchMember.forEach(function (member2, index2) {
 				if (member != member2) {
 					var isFriend = friends.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
@@ -387,7 +388,7 @@ app.post('/make_branch', function(request, response){
 						otherTable.push(otherList);
 					});
 
-					CheckHappiness(allTable);
+					CheckHappiness(branchYoungTable, allTable);
 
 					var etcList = getEtcOldMember(entries,attendSet);
 					branchTable.push(etcList);
