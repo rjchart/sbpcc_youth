@@ -546,6 +546,8 @@ app.get('/save_current_branch/:id', function (request, response) {
 					var testString = JSON.stringify(result.entries);
 					var entries = JSON.parse(testString);
 					var entGen = azure.TableUtilities.entityGenerator;
+					var batch = new azure.TableBatch();
+
 					entries.forEach(function (item, index) {
 						var charge = bm;
 						bsList.forEach(function (item2, index2) {
@@ -561,6 +563,14 @@ app.get('/save_current_branch/:id', function (request, response) {
 							birthYear: entGen.Int32(item.birthYear._),
 							age: entGen.Int32(item.age._)
 						};
+						batch.insertOrMergeEntity(entity, {echoContent: true});
+					});
+
+					// 데이터베이스에 entity를 추가합니다.
+					tableService.executeBatch('branchlog', batch, function(error2, result2, res2) {
+						if (!error2) {
+							response.send('success');
+						}
 					});
 				}
 			});
