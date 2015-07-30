@@ -72,7 +72,7 @@
 		<tr<% if ((i+maxNumber+maxYoungNumber)%2 == 0) {%> class="alt"<%}%>>
 			<% if (i==0) {%>  <td style="background: #E1EEF4" rowspan="<%=maxArmy%>">군입대자</td> <%}%>
 			<% armyTable.forEach( function (item, index) { %>
-				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].happy._%>)</a><%}%></td>
 			<% }); %>
 			<td></td>
 		</tr>

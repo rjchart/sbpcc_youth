@@ -385,7 +385,7 @@ app.post('/make_branch', function(request, response){
 						otherTable.push(otherList);
 					});
 
-					// CheckHappiness(allTable);
+					CheckHappiness(allTable);
 
 					var etcList = getEtcOldMember(entries,attendSet);
 					branchTable.push(etcList);
