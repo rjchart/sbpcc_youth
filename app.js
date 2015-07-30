@@ -279,7 +279,6 @@ function CheckHappiness(branchList) {
 			branch.forEach(function (member2, index2) {
 				if (member != member2) {
 					if (member.oldbranch._ == member2.oldbranch._) {
-						happyValue -= 50;
 						member.order -= 40;
 					}
 
