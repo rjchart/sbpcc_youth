@@ -278,10 +278,6 @@ function CheckHappiness(branchList) {
 
 			branch.forEach(function (member2, index2) {
 				if (member != member2) {
-					if (member.oldbranch._ == member2.oldbranch._) {
-						member.order -= 40;
-					}
-
 					var isFriend = friends.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
