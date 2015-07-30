@@ -260,10 +260,10 @@ app.get('/make_branch', function(request, response){
 
 function CheckHappiness(branchList) {
 	var entGen = azure.TableUtilities.entityGenerator;
-	var branchPowerList = [];
+	// var branchPowerList = [];
 
 	branchList.forEach(function (branch, branchIndex) {
-		var branchPower = 0;
+		// var branchPower = 0;
 		branch.forEach(function (member, index) {
 			var happyValue = 100;
 			var friends = [], haters = [], families = [];
@@ -309,7 +309,7 @@ function CheckHappiness(branchList) {
 		// branchPowerList.push(branchPower);
 	});
 
-	return branchPowerList;
+	// return branchPowerList;
 }
 
 app.post('/make_branch', function(request, response){
@@ -359,6 +359,7 @@ app.post('/make_branch', function(request, response){
 
 						item['happy'] = entGen.Int32(100);
 						item['order'] = entGen.Int32(50);
+						item['important'] = entGen.Int32(0);
 
 						switch (item.attend._) {
 							case 0:
@@ -435,7 +436,7 @@ app.post('/make_branch', function(request, response){
 						allTable.push(allList);
 					});
 
-					var branchPowerList = CheckHappiness(allTable);
+					CheckHappiness(allTable);
 
 					// allList.forEach (function (branch, index) {
 
