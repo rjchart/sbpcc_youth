@@ -377,29 +377,7 @@ app.post('/make_branch', function(request, response){
 							item['important'] = entGen.Int32(120);
 						else
 							item['important'] = entGen.Int32(0);
-						// switch (item.attend._) {
-						// 	case 0:
-						// 		item['important'] = entGen.Int32(5);
-						// 		break;
-						// 	case 1:
-						// 		item['important'] = entGen.Int32(10);
-						// 		break;
-						// 	case 2:
-						// 		item['important'] = entGen.Int32(30);
-						// 		break;
-						// 	case 3:
-						// 		item['important'] = entGen.Int32(70);
-						// 		break;
-						// 	case 4:
-						// 		item['important'] = entGen.Int32(100);
-						// 		break;
-						// 	case 5:
-						// 		item['important'] = entGen.Int32(120);
-						// 		break;
-						// 	default:
-						// 		item['important'] = entGen.Int32(0);
-
-						// }
+						
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
