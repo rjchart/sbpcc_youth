@@ -563,17 +563,22 @@ app.get('/save_current_branch/:id', function (request, response) {
 							age: entGen.Int32(item.age._)
 						};
 
-						// batch.insertOrMergeEntity(entity, {echoContent: true});
+						// 데이터베이스에 entity를 추가합니다.
+						tableService.insertOrMergeEntity('branchlog', entity, function(error2, result2, res2) {
+							if (!error2) {
+							}
+						});
+						// batch.insertOrMergeEntity(entity, {echoContent: false});
 					});
 
+					// // 데이터베이스에 entity를 추가합니다.
+					// tableService.executeBatch('branchlog', batch, function(error2, result2, res2) {
+					// 	if (!error2) {
+					// 		response.send('success');
+					// 	}
+					// });
 					response.send("success");
 
-				// 	// 데이터베이스에 entity를 추가합니다.
-				// 	tableService.executeBatch('branchlog', batch, function(error2, result2, res2) {
-				// 		if (!error2) {
-				// 			response.send('success');
-				// 		}
-				// 	});
 				}
 			});
 		}
