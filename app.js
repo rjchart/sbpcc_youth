@@ -302,9 +302,9 @@ function CheckHappiness(branchList) {
 						member2.order._ -= 40;
 					}
 
-					// if (member.oldBranch._ == member2.oldBranch._) {
-					// 	member.order -= 20;
-					// }
+					if (member.oldbranch._ == member2.oldbranch._) {
+						member.order -= 20;
+					}
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
