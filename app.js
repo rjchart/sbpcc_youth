@@ -263,7 +263,7 @@ function CheckHappiness(branchList) {
 
 	branchList.forEach(function (branch, branchIndex) {
 		branch.forEach(function (member, index) {
-			var happyValue = 110;
+			var happyValue = 100;
 			var orderValue = 50;
 			var friends = [], haters = [];
 			if (member.friends)
@@ -281,7 +281,7 @@ function CheckHappiness(branchList) {
 					if (isFriend)
 						happyValue += 20;
 
-					var isHater = friends.some(function(item, index3, array) {
+					var isHater = haters.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
 					});
