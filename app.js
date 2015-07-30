@@ -301,6 +301,10 @@ function CheckHappiness(branchList) {
 					if (isFamily) {
 						member2.order._ -= 40;
 					}
+
+					if (member.oldBranch._ == member2.oldBranch._) {
+						member.order -= 20;
+					}
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
@@ -404,6 +408,7 @@ app.post('/make_branch', function(request, response){
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
+								item['oldBranch'] = entGen.String(item.branch._);
 								item['branch'] = entGen.String(item2);
 								isBS = true;
 								newBSList.push(item);
