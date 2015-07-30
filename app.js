@@ -377,7 +377,7 @@ app.post('/make_branch', function(request, response){
 							item['important'] = entGen.Int32(120);
 						else
 							item['important'] = entGen.Int32(0);
-						
+
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
@@ -391,10 +391,17 @@ app.post('/make_branch', function(request, response){
 						if (!isBS) {
 							// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
 							if (item.branch._ != "기타") {
-								item['branch'] = entGen.String(bsList[i]);
-								i++;
-								if (i >= bsList.length)
-									i = 0;
+								var isOK = false;
+								if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
+									isOK = true;
+								if (!item.hasOwnProperty("attendDesc"))
+									isOK = true;
+								if (isOK) {
+									item['branch'] = entGen.String(bsList[i]);
+									i++;
+									if (i >= bsList.length)
+										i = 0;
+								}
 							}
 						}
 					});
