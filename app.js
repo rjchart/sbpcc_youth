@@ -556,11 +556,7 @@ app.get('/save_current_branch/:id', function (request, response) {
 
 						var entity = {
 							PartitionKey: entGen.String(year),
-							RowKey: entGen.String(item.RowKey._),
-							branch: entGen.String(item.branch._),
-							charge: entGen.String(charge),
-							birthYear: entGen.Int32(item.birthYear._),
-							age: entGen.Int32(item.age._)
+							RowKey: entGen.String(item.RowKey._)
 						};
 						
 						batch.insertOrMergeEntity(entity, {echoContent: true});
