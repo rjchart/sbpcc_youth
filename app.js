@@ -541,7 +541,6 @@ app.get('/save_current_branch/:id', function (request, response) {
 			// 데이터베이스 쿼리를 실행합니다.
 			tableService.queryEntities('members', query, null, function (error, result) {
 				if (!error) {
-					response.send("success");
 					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
 					var testString = JSON.stringify(result.entries);
 					var entries = JSON.parse(testString);
@@ -565,6 +564,8 @@ app.get('/save_current_branch/:id', function (request, response) {
 				// 		};
 				// 		batch.insertOrMergeEntity(entity, {echoContent: true});
 					});
+					
+					response.send("success");
 
 				// 	// 데이터베이스에 entity를 추가합니다.
 				// 	tableService.executeBatch('branchlog', batch, function(error2, result2, res2) {
