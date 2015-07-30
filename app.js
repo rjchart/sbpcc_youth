@@ -304,7 +304,8 @@ function CheckHappiness(branchList) {
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
-			branchPower += member.power._;
+			if (member.power)
+				branchPower += member.power._;
 		});
 		branchPowerList.push(branchPower);
 	});
@@ -381,24 +382,24 @@ app.post('/make_branch', function(request, response){
 
 						item['important'] = entGen.Int32(importantValue);
 
-						if (!item.tension)
-							powerValue = importantValue * .1;
-						else if (item.tension._ == 0)
-							powerValue = importantValue * .1;
-						else if (item.tension._ == 1)
-							powerValue = importantValue * .5;
-						else if (item.tension._ == 2)
-							powerValue = importantValue;
-						else if (item.tension._ == 3)
-							powerValue = importantValue * 1.5;
-						else if (item.tension._ == 4)
-							powerValue = importantValue * 2;
-						else if (item.tension._ == 5)
-							powerValue = importantValue * 2.5;
-						else
-							powerValue = 0;
+						// if (!item.tension)
+						// 	powerValue = importantValue * .1;
+						// else if (item.tension._ == 0)
+						// 	powerValue = importantValue * .1;
+						// else if (item.tension._ == 1)
+						// 	powerValue = importantValue * .5;
+						// else if (item.tension._ == 2)
+						// 	powerValue = importantValue;
+						// else if (item.tension._ == 3)
+						// 	powerValue = importantValue * 1.5;
+						// else if (item.tension._ == 4)
+						// 	powerValue = importantValue * 2;
+						// else if (item.tension._ == 5)
+						// 	powerValue = importantValue * 2.5;
+						// else
+						// 	powerValue = 0;
 
-						item['power'] = entGen.Int32((int)powerValue);
+						// item['power'] = entGen.Int32((int)powerValue);
 
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
