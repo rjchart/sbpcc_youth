@@ -365,7 +365,7 @@ app.post('/make_branch', function(request, response){
 						item['happy'] = entGen.Int32(100);
 						item['order'] = entGen.Int32(50);
 						item['important'] = entGen.Int32(0);
-						item['oldbranch'] = item['branch'];
+						item['oldbranch'] = entGen.String(item.branch._);
 
 						var importantValue = 0, powerValue = 0;
 						if (!item.attend)
