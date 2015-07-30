@@ -263,11 +263,13 @@ function CheckHappiness(branchList) {
 	var entGen = azure.TableUtilities.entityGenerator;
 	branchList.forEach(function (branch, branchIndex) {
 		branch.forEach(function (member, index) {
-			var happyValue = 100;
+			var happyValue = 110;
 			var orderValue = 50;
+			var friends = JSON.parse(member.friends._);
+			var haters = JSON.parse(member.haters._);
+
 			branch.forEach(function (member2, index2) {
 				if (member != member2) {
-					var friends = JSON.parse(member.friends._);
 					var isFriend = friends.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
@@ -275,7 +277,6 @@ function CheckHappiness(branchList) {
 					if (isFriend)
 						happyValue += 20;
 
-					var haters = JSON.parse(member.haters._);
 					var isHater = friends.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
