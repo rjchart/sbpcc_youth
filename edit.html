@@ -169,11 +169,6 @@
 		<legend>EDIT DATA</legend>
 		<form action="/upload/<%= data.RowKey._%>" enctype="multipart/form-data" method="post">
 		<input type="file" name="upload" accept="image/*"><br>
-			<% if(data.photo) { %>
-			<img src="<%=data.photo._%>" width="300" align="center"/><br/>
-			<% } else { %>
-			<img src="https://sbpccyouth.blob.core.windows.net/imgcontainer/lss_10.jpg" width="300" align="center"/><br/>
-			<% } %>
 		<input type="submit" value="Upload">
 		</form>
 		<form method="post">
