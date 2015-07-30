@@ -107,6 +107,24 @@ function makeYoungBranchMember(branchData, members, attendValue) {
 	return branchArray;
 }
 
+function makeAllBranchMember(branchData, members, attendValue) {
+	var branchArray = [];
+	members.forEach (function (item, index) {
+		var attendOk = false;
+		if (item.hasOwnProperty("attend")) {
+			if (item.attend._ >= attendValue)
+				attendOk = true;
+		}
+		else if (attendValue == 0)
+			attendOk = true;
+
+		if (attendOk && item.branch._ == branchData.branch._) {
+				branchArray.push(item);
+		}
+	});
+	return branchArray;
+}
+
 function getEtcOldMember(members, attendValue) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
@@ -240,6 +258,37 @@ app.get('/make_branch', function(request, response){
 	});
 });
 
+function CheckHappiness(branchList) {
+	var entGen = azure.TableUtilities.entityGenerator;
+	branchList.forEach(function (branch, branchIndex) {
+		branch.forEach(function (member, index) {
+			var happyValue = 100;
+			var orderValue = 50;
+			branch.forEach(function (member2, index2) {
+				if (member != member2) {
+					var friends = JSON.parse(member.friends._);
+					var isFriend = friends.some(function(item, index3, array) {
+						if (item == member2.RowKey._)
+							return true;
+					});
+					if (isFriend)
+						happyValue += 20;
+
+					var haters = JSON.parse(member.haters._);
+					var isHater = friends.some(function(item, index3, array) {
+						if (item == member2.RowKey._)
+							return true;
+					});
+					if (isHater)
+						happyValue -= 50;
+				}
+			});
+			member['happy'] = entGen.Int32(happyValue);
+		});
+	});
+
+}
+
 app.post('/make_branch', function(request, response){
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
@@ -270,30 +319,40 @@ app.post('/make_branch', function(request, response){
 					var maxLength = 0;
 					var maxYoungLength = 0, maxArmy = 0, maxOther = 0;
 					var branchYoungTable = [];
-					var armyTable = [], otherTable = [];
+					var armyTable = [], otherTable = [], allTable = [];
 					var attendSet = 0;
 					var newBSList = [];
 
 					var entGen = azure.TableUtilities.entityGenerator;
+
+
+					/***
+						청년부 전체 브랜치를 임의로 지정한다.
+					***/					
 					var i = 0;
 					entries.forEach (function (item, index) {
 						var _ary = [];
 						var isBS = false;
 
-						item['happy'] = entGen.Int32(100);
+						// item['happy'] = entGen.Int32(100);
+						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
-								item.branch._ = item2;
+								item['branch'] = entGen.String(item2);
 								isBS = true;
 								newBSList.push(item);
 								return;
 							}
 						});
+						// BS가 아닌 경우 임의로 처리
 						if (!isBS) {
-							item.branch._ = bsList[i];
-							i++;
-							if (i >= bsList.length)
-								i = 0;
+							// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
+							if (item.branch._ != "기타") {
+								item['branch'] = entGen.String(bsList[i]);
+								i++;
+								if (i >= bsList.length)
+									i = 0;
+							}
 						}
 					});
 
@@ -302,10 +361,16 @@ app.post('/make_branch', function(request, response){
 						청년부 정보를 브랜치별로 정리한다.
 					***/
 					newBSList.forEach (function (item, index) {
+						// 청2부
 						var getOlderList = makeOldBranchMember(item, entries, attendSet);
+						// 청1부
 						var getYoungList = makeYoungBranchMember(item, entries, attendSet);
+						// 군인 맴버 따로 저장
 						var armyList = makeArmyMember(item, entries);
+						// 유학 혹은 지역에 있는 경우 따로 저장
 						var otherList = makeOtherMember(item, entries);
+						// 모든 인원 체크
+						var allList = makeAllBranchMember(item, entries, attendSet);
 
 						if (maxLength < getOlderList.length) 
 							maxLength = getOlderList.length;
@@ -319,6 +384,8 @@ app.post('/make_branch', function(request, response){
 						armyTable.push(armyList);
 						otherTable.push(otherList);
 					});
+
+					// CheckHappiness(allTable);
 
 					var etcList = getEtcOldMember(entries,attendSet);
 					branchTable.push(etcList);
