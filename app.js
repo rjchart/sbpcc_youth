@@ -388,7 +388,7 @@ app.post('/make_branch', function(request, response){
 						allTable.push(allList);
 					});
 
-					CheckHappiness(allTable);
+					// CheckHappiness(allTable);
 
 					// allList.forEach (function (branch, index) {
 
