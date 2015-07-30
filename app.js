@@ -933,6 +933,7 @@ app.post('/profile/:id', function (request, response) {
 		love: entGen.String(body.love),
 		attend: entGen.Int32(body.attend),
 		attendDesc: entGen.String(body.attendDesc),
+		tension: entGen.Int32(body.tension),
 		friends: entGen.String(JSON.stringify(body.friends)),
 		haters: entGen.String(JSON.stringify(body.haters)),
 		families: entGen.String(JSON.stringify(body.families))
