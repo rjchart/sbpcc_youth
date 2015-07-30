@@ -278,6 +278,11 @@ function CheckHappiness(branchList) {
 
 			branch.forEach(function (member2, index2) {
 				if (member != member2) {
+					if (member.oldbranch._ == member2.oldbranch._) {
+						happyValue -= 50;
+						member.order -= 40;
+					}
+
 					var isFriend = friends.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
@@ -302,9 +307,6 @@ function CheckHappiness(branchList) {
 						member2.order._ -= 40;
 					}
 
-					if (member.oldbranch._ == member2.oldbranch._) {
-						member.order -= 20;
-					}
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
