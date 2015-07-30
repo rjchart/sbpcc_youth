@@ -109,7 +109,8 @@
 			<td></td>
 		</tr>
 		<% } %>
-		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy+maxOther)%2 == 0) {%> class="alt"<%}%>>
+		<tr<% if ((maxNumber+maxYoungNumber+maxArmy+maxOther)%2 == 0) {%> class="alt"<%}%>>
+			<td style="background: #E1EEF4">브랜치 활성도</td>
 			<% for (var i = 0; i < branchPowerList.length; i++) {%>
 				<td><%=branchPowerList[i]%></td>
 			<%}%>
