@@ -382,22 +382,22 @@ app.post('/make_branch', function(request, response){
 
 						item['important'] = entGen.Int32(importantValue);
 
-						// if (!item.tension)
-						// 	powerValue = importantValue * .1;
-						// else if (item.tension._ == 0)
-						// 	powerValue = importantValue * .1;
-						// else if (item.tension._ == 1)
-						// 	powerValue = importantValue * .5;
-						// else if (item.tension._ == 2)
-						// 	powerValue = importantValue;
-						// else if (item.tension._ == 3)
-						// 	powerValue = importantValue * 1.5;
-						// else if (item.tension._ == 4)
-						// 	powerValue = importantValue * 2;
-						// else if (item.tension._ == 5)
-						// 	powerValue = importantValue * 2.5;
-						// else
-						// 	powerValue = 0;
+						if (!item.tension)
+							powerValue = importantValue * 0.1;
+						else if (item.tension._ == 0)
+							powerValue = importantValue * 0.1;
+						else if (item.tension._ == 1)
+							powerValue = importantValue * 0.5;
+						else if (item.tension._ == 2)
+							powerValue = importantValue;
+						else if (item.tension._ == 3)
+							powerValue = importantValue * 1.5;
+						else if (item.tension._ == 4)
+							powerValue = importantValue * 2;
+						else if (item.tension._ == 5)
+							powerValue = importantValue * 2.5;
+						else
+							powerValue = 0;
 
 						// item['power'] = entGen.Int32((int)powerValue);
 
