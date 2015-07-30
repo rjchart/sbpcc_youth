@@ -481,7 +481,8 @@ app.post('/make_branch', function(request, response){
 							armyTable: armyTable,
 							otherTable: otherTable,
 							maxArmy: maxArmy,
-							maxOther: maxOther
+							maxOther: maxOther,
+							branchPowerList: branchPowerList
 						}
 					));
 					// response.send(ejs.render(data, 
