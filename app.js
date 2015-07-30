@@ -260,13 +260,17 @@ app.get('/make_branch', function(request, response){
 
 function CheckHappiness(branchList) {
 	var entGen = azure.TableUtilities.entityGenerator;
-	
+
 	branchList.forEach(function (branch, branchIndex) {
 		branch.forEach(function (member, index) {
 			var happyValue = 110;
 			var orderValue = 50;
-			var friends = JSON.parse(member.friends._);
-			var haters = JSON.parse(member.haters._);
+			var friends = [], haters = [];
+			if (members.friends)
+				friends = JSON.parse(member.friends._);
+
+			if (members.haters)
+				haters = JSON.parse(member.haters._);
 
 			// branch.forEach(function (member2, index2) {
 			// 	if (member != member2) {
