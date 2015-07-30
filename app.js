@@ -540,38 +540,39 @@ app.get('/save_current_branch/:id', function (request, response) {
 			var query = new azure.TableQuery();
 
 			// 데이터베이스 쿼리를 실행합니다.
-			tableService.queryEntities('members', query, null, function entitiesQueried(error3, result3) {
-				if (!error3) {
-					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
-					var testString = JSON.stringify(result3.entries);
-					var entries = JSON.parse(testString);
-					var entGen = azure.TableUtilities.entityGenerator;
-					var batch = new azure.TableBatch();
+			tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+				if (!error) {
+					response.send("success");
+				// 	// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+				// 	var testString = JSON.stringify(result3.entries);
+				// 	var entries = JSON.parse(testString);
+				// 	var entGen = azure.TableUtilities.entityGenerator;
+				// 	var batch = new azure.TableBatch();
 
-					entries.forEach(function (item, index) {
-						var charge = 'bm';
-						bsList.forEach(function (item2, index2) {
-							if (item2.name._ == item.RowKey._)
-								charge = 'bs';
-						});
+				// 	entries.forEach(function (item, index) {
+				// 		var charge = 'bm';
+				// 		bsList.forEach(function (item2, index2) {
+				// 			if (item2.name._ == item.RowKey._)
+				// 				charge = 'bs';
+				// 		});
 
-						var entity = {
-							PartitionKey: entGen.String(year),
-							RowKey: entGen.String(item.RowKey._),
-							branch: entGen.String(item.branch._),
-							charge: entGen.String(charge),
-							birthYear: entGen.Int32(item.birthYear._),
-							age: entGen.Int32(item.age._)
-						};
-						batch.insertOrMergeEntity(entity, {echoContent: true});
-					});
+				// 		var entity = {
+				// 			PartitionKey: entGen.String(year),
+				// 			RowKey: entGen.String(item.RowKey._),
+				// 			branch: entGen.String(item.branch._),
+				// 			charge: entGen.String(charge),
+				// 			birthYear: entGen.Int32(item.birthYear._),
+				// 			age: entGen.Int32(item.age._)
+				// 		};
+				// 		batch.insertOrMergeEntity(entity, {echoContent: true});
+				// 	});
 
-					// 데이터베이스에 entity를 추가합니다.
-					tableService.executeBatch('branchlog', batch, function(error2, result2, res2) {
-						if (!error2) {
-							response.send('success');
-						}
-					});
+				// 	// 데이터베이스에 entity를 추가합니다.
+				// 	tableService.executeBatch('branchlog', batch, function(error2, result2, res2) {
+				// 		if (!error2) {
+				// 			response.send('success');
+				// 		}
+				// 	});
 				}
 			});
 		}
