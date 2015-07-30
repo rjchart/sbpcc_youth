@@ -334,7 +334,7 @@ app.post('/make_branch', function(request, response){
 						var _ary = [];
 						var isBS = false;
 
-						// item['happy'] = entGen.Int32(100);
+						item['happy'] = entGen.Int32(100);
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
