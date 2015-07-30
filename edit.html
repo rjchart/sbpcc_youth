@@ -167,6 +167,15 @@
 
 	<fieldset style="width: 250px">
 		<legend>EDIT DATA</legend>
+		<form action="/upload/<%= data.RowKey._%>" enctype="multipart/form-data" method="post">
+		<input type="file" name="upload" accept="image/*"><br>
+			<% if(data.photo) { %>
+			<img src="<%=data.photo._%>" width="300" align="center"/><br/>
+			<% } else { %>
+			<img src="https://sbpccyouth.blob.core.windows.net/imgcontainer/lss_10.jpg" width="300" align="center"/><br/>
+			<% } %>
+		<input type="submit" value="Upload">
+		</form>
 		<form method="post">
 		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
 		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
@@ -215,7 +224,7 @@
 			</tr>
 			<tr>
 				<td><label>애인</label></td>
-				<td><input type="text" name="love" <% if(data.photo) { %>value="<%= data.love._ %>"<%}%> /></td>
+				<td><input type="text" name="love" <% if(data.love) { %>value="<%= data.love._ %>"<%}%> /></td>
 			</tr>
 			<tr>
 				<td><label>출석 빈도</label></td>
@@ -232,6 +241,16 @@
 				<td><label>출석 비고</label></td>
 				<td><input type="text" name="attendDesc" <% if (data.attendDesc) {%>value="<%= data.attendDesc._ %>"<%}%> /></td>
 			</tr>
+
+			<% for(var i=0; i <friends.length; i++) { %> 
+				<input type="hidden" name="friends[<%=i%>]" value="<%=friends[i].RowKey._%>">
+			<% } %>
+			<% for(var i=0; i <haters.length; i++) { %> 
+				<input type="hidden" name="haters[<%=i%>]" value="<%=haters[i].RowKey._%>">
+			<% } %>
+			<% for(var i=0; i <families.length; i++) { %> 
+				<input type="hidden" name="families[<%=i%>]" value="<%=families[i].RowKey._%>">
+			<% } %>
 		</table>
 		<input type="submit" />
 		</form>
