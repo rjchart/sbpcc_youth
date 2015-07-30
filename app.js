@@ -304,6 +304,7 @@ function CheckHappiness(branchList) {
 
 					if (index2 == 0 && member.oldbranch._ == member2.oldbranch._) {
 						member.order._ -= 20;
+						member2.order._ -= 20;
 					}
 				}
 			});
