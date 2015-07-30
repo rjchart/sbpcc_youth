@@ -66,7 +66,7 @@
 			<% if (i==0) {%>  <td rowspan="<%=maxNumber%>">청 2부</td> <%}%>
 			<% branchTable.forEach( function (item, index) { %>
 				<td <% if (item.length > i && item[i].happy._ < 90) {%>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ < 50) {%>style="background:#00FF00"<%}%>>
-					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._%>)</a><%}%>
+					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].order._%>)</a><%}%>
 				</td>
 			<% }); %>
 		</tr>
