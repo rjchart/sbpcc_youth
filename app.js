@@ -264,7 +264,6 @@ function CheckHappiness(branchList) {
 	branchList.forEach(function (branch, branchIndex) {
 		branch.forEach(function (member, index) {
 			var happyValue = 100;
-			var orderValue = 50;
 			var friends = [], haters = [];
 			if (member.friends)
 				friends = JSON.parse(member.friends._);
@@ -279,14 +278,16 @@ function CheckHappiness(branchList) {
 							return true;
 					});
 					if (isFriend)
-						happyValue += 20;
+						happyValue += 10;
 
 					var isHater = haters.some(function(item, index3, array) {
 						if (item == member2.RowKey._)
 							return true;
 					});
-					if (isHater)
+					if (isHater) {
 						happyValue -= 50;
+						member2.order._ -= 20;
+					}
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
@@ -341,6 +342,7 @@ app.post('/make_branch', function(request, response){
 						var isBS = false;
 
 						item['happy'] = entGen.Int32(100);
+						item['order'] = entGen.Int32(50);
 						// BS인 경우 자신의 브랜치로 바로 편성된다.
 						bsList.forEach (function (item2, index2) {
 							if (item.RowKey._ == item2) {
