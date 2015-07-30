@@ -272,23 +272,23 @@ function CheckHappiness(branchList) {
 			if (member.haters)
 				haters = JSON.parse(member.haters._);
 
-			// branch.forEach(function (member2, index2) {
-			// 	if (member != member2) {
-			// 		var isFriend = friends.some(function(item, index3, array) {
-			// 			if (item == member2.RowKey._)
-			// 				return true;
-			// 		});
-			// 		if (isFriend)
-			// 			happyValue += 20;
+			branch.forEach(function (member2, index2) {
+				if (member != member2) {
+					var isFriend = friends.some(function(item, index3, array) {
+						if (item == member2.RowKey._)
+							return true;
+					});
+					if (isFriend)
+						happyValue += 20;
 
-			// 		var isHater = friends.some(function(item, index3, array) {
-			// 			if (item == member2.RowKey._)
-			// 				return true;
-			// 		});
-			// 		if (isHater)
-			// 			happyValue -= 50;
-			// 	}
-			// });
+					var isHater = friends.some(function(item, index3, array) {
+						if (item == member2.RowKey._)
+							return true;
+					});
+					if (isHater)
+						happyValue -= 50;
+				}
+			});
 			member['happy'] = entGen.Int32(happyValue);
 		});
 	});
