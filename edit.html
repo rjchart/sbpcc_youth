@@ -165,97 +165,167 @@
 	<hr />
 
 
-	<fieldset style="width: 250px">
-		<legend>EDIT DATA</legend>
-		<form action="/upload/<%= data.RowKey._%>" enctype="multipart/form-data" method="post">
-		<input type="file" name="upload" accept="image/*"><br>
-			<% if(data.photo) { %>
-			<img src="<%=data.photo._%>" width="300" align="center"/><br/>
-			<% } else { %>
-			<img src="https://sbpccyouth.blob.core.windows.net/imgcontainer/lss_10.jpg" width="300" align="center"/><br/>
-			<% } %>
-		<input type="submit" value="Upload">
-		</form>
-		<form method="post">
+
+	<form action="/" name="friends" method="post">
+	<fieldset style="width: 60%">
+		<legend>친구 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <friends.length; i++) { %> 
+					<td><a href="/profile/<%= friends[i].RowKey._ %>"><%=friends[i].RowKey._%></a>
+					<input type="button" value="제거" onclick="RemoveFriend('<%=data.RowKey._%>','<%=friends[i].RowKey._%>')">
+					</td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((friends.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
+
+
+	<form action="/" name="follows" method="post">
+	<fieldset style="width: 60%">
+		<legend>팔로우 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <follows.length; i++) { %> 
+					<td><%=follows[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=follows[i].PartitionKey._%>', 'friend')"></td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((follows.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
+
+	<form action="/" name="haters" method="post">
+	<fieldset style="width: 60%">
+		<legend>싫어하는 사람 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <haters.length; i++) { %> 
+					<td><a href="/profile/<%= haters[i].RowKey._ %>"><%=haters[i].RowKey._%></a>
+					<input type="button" value="제거" onclick="RemoveHater('<%=data.RowKey._%>','<%=haters[i].RowKey._%>')">
+					</td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((haters.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
+
+	<form action="/" name="hates" method="post">
+	<fieldset style="width: 60%">
+		<legend>미움 받는 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <followsHaters.length; i++) { %> 
+					<td><%=followsHaters[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsHaters[i].PartitionKey._%>', 'hater')"></td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((followsHaters.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
+
+	<form action="/" name="families" method="post">
+	<fieldset style="width: 60%">
+		<legend>가족 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <families.length; i++) { %> 
+					<td><a href="/profile/<%= families[i].RowKey._ %>"><%=families[i].RowKey._%></a>
+					<input type="button" value="제거" onclick="RemoveFamily('<%=data.RowKey._%>','<%=families[i].RowKey._%>')">
+					</td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((families.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
+
+	<form action="/" name="families" method="post">
+	<fieldset style="width: 60%">
+		<legend>등록된 가족 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <followsFamilies.length; i++) { %> 
+					<td><%=followsFamilies[i].PartitionKey._%><input type="button" value="추가" onclick="AddFollow('<%=data.RowKey._%>','<%=followsFamilies[i].PartitionKey._%>', 'family')"></td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((followsFamilies.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
+
+	<form action="/" name="check" method="post">
+		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
+		<input type="button" value="추가" onclick="AddFriend()">
+	</form>
+
+	<form action="/addFriend/<%= data.RowKey._%>" method="post">
 		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
 		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
-		<table>
-			<tr>
-				<td></td>
-			</tr>
-			<tr>
-				<td><label>또래: </label></td>
-				<td><%= data.PartitionKey._ %> 또래</td>
-			</tr>
-			<tr>
-				<td><label>이름: </label></td>
-				<td><%= data.RowKey._ %></td>
-			</tr>
-			<tr>
-				<td><label>브랜치</label></td>
-				<td><input type="text" name="branch" value="<%= data.branch._ %>" /></td>
-			</tr>
-			<tr>
-				<td><label>성별</label></td>
-				<td><input type="text" name="gender" value="<%= data.gender._ %>" /></td>
-			</tr>
-			<tr>
-				<td><label>전화번호</label></td>
-				<td><input type="text" name="phone" value="<%= data.phone._ %>" /></td>
-			</tr>
-			<tr>
-				<td><label>생년월일</label></td>
-				<td><select name="birthYear">
-					<% for(var i=75; i <99; i++) { %> 
-					<option value="<%=i%>" <% if(i==data.birthYear._) {%>selected<%}%> ><%=i%></option>
-					<% } %>
-					</select>
-					<select name="birthMonth">
-					<% for(var i=1; i <13; i++) { %> 
-					<option value="<%=i%>" <% if(i==data.birthMonth._) {%>selected<%}%> ><%=i%></option>
-					<% } %>
-					</select>
-					<select name="birthDay">
-					<% for(var i=1; i <32; i++) { %> 
-					<option value="<%=i%>" <% if(i==data.birthDay._) {%>selected<%}%> ><%=i%></option>
-					<% } %>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td><label>애인</label></td>
-				<td><input type="text" name="love" <% if(data.photo) { %>value="<%= data.love._ %>"<%}%> /></td>
-			</tr>
-			<tr>
-				<td><label>출석 빈도</label></td>
-				<td><select name="attend">
-					<option value="0" <% if(data.attend && data.attend._==0) {%>selected<%}%> >안 나옴</option>
-					<option value="1" <% if(data.attend && data.attend._==1) {%>selected<%}%> >가끔 나옴</option>
-					<option value="2" <% if(data.attend && data.attend._==2) {%>selected<%}%> >종종 나옴</option>
-					<option value="3" <% if(data.attend && data.attend._==3) {%>selected<%}%> >대부분 나옴</option>
-					<option value="4" <% if(data.attend && data.attend._==4) {%>selected<%}%> >항상 나옴</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td><label>출석 비고</label></td>
-				<td><input type="text" name="attendDesc" <% if (data.attendDesc) {%>value="<%= data.attendDesc._ %>"<%}%> /></td>
-			</tr>
+		<div>친구추가</div>
+		<div id="addFriendCount"><input type="hidden" name="friendNum" value="1"></div>
+		<div id="addFriend"><input type="text" name="friend[0]"></div>
+		<input type="submit">
+	</form>
 
-			<% for(var i=0; i <friends.length; i++) { %> 
-				<input type="hidden" name="friends[<%=i%>]" value="<%=friends[i].RowKey._%>">
-			<% } %>
-			<% for(var i=0; i <haters.length; i++) { %> 
-				<input type="hidden" name="haters[<%=i%>]" value="<%=haters[i].RowKey._%>">
-			<% } %>
-			<% for(var i=0; i <families.length; i++) { %> 
-				<input type="hidden" name="families[<%=i%>]" value="<%=families[i].RowKey._%>">
-			<% } %>
-		</table>
-		<input type="submit" />
-		</form>
-	</fieldset>
+	<form action="/" name="check2" method="post">
+		<div id="addHaterNumber"><input type="hidden" id="number" value="1"></div>
+		<input type="button" value="추가" onclick="AddHater()">
+	</form>
+	<form action="/AddHater/<%= data.RowKey._%>" method="post">
+		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
+		<div>싫어하는 사람 추가</div>
+		<div id="AddHaterCount"><input type="hidden" name="haterNum" value="1"></div>
+		<div id="AddHater"><input type="text" name="hater[0]"></div>
+		<input type="submit">
+	</form>
 
+	<form action="/" name="check3" method="post">
+		<div id="addFamilyNumber"><input type="hidden" id="number" value="1"></div>
+		<input type="button" value="추가" onclick="AddFamily()">
+	</form>
+	<form action="/AddFamily/<%= data.RowKey._%>" method="post">
+		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
+		<div>가족 추가</div>
+		<div id="AddFamilyCount"><input type="hidden" name="familyNum" value="1"></div>
+		<div id="AddFamily"><input type="text" name="family[0]"></div>
+		<input type="submit">
+	</form>
 
 	<div><a href="/branch">브랜치로</a></div>
 </body>
