@@ -554,17 +554,18 @@ app.get('/save_current_branch/:id', function (request, response) {
 								charge = 'bs';
 						});
 
-				// 		var entity = {
-				// 			PartitionKey: entGen.String(year),
-				// 			RowKey: entGen.String(item.RowKey._),
-				// 			branch: entGen.String(item.branch._),
-				// 			charge: entGen.String(charge),
-				// 			birthYear: entGen.Int32(item.birthYear._),
-				// 			age: entGen.Int32(item.age._)
-				// 		};
-				// 		batch.insertOrMergeEntity(entity, {echoContent: true});
+						var entity = {
+							PartitionKey: entGen.String(year),
+							RowKey: entGen.String(item.RowKey._),
+							branch: entGen.String(item.branch._),
+							charge: entGen.String(charge),
+							birthYear: entGen.Int32(item.birthYear._),
+							age: entGen.Int32(item.age._)
+						};
+						
+						batch.insertOrMergeEntity(entity, {echoContent: true});
 					});
-					
+
 					response.send("success");
 
 				// 	// 데이터베이스에 entity를 추가합니다.
