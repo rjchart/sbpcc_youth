@@ -543,7 +543,7 @@ app.get('/save_current_branch/:id', function (request, response) {
 			tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
 				if (!error) {
 					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
-					var testString = JSON.stringify(result3.entries);
+					var testString = JSON.stringify(result.entries);
 					var entries = JSON.parse(testString);
 					var entGen = azure.TableUtilities.entityGenerator;
 					var batch = new azure.TableBatch();
