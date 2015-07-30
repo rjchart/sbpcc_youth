@@ -259,6 +259,7 @@ app.get('/make_branch', function(request, response){
 });
 
 function CheckHappiness(branchList) {
+	console.log("testCheckHappiness");
 	var entGen = azure.TableUtilities.entityGenerator;
 	branchList.forEach(function (branch, branchIndex) {
 		branch.forEach(function (member, index) {
