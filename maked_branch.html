@@ -55,7 +55,7 @@
 			<th>브랜치장</th>
  			<% bsList.forEach( function (item, index) { %>
 			<td <% if (item.happy._ < 90) {%>style="background:#FF0000"<%} else if (item.order._ < 50) {%>style="background:#00FF00"<%}%>>
-				<a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %>(<%=item.happy._%>)</a>
+				<a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %>(<%=item.oldbranch._%>)</a>
 			</td>
 			<% }); %>
 			<th>없음</th>
