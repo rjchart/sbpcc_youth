@@ -555,10 +555,14 @@ app.get('/save_current_branch/:id', function (request, response) {
 						});
 
 						var entity = {
-							PartitionKey: entGen.String(year),
-							RowKey: entGen.String(item.RowKey._)
+							PartitionKey: entGen.String('2015'),
+							RowKey: entGen.String(item.RowKey._),
+							branch: entGen.String(item.branch._),
+							charge: entGen.String(charge),
+							birthYear: entGen.Int32(item.birthYear._),
+							age: entGen.Int32(item.age._)
 						};
-						
+
 						batch.insertOrMergeEntity(entity, {echoContent: true});
 					});
 
