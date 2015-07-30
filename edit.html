@@ -165,6 +165,78 @@
 	<hr />
 
 
+	<fieldset style="width: 250px">
+		<legend>EDIT DATA</legend>
+		<form method="post">
+		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
+		<table>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td><label>또래: </label></td>
+				<td><%= data.PartitionKey._ %> 또래</td>
+			</tr>
+			<tr>
+				<td><label>이름: </label></td>
+				<td><%= data.RowKey._ %></td>
+			</tr>
+			<tr>
+				<td><label>브랜치</label></td>
+				<td><input type="text" name="branch" value="<%= data.branch._ %>" /></td>
+			</tr>
+			<tr>
+				<td><label>성별</label></td>
+				<td><input type="text" name="gender" value="<%= data.gender._ %>" /></td>
+			</tr>
+			<tr>
+				<td><label>전화번호</label></td>
+				<td><input type="text" name="phone" value="<%= data.phone._ %>" /></td>
+			</tr>
+			<tr>
+				<td><label>생년월일</label></td>
+				<td><select name="birthYear">
+					<% for(var i=75; i <99; i++) { %> 
+					<option value="<%=i%>" <% if(i==data.birthYear._) {%>selected<%}%> ><%=i%></option>
+					<% } %>
+					</select>
+					<select name="birthMonth">
+					<% for(var i=1; i <13; i++) { %> 
+					<option value="<%=i%>" <% if(i==data.birthMonth._) {%>selected<%}%> ><%=i%></option>
+					<% } %>
+					</select>
+					<select name="birthDay">
+					<% for(var i=1; i <32; i++) { %> 
+					<option value="<%=i%>" <% if(i==data.birthDay._) {%>selected<%}%> ><%=i%></option>
+					<% } %>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label>애인</label></td>
+				<td><input type="text" name="love" <% if(data.photo) { %>value="<%= data.love._ %>"<%}%> /></td>
+			</tr>
+			<tr>
+				<td><label>출석 빈도</label></td>
+				<td><select name="attend">
+					<option value="0" <% if(data.attend && data.attend._==0) {%>selected<%}%> >안 나옴</option>
+					<option value="1" <% if(data.attend && data.attend._==1) {%>selected<%}%> >가끔 나옴</option>
+					<option value="2" <% if(data.attend && data.attend._==2) {%>selected<%}%> >종종 나옴</option>
+					<option value="3" <% if(data.attend && data.attend._==3) {%>selected<%}%> >대부분 나옴</option>
+					<option value="4" <% if(data.attend && data.attend._==4) {%>selected<%}%> >항상 나옴</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label>출석 비고</label></td>
+				<td><input type="text" name="attendDesc" <% if (data.attendDesc) {%>value="<%= data.attendDesc._ %>"<%}%> /></td>
+			</tr>
+		</table>
+		<input type="submit" />
+		</form>
+	</fieldset>
+
 
 	<form action="/" name="friends" method="post">
 	<fieldset style="width: 60%">
