@@ -264,12 +264,15 @@ function CheckHappiness(branchList) {
 	branchList.forEach(function (branch, branchIndex) {
 		branch.forEach(function (member, index) {
 			var happyValue = 100;
-			var friends = [], haters = [];
+			var friends = [], haters = [], families = [];
 			if (member.friends)
 				friends = JSON.parse(member.friends._);
 
 			if (member.haters)
 				haters = JSON.parse(member.haters._);
+
+			if (member.families)
+				families = JSON.parse(member.families._);
 
 			branch.forEach(function (member2, index2) {
 				if (member != member2) {
@@ -287,6 +290,14 @@ function CheckHappiness(branchList) {
 					if (isHater) {
 						happyValue -= 50;
 						member2.order._ -= 20;
+					}
+
+					var isFamily = families.some(function(item, index3, array) {
+						if (item == member2.RowKey._)
+							return true;
+					});
+					if (isFamily) {
+						member2.order._ -= 40;
 					}
 				}
 			});
