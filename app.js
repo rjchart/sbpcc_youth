@@ -515,6 +515,59 @@ app.post('/make_branch', function(request, response){
 	});
 });
 
+app.get('/save_current_branch/:id', function (request, response) {
+	var year = request.param('id');
+	// get table service from azure database
+	var tableService = azure.createTableService(storageAccount, accessKey);
+
+
+	/*****
+		Branch의 개수 만큼 데이터를 가져오기 위해서 임원 중 BS 데이터를 가져온다.
+	*****/
+
+	// 브랜치에서 BS의 데이터를 가져오는 쿼리 생성.
+	var branchQuery = new azure.TableQuery()
+	// .top(5)
+	.where('part eq ?', 'BS');
+
+	// 데이터베이스 쿼리를 실행.
+	tableService.queryEntities('charges', branchQuery, null, function entitiesQueried(error, result) {
+		if (!error) {
+			// 가져온 데이터를 읽어들일 수 있도록 수정한다.
+			var bsTestString = JSON.stringify(result.entries);
+			var bsList = JSON.parse(bsTestString);
+			// 모든 청년부 데이터를 가져온다.
+			var query = new azure.TableQuery();
+
+			// 데이터베이스 쿼리를 실행합니다.
+			tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+				if (!error) {
+					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+					var testString = JSON.stringify(result.entries);
+					var entries = JSON.parse(testString);
+					var entGen = azure.TableUtilities.entityGenerator;
+					entries.forEach(function (item, index) {
+						var charge = bm;
+						bsList.forEach(function (item2, index2) {
+							if (item2.name._ == item.RowKey._)
+								charge = bs;
+						});
+
+						var entity = {
+							PartitionKey: entGen.String(year),
+							RowKey: entGen.String(item.RowKey._),
+							branch: entGen.String(item.branch._),
+							charge: entGen.String(charge),
+							birthYear: entGen.Int32(item.birthYear._),
+							age: entGen.Int32(item.age._)
+						};
+					});
+				}
+			});
+		}
+	});
+});
+
 
 app.get('/branch', function(request, response) {
 	// get table service from azure database
