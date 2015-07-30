@@ -265,8 +265,8 @@ function CheckHappiness(branchList) {
 		branch.forEach(function (member, index) {
 			var happyValue = 110;
 			var orderValue = 50;
-			// var friends = JSON.parse(member.friends._);
-			// var haters = JSON.parse(member.haters._);
+			var friends = JSON.parse(member.friends._);
+			var haters = JSON.parse(member.haters._);
 
 			// branch.forEach(function (member2, index2) {
 			// 	if (member != member2) {
