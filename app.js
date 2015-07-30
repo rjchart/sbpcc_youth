@@ -304,9 +304,9 @@ function CheckHappiness(branchList) {
 				}
 			});
 			member['happy'] = entGen.Int32(happyValue);
-			branchPower += member.important._;
+			// branchPower += member.important._;
 		});
-		branchPowerList.push(branchPower);
+		// branchPowerList.push(branchPower);
 	});
 
 	return branchPowerList;
@@ -465,8 +465,7 @@ app.post('/make_branch', function(request, response){
 							armyTable: armyTable,
 							otherTable: otherTable,
 							maxArmy: maxArmy,
-							maxOther: maxOther,
-							branchPowerList: branchPowerList
+							maxOther: maxOther
 						}
 					));
 					// response.send(ejs.render(data, 
