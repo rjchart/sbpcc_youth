@@ -360,6 +360,33 @@ function SetAllEntries(entries, bsList, type) {
 			var item = newEntries[randomValue];
 			newEntries = newEntries.splice(randomValue,1);
 			SetBasicComponent(item);
+
+			// BS인 경우 자신의 브랜치로 바로 편성된다.
+			bsList.forEach (function (item2, index2) {
+				if (item.RowKey._ == item2) {
+					item['branch'] = entGen.String(item2);
+					isBS = true;
+					newBSList.push(item);
+					return;
+				}
+			});
+
+			// BS가 아닌 경우 임의로 처리
+			if (!isBS) {
+				// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
+				if (item.branch._ != "기타") {
+					var isOK = false;
+					if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
+						isOK = true;
+					if (!item.hasOwnProperty("attendDesc"))
+						isOK = true;
+					if (isOK) {
+
+						var randomValue2 = randomIntInc(0, bsList.length-1);
+						item['branch'] = entGen.String(randomValue2);
+					}
+				}
+			}
 		}
 
 	}
@@ -461,7 +488,7 @@ app.post('/make_branch', function(request, response){
 
 					var entGen = azure.TableUtilities.entityGenerator;
 
-					var newBSList = SetAllEntries(entries, bsList, 0);
+					var newBSList = SetAllEntries(entries, bsList, 1);
 
 					/***
 						청년부 정보를 브랜치별로 정리한다.
