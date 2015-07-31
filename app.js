@@ -369,9 +369,9 @@ function CheckHappiness(branchList) {
 	return branchPowerList;
 }
 
-function SortByPower(a, b) {
-	return a.power._ - b.power._;
-}
+// function SortByPower(a, b) {
+// 	return a.power._ - b.power._;
+// }
 
 // function GetIndexOfLessPeople(bsList, branchList, youngList, item) {
 // 	var i = 0;
@@ -423,13 +423,13 @@ function SetAllEntries(entries, bsList, type) {
 	}
 	else if (type == 1) {
 		var newEntries = entries.slice(0);
-		var branchList = {}, youngList = {};
+		// var branchList = {}, youngList = {};
 		
-		// branchList 만들기.
-		bsList.forEach( function (item, index) {
-			branchList[item] = [];
-			youngList[item] = [];
-		});
+		// // branchList 만들기.
+		// bsList.forEach( function (item, index) {
+		// 	branchList[item] = [];
+		// 	youngList[item] = [];
+		// });
 
 		for (var j = 0; newEntries.length > 0; j++) {
 			var isBS = false;
