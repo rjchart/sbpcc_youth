@@ -383,7 +383,6 @@ function SetAllEntries(entries, bsList, type) {
 
 	var entGen = azure.TableUtilities.entityGenerator;
 	var newBSList = [];
-
 	/***
 		청년부 전체 브랜치를 임의로 지정한다.
 	***/					
@@ -424,6 +423,14 @@ function SetAllEntries(entries, bsList, type) {
 	}
 	else if (type == 1) {
 		var newEntries = entries.slice(0);
+		var branchList = {}, youngList = {};
+		
+		// branchList 만들기.
+		bsList.forEach( function (item, index) {
+			branchList[item] = [];
+			youngList[item] = [];
+		});
+
 		for (var j = 0; newEntries.length > 0; j++) {
 			var isBS = false;
 			var randomValue = randomIntInc(0, newEntries.length-1);
