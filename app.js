@@ -489,7 +489,7 @@ app.post('/make_branch', function(request, response){
 
 					var entGen = azure.TableUtilities.entityGenerator;
 
-					var newBSList = SetAllEntries(entries, bsList, 1);
+					var newBSList = SetAllEntries(entries, bsList, 0);
 
 					/***
 						청년부 정보를 브랜치별로 정리한다.
