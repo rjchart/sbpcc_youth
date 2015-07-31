@@ -381,9 +381,10 @@ function SetAllEntries(entries, bsList, type) {
 					if (!item.hasOwnProperty("attendDesc"))
 						isOK = true;
 					if (isOK) {
-
-						var randomValue2 = randomIntInc(0, bsList.length-1);
-						item['branch'] = entGen.String(randomValue2);
+						item['branch'] = entGen.String(bsList[i]);
+						i++;
+						if (i >= bsList.length)
+							i = 0;
 					}
 				}
 			}
