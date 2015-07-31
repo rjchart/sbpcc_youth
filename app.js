@@ -321,7 +321,51 @@ function SetAllEntries(entries, bsList, type) {
 	if (type == 0) {
 		entries.forEach (function (item, index) {
 			var isBS = false;
-			SetBasicComponent(item);
+			
+			item['happy'] = entGen.Int32(100);
+			item['order'] = entGen.Int32(50);
+			item['important'] = entGen.Int32(0);
+			item['oldbranch'] = entGen.String(item.branch._);
+
+			var importantValue = 0, powerValue = 0;
+			if (!item.attend)
+				importantValue = 5;
+			else if (item.attend._ == 0)
+				importantValue = 5;
+			else if (item.attend._ == 1)
+				importantValue = 10;
+			else if (item.attend._ == 2)
+				importantValue = 30;
+			else if (item.attend._ == 3)
+				importantValue = 70;
+			else if (item.attend._ == 4)
+				importantValue = 100;
+			else if (item.attend._ == 5)
+				importantValue = 120;
+			else
+				importantValue = 0;
+
+			item['important'] = entGen.Int32(importantValue);
+
+			if (!item.tension)
+				powerValue = importantValue * 0.1;
+			else if (item.tension._ == 0)
+				powerValue = importantValue * 0.1;
+			else if (item.tension._ == 1)
+				powerValue = importantValue * 0.5;
+			else if (item.tension._ == 2)
+				powerValue = importantValue;
+			else if (item.tension._ == 3)
+				powerValue = importantValue * 1.5;
+			else if (item.tension._ == 4)
+				powerValue = importantValue * 2;
+			else if (item.tension._ == 5)
+				powerValue = importantValue * 2.5;
+			else
+				powerValue = 0;
+
+			item['power'] = entGen.Int32(powerValue);
+
 
 			// BS인 경우 자신의 브랜치로 바로 편성된다.
 			bsList.forEach (function (item2, index2) {
@@ -352,7 +396,7 @@ function SetAllEntries(entries, bsList, type) {
 		});
 
 	}
-	
+
 	// if (type == 1) {
 	// 	var newEntries = entries;
 	// 	for (var j = 0; newEntries.length > 0; j++) {
