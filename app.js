@@ -415,6 +415,7 @@ function SetAllEntries(entries, bsList, type) {
 	else if (type == 1) {
 		var newEntries = entries.slice(0);
 		for (var j = 0; newEntries.length > 0; j++) {
+			var isBS = false;
 			var randomValue = randomIntInc(0, newEntries.length-1);
 			var item = newEntries[randomValue];
 			newEntries.splice(randomValue,1);
