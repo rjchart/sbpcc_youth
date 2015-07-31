@@ -431,22 +431,22 @@ function SetAllEntries(entries, bsList, type) {
 			});
 
 			// BS가 아닌 경우 임의로 처리
-			// if (!isBS) {
-			// 	// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
-			// 	if (item.branch._ != "기타") {
-			// 		var isOK = false;
-			// 		if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
-			// 			isOK = true;
-			// 		if (!item.hasOwnProperty("attendDesc"))
-			// 			isOK = true;
-			// 		if (isOK) {
-			// 			item['branch'] = entGen.String(bsList[i]);
-			// 			i++;
-			// 			if (i >= bsList.length)
-			// 				i = 0;
-			// 		}
-			// 	}
-			// }
+			if (!isBS) {
+				// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
+				if (item.branch._ != "기타") {
+					var isOK = false;
+					if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
+						isOK = true;
+					if (!item.hasOwnProperty("attendDesc"))
+						isOK = true;
+					if (isOK) {
+						item['branch'] = entGen.String(bsList[i]);
+						i++;
+						if (i >= bsList.length)
+							i = 0;
+					}
+				}
+			}
 		}
 
 	}
