@@ -313,6 +313,7 @@ function SetBasicComponent(item) {
 function SetAllEntries(entries, bsList, type) {
 
 	var entGen = azure.TableUtilities.entityGenerator;
+	var newBSList = [];
 
 	/***
 		청년부 전체 브랜치를 임의로 지정한다.
@@ -321,7 +322,7 @@ function SetAllEntries(entries, bsList, type) {
 	if (type == 0) {
 		entries.forEach (function (item, index) {
 			var isBS = false;
-			
+
 			item['happy'] = entGen.Int32(100);
 			item['order'] = entGen.Int32(50);
 			item['important'] = entGen.Int32(0);
@@ -408,7 +409,7 @@ function SetAllEntries(entries, bsList, type) {
 
 	// }
 	// else 
-
+	return newBSList;
 }
 
 function CheckHappiness(branchList) {
@@ -502,7 +503,6 @@ app.post('/make_branch', function(request, response){
 					var branchYoungTable = [];
 					var armyTable = [], otherTable = [], allTable = [];
 					var attendSet = 0;
-					var newBSList = [];
 
 					var entGen = azure.TableUtilities.entityGenerator;
 
@@ -585,7 +585,7 @@ app.post('/make_branch', function(request, response){
 					// 		}
 					// 	}
 					// });
-					SetAllEntries(entries, bsList, 0);
+					var newBSList = SetAllEntries(entries, bsList, 0);
 
 					/***
 						청년부 정보를 브랜치별로 정리한다.
