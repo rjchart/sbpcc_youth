@@ -59,7 +59,7 @@ function getYoungBranchMember(branchData, members, attendValue) {
 		else if (attendValue == 0)
 			attendOk = true;
 
-		if (attendOk && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._ && item.age._ <= 26) {
+		if (attendOk && item.branch._ == branchData.charge._ && item.RowKey._ != branchData.name._  && item.age._ <= 26) {
 			if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
 				branchArray.push(item);
 			if (!item.hasOwnProperty("attendDesc"))
@@ -192,8 +192,6 @@ function getOtherMember(branchData, members) {
 function makeArmyMember(branchData, members) {
 	var branchArray = [];
 	members.forEach (function (item, index) {
-		// if (item.keys().indexof('attend') <= -1)
-		// 	continue;
 		if (item.hasOwnProperty("attendDesc") && item.branch._ == branchData.branch._ && item.RowKey._ != branchData.RowKey._ && item.attendDesc._ == '군대') {
 			branchArray.push(item);
 		}
@@ -295,7 +293,7 @@ function SetBasicComponent(item) {
 	else if (item.tension._ == 0)
 		powerValue = importantValue * 0.1;
 	else if (item.tension._ == 1)
-		powerValue = importantValue * 0.5;
+		powerValue = importantValue * 0.7;
 	else if (item.tension._ == 2)
 		powerValue = importantValue;
 	else if (item.tension._ == 3)
@@ -308,6 +306,8 @@ function SetBasicComponent(item) {
 		powerValue = 0;
 
 	item['power'] = entGen.Int32(powerValue);
+
+	return powerValue;
 }
 
 function CheckHappiness(branchList) {
@@ -373,16 +373,161 @@ function SortByPower(a, b) {
 	return a.power._ - b.power._;
 }
 
-// function GetIndexOfLessPeople(bsList, branchList, youngList, item) {
-// 	var i = 0;
+function getList (item, key) {
+	var list = [];
+	if (item[key])
+		list = JSON.parse(item[key]._);
+	return list;
+}
 
-// 	return i;
-// }
+function GetIndexOfLessPeople(bsList, branchList, youngList, item) {
+
+	var i = 0;
+	var isDecide = false;
+	var friends = getList(item,'friends');
+	var haters = getList(item, 'haters');
+	var hopers = getList(item, 'hopers');
+
+	hopers.forEach(function (hoper, index) {
+		bsList.forEach(function (item2, index2) {
+			if (hoper == item2.RowKey._ && item2.oldbranch._ != item.oldbranch._) {
+				i = index2;
+				isDecide = true;
+			}
+		});
+	});
+
+	if (!isDecide) {
+		var checkCount = 0;
+		while (1) {
+			checkCount++;
+			i = randomIntInc(0,bsList.length-1);
+			var isHate = false;
+
+			haters.forEach(function (hater, index) {
+				if (bsList[i].RowKey._	== hater) {
+					isHate = true;
+					return;
+				}
+			});
+			if (bsList[i].oldbranch._ != item.oldbranch._ && !isHate)
+				break;
+		}
+
+		var key = bsList[i];
+		var isOld = false;
+		if (item.age._ > 26)
+			isOld = true;
+
+		bsList.forEach (function (item2, index) {
+			if (item.oldbranch._ != item2.oldbranch._) {
+				if (isOld) {
+					if (branchList[key.RowKey._].length > branchList[item2.RowKey._].length) {
+						i = index;
+						key = item2;
+					}
+				}
+				else {
+					if (youngList[key.RowKey._].length > youngList[item2.RowKey._].length) {
+						i = index;
+						key = item2;
+					}
+				}
+			}
+		});
+	}	
+
+	return i;
+}
+
+function SetShowEntries(entries, bsList) {
+
+	var entGen = azure.TableUtilities.entityGenerator;
+	var newBSList = [];
+	var powerSum = 0;
+
+	entries.forEach (function (item, index) {
+		var isBS = false;
+		powerSum += SetBasicComponent(item);
+
+		// BS인 경우 자신의 브랜치로 바로 편성된다.
+		bsList.forEach (function (item2, index2) {
+			if (item.RowKey._ == item2) {
+				item['branch'] = entGen.String(item2);
+				isBS = true;
+				newBSList.push(item);
+				return;
+			}
+		});
+		
+		item['isok'] = entGen.Boolean(false);
+		// BS가 아닌 경우 임의로 처리
+		if (!isBS) {
+			// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
+			if (item.branch._ != "기타") {
+				item['isok'] = entGen.Boolean(true);
+			}
+		}
+	});
+
+	var powerAver = powerSum / bsList.length;
+	/***
+		청년부 전체 브랜치를 임의로 지정한다.
+	***/					
+
+	var newEntries = entries.slice(0);
+	var branchList = {}, youngList = {};
+
+	for (var j = 0; j < newEntries.length; j++) {
+		var item = newEntries[j];
+
+		// BS가 아닌 경우 임의로 처리
+		if (item.isok._ && item.makedbranch) {
+			item['branch'] = entGen.String(item.makedbranch._);
+		}
+	}
+
+	return newBSList;
+}
 
 function SetAllEntries(entries, bsList, type) {
 
 	var entGen = azure.TableUtilities.entityGenerator;
 	var newBSList = [];
+	var powerSum = 0;
+
+	entries.forEach (function (item, index) {
+		var isBS = false;
+		powerSum += SetBasicComponent(item);
+
+		// BS인 경우 자신의 브랜치로 바로 편성된다.
+		bsList.forEach (function (item2, index2) {
+			if (item.RowKey._ == item2) {
+				item['branch'] = entGen.String(item2);
+				isBS = true;
+				newBSList.push(item);
+				return;
+			}
+		});
+		
+		item['isok'] = entGen.Boolean(false);
+		// BS가 아닌 경우 임의로 처리
+		if (!isBS) {
+			// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
+			if (item.branch._ != "기타") {
+				var isOK = false;
+				if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
+					isOK = true;
+				if (!item.hasOwnProperty("attendDesc"))
+					isOK = true;
+				if (isOK) {
+					item['isok'] = entGen.Boolean(true);
+				}
+			}
+		}
+	});
+
+	var powerAver = powerSum / bsList.length;
 	/***
 		청년부 전체 브랜치를 임의로 지정한다.
 	***/					
@@ -426,44 +571,25 @@ function SetAllEntries(entries, bsList, type) {
 		var branchList = {}, youngList = {};
 		
 		// branchList 만들기.
-		bsList.forEach( function (item, index) {
-			branchList[item] = [];
-			youngList[item] = [];
+		newBSList.forEach( function (item, index) {
+			branchList[item.RowKey._] = [];
+			youngList[item.RowKey._] = [];
 		});
 
-		for (var j = 0; newEntries.length > 0; j++) {
-			var isBS = false;
-			var randomValue = randomIntInc(0, newEntries.length-1);
-			var item = newEntries[randomValue];
-			newEntries.splice(randomValue,1);
-			SetBasicComponent(item);
-
-			// BS인 경우 자신의 브랜치로 바로 편성된다.
-			bsList.forEach (function (item2, index2) {
-				if (item.RowKey._ == item2) {
-					item['branch'] = entGen.String(item2);
-					isBS = true;
-					newBSList.push(item);
-					return;
-				}
-			});
+		for (var j = 0; j < newEntries.length; j++) {
+			// var randomValue = randomIntInc(0, newEntries.length-1);
+			var item = newEntries[j];
+			// newEntries.splice(randomValue,1);
 
 			// BS가 아닌 경우 임의로 처리
-			if (!isBS) {
-				// 브랜치 편성 맴버가 아닌 경우 적용하지 않는다.
-				if (item.branch._ != "기타") {
-					var isOK = false;
-					if (item.hasOwnProperty("attendDesc") && item.attendDesc._ != '유학' && item.attendDesc._ != '직장' && item.attendDesc._ != '군대')
-						isOK = true;
-					if (!item.hasOwnProperty("attendDesc"))
-						isOK = true;
-					if (isOK) {
-						item['branch'] = entGen.String(bsList[i]);
-						i++;
-						if (i >= bsList.length)
-							i = 0;
-					}
-				}
+			if (item.isok._) {
+				i = GetIndexOfLessPeople(newBSList, branchList, youngList, item);
+				var key = newBSList[i].RowKey._;
+				item['branch'] = entGen.String(key);
+				if (item.age._ > 26)
+					branchList[key].push(item);
+				else
+					youngList[key].push(item);
 			}
 		}
 
@@ -569,29 +695,269 @@ app.post('/make_branch', function(request, response){
 							otherTable: otherTable,
 							maxArmy: maxArmy,
 							maxOther: maxOther,
+							allMember: allTable,
 							branchPowerList: branchPowerList
 						}
 					));
-					// response.send(ejs.render(data, 
-					// 	{	
-					// 		bsList: bsList,
-					// 		maxNumber: maxLength,
-					// 		branchTable: branchTable
-					// 	}
-					// ));
 				}
 			});
-					// bsList: bsList,
-					// maxNumber: maxLength,
-					// maxYoungNumber: maxYoungLength,
-					// branchTable: branchTable,
-					// branchYoungTable: branchYoungTable,
-					// armyTable: armyTable,
-					// otherTable: otherTable,
-					// maxArmy: maxArmy,
-					// maxOther: maxOther
 		}
 	});
+});
+
+app.get('/show_maked_edit', function(request, response){
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
+	var bsList = [];
+	var attendSet = request.param('attendValue');
+	if (!attendSet)
+		attendSet = 0;
+
+	fs.readFile('maked_show_edit.html', 'utf8', function (error, data) {
+		if (!error) {
+
+			// 모든 청년부 데이터를 가져온다.
+			var bsQuery = new azure.TableQuery()
+			.where('PartitionKey eq ? and RowKey eq ?', 'bsData', '2015.5');
+
+
+			// 데이터베이스 쿼리를 실행합니다.
+			tableService.queryEntities('saveData', bsQuery, null, function (bsError, bsResult) {
+				if (!bsError) {
+					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+					var bsString = JSON.stringify(bsResult.entries);
+					var bsEntries = JSON.parse(bsString);
+					bsList = JSON.parse(bsEntries[0].data._);
+
+					// 모든 청년부 데이터를 가져온다.
+					var query = new azure.TableQuery();
+
+
+					// 데이터베이스 쿼리를 실행합니다.
+					tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+						if (!error) {
+							// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+							var testString = JSON.stringify(result.entries);
+							var entries = JSON.parse(testString);
+
+							var get, checkList;
+							var branchTable = [];
+							var maxLength = 0;
+							var maxYoungLength = 0, maxArmy = 0, maxOther = 0;
+							var branchYoungTable = [];
+							var armyTable = [], otherTable = [], allTable = [];
+
+							var entGen = azure.TableUtilities.entityGenerator;
+
+							var newBSList = SetShowEntries(entries, bsList, 1);
+							/***
+								청년부 정보를 브랜치별로 정리한다.
+							***/
+							newBSList.forEach (function (item, index) {
+								// 청2부
+								var getOlderList = makeOldBranchMember(item, entries, attendSet);
+								// 청1부
+								var getYoungList = makeYoungBranchMember(item, entries, attendSet);
+								// 군인 맴버 따로 저장
+								var armyList = makeArmyMember(item, entries);
+								// 유학 혹은 지역에 있는 경우 따로 저장
+								var otherList = makeOtherMember(item, entries);
+								// 모든 인원 체크
+								var allList = makeAllBranchMember(item, entries, attendSet);
+
+								if (maxLength < getOlderList.length) 
+									maxLength = getOlderList.length;
+								if (maxYoungLength < getYoungList.length)
+									maxYoungLength = getYoungList.length;
+								if (maxArmy < armyList.length) maxArmy = armyList.length;
+								if (maxOther < otherList.length) maxOther = otherList.length;
+
+								branchTable.push(getOlderList);
+								branchYoungTable.push(getYoungList);
+								armyTable.push(armyList);
+								otherTable.push(otherList);
+								allTable.push(allList);
+							});
+
+							var branchPowerList = CheckHappiness(allTable);
+
+							var etcList = getEtcOldMember(entries,attendSet);
+							branchTable.push(etcList);
+
+							var etcList2 = getEtcYoungMember(entries,attendSet);
+							branchYoungTable.push(etcList2);
+
+							// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
+							response.send(ejs.render(data, 
+								{	
+									// newBS: JSON.stringify(newBSList),
+									bsList: newBSList,
+									maxNumber: maxLength,
+									maxYoungNumber: maxYoungLength,
+									branchTable: branchTable,
+									branchYoungTable: branchYoungTable,
+									armyTable: armyTable,
+									otherTable: otherTable,
+									maxArmy: maxArmy,
+									maxOther: maxOther,
+									allMember: allTable,
+									branchPowerList: branchPowerList
+								}
+							));
+						}
+					});
+
+				}
+			});
+
+
+
+		}
+	});
+});
+
+app.get('/show_maked', function(request, response){
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
+	var bsList = [];
+	var attendSet = request.param('attendValue');
+	if (!attendSet)
+		attendSet = 0;
+
+	fs.readFile('maked_show.html', 'utf8', function (error, data) {
+		if (!error) {
+
+			// 모든 청년부 데이터를 가져온다.
+			var bsQuery = new azure.TableQuery()
+			.where('PartitionKey eq ? and RowKey eq ?', 'bsData', '2015.5');
+
+
+			// 데이터베이스 쿼리를 실행합니다.
+			tableService.queryEntities('saveData', bsQuery, null, function (bsError, bsResult) {
+				if (!bsError) {
+					// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+					var bsString = JSON.stringify(bsResult.entries);
+					var bsEntries = JSON.parse(bsString);
+					bsList = JSON.parse(bsEntries[0].data._);
+
+					// 모든 청년부 데이터를 가져온다.
+					var query = new azure.TableQuery();
+
+
+					// 데이터베이스 쿼리를 실행합니다.
+					tableService.queryEntities('members', query, null, function entitiesQueried(error, result) {
+						if (!error) {
+							// 가져온 청년부 정보를 읽어들일 수 있도록 수정한다.
+							var testString = JSON.stringify(result.entries);
+							var entries = JSON.parse(testString);
+
+							var get, checkList;
+							var branchTable = [];
+							var maxLength = 0;
+							var maxYoungLength = 0, maxArmy = 0, maxOther = 0;
+							var branchYoungTable = [];
+							var armyTable = [], otherTable = [], allTable = [];
+
+							var entGen = azure.TableUtilities.entityGenerator;
+
+							var newBSList = SetShowEntries(entries, bsList, 1);
+							/***
+								청년부 정보를 브랜치별로 정리한다.
+							***/
+							newBSList.forEach (function (item, index) {
+								// 청2부
+								var getOlderList = makeOldBranchMember(item, entries, attendSet);
+								// 청1부
+								var getYoungList = makeYoungBranchMember(item, entries, attendSet);
+								// 군인 맴버 따로 저장
+								var armyList = makeArmyMember(item, entries);
+								// 유학 혹은 지역에 있는 경우 따로 저장
+								var otherList = makeOtherMember(item, entries);
+								// 모든 인원 체크
+								var allList = makeAllBranchMember(item, entries, attendSet);
+
+								if (maxLength < getOlderList.length) 
+									maxLength = getOlderList.length;
+								if (maxYoungLength < getYoungList.length)
+									maxYoungLength = getYoungList.length;
+								if (maxArmy < armyList.length) maxArmy = armyList.length;
+								if (maxOther < otherList.length) maxOther = otherList.length;
+
+								branchTable.push(getOlderList);
+								branchYoungTable.push(getYoungList);
+								armyTable.push(armyList);
+								otherTable.push(otherList);
+								allTable.push(allList);
+							});
+
+							var branchPowerList = CheckHappiness(allTable);
+
+							var etcList = getEtcOldMember(entries,attendSet);
+							branchTable.push(etcList);
+
+							var etcList2 = getEtcYoungMember(entries,attendSet);
+							branchYoungTable.push(etcList2);
+
+							// 정리된 정보를 건내고 ejs 랜더링 하여 보여줌.
+							response.send(ejs.render(data, 
+								{	
+									// newBS: JSON.stringify(newBSList),
+									bsList: newBSList,
+									maxNumber: maxLength,
+									maxYoungNumber: maxYoungLength,
+									branchTable: branchTable,
+									branchYoungTable: branchYoungTable,
+									armyTable: armyTable,
+									otherTable: otherTable,
+									maxArmy: maxArmy,
+									maxOther: maxOther,
+									allMember: allTable,
+									branchPowerList: branchPowerList
+								}
+							));
+						}
+					});
+
+				}
+			});
+
+
+
+		}
+	});
+});
+
+app.post('/show_maked', function (request, response) {
+
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
+
+	var getNameQuery = new azure.TableQuery()
+	.where('RowKey eq ?', body.changeName);
+
+	// 이름 정보를 가져온다.
+	tableService.queryEntities('members', getNameQuery, null, function (nameError, nameResult) {
+		if (!nameError) {
+			var nameString = JSON.stringify(nameResult.entries);
+			var nameList = JSON.parse(nameString)[0];
+
+			var entGen = azure.TableUtilities.entityGenerator;
+			var entity = {
+				PartitionKey: entGen.String(nameList.PartitionKey._),
+				RowKey: entGen.String(body.changeName),
+				makedbranch: entGen.String(body.changeBranch)
+			};
+
+			console.log(nameString);
+			// 데이터베이스에 entity를 추가합니다.
+			tableService.mergeEntity('members', entity, function(error, result, res) {
+				if (!error) {
+					response.redirect("/show_maked");
+				}
+			});
+		}
+	});
+
 });
 
 app.get('/save_current_branch/:id', function (request, response) {
@@ -998,6 +1364,7 @@ app.get('/profile/:id', function (request, response) {
 						var friendsList = [];
 						var hatersList = [];
 						var familiesList = [];
+						var hopersList = [];
 						relationList.forEach(function (item, index) {
 							if (item.relation._ == "friend") {
 								friendsList.push(item);
@@ -1007,6 +1374,9 @@ app.get('/profile/:id', function (request, response) {
 							}
 							else if (item.relation._ == "family") {
 								familiesList.push(item);
+							}
+							else if (item.relation._ == "hoper") {
+								hopersList.push(item);
 							}
 						});
 
@@ -1068,6 +1438,7 @@ app.get('/profile/:id', function (request, response) {
 								response.send(ejs.render(data, 
 									{
 										data: entries[0],
+										hopers: hopersList,
 									 	friends: friendsList,
 									 	follows: newFollowsList,
 									 	haters: hatersList,
@@ -1092,6 +1463,7 @@ app.post('/profile/:id', function (request, response) {
 	var id = request.param('id');
 	var body = request.body;
 
+	var age = 116 - body.PartitionKey;
 	var entGen = azure.TableUtilities.entityGenerator;
 	var entity = {
 		PartitionKey: entGen.String(body.PartitionKey),
@@ -1103,11 +1475,13 @@ app.post('/profile/:id', function (request, response) {
 		birthMonth: entGen.Int32(body.birthMonth),
 		birthDay: entGen.Int32(body.birthDay),
 		love: entGen.String(body.love),
+		age: entGen.Int32(age),
 		attend: entGen.Int32(body.attend),
 		attendDesc: entGen.String(body.attendDesc),
 		tension: entGen.Int32(body.tension),
 		friends: entGen.String(JSON.stringify(body.friends)),
 		haters: entGen.String(JSON.stringify(body.haters)),
+		hopers: entGen.String(JSON.stringify(body.hopers)),
 		families: entGen.String(JSON.stringify(body.families))
 	};
 
@@ -1213,6 +1587,43 @@ app.post('/removeFriend', function (request, response){
 	});	
 }); 
 
+app.post('/saveMakedBranch', function(request, response){
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var body = request.body;
+	var entGen = azure.TableUtilities.entityGenerator;
+
+
+	var bsListEntity = {
+		PartitionKey: entGen.String("bsData"),
+		RowKey: entGen.String("2015.5"),
+		data: entGen.String(JSON.stringify(body.bsList))
+	};
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.insertOrMergeEntity('saveData', bsListEntity, function(error2, result2, res2) {
+		if (!error2) {
+			;
+		}
+	});
+
+	for (var i = 0; i < body.memberName.length; i++){
+		if (body.memberName[i] != "") {
+			var entity = {
+				PartitionKey: entGen.String(body.memberKey[i]),
+				RowKey: entGen.String(body.memberName[i]),
+				makedbranch: entGen.String(body.branchName[i])
+			};
+
+			// 데이터베이스에 entity를 추가합니다.
+			tableService.insertOrMergeEntity('members', entity, function(error2, result2, res2) {
+				if (!error2) {
+					;
+				}
+			});
+		}
+	}
+
+});
+
 app.post('/addFriend/:id', function (request, response) {
 	var tableService = azure.createTableService(storageAccount, accessKey);
 	var id = request.param('id');
@@ -1242,6 +1653,39 @@ app.post('/addFriend/:id', function (request, response) {
 	tableService.executeBatch('friends', batch, function(error2, result2, res2) {
 		if (!error2) {
 			MakeRelation(tableService, body, 'friend', 'friends', response, null);
+		}
+	});
+});
+
+app.post('/addHoper/:id', function (request, response) {
+	var tableService = azure.createTableService(storageAccount, accessKey);
+	var id = request.param('id');
+	var body = request.body;
+
+	tableService.createTableIfNotExists('friends', function(error, result, res){
+	    if(!error){
+	        // Table exists or created
+	    }
+	});
+
+	var batch = new azure.TableBatch();
+	var entGen = azure.TableUtilities.entityGenerator;
+	for (var i = 0; i < body.hoper.length; i++){
+		if (body.hoper[i] != "") {
+			var entity1 = {
+				PartitionKey: entGen.String(id),
+				RowKey: entGen.String(body.hoper[i]),
+				relation: entGen.String("hoper")
+			};
+
+			batch.insertOrMergeEntity(entity1, {echoContent: true});
+		}
+	}
+
+	// 데이터베이스에 entity를 추가합니다.
+	tableService.executeBatch('friends', batch, function(error2, result2, res2) {
+		if (!error2) {
+			MakeRelation(tableService, body, 'hoper', 'hopers', response, null);
 		}
 	});
 });

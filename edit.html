@@ -4,6 +4,16 @@
 	<title>Edit Page</title>
 	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
 	<script type="text/javascript">
+		function AddHoper() {
+			var number = document.hopeCheck.number.value;
+			document.getElementById("addHoper").innerHTML += '<br/><input type="text" name="hoper[' + number + ']">';
+			number++;
+
+			document.getElementById("addHoperNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
+			document.getElementById("addHoperCount").innerHTML = '<input type="hidden" name="hoperNum" value="' + number + '">';
+
+		}
+
 		function AddFriend() {
 			var number = document.check.number.value;
 			document.getElementById("addFriend").innerHTML += '<br/><input type="text" name="friend[' + number + ']">';
@@ -15,7 +25,7 @@
 		}
 
 		function AddHater() {
-			var number = document.check2.number.value;
+			var number = document.haterCheck.number.value;
 			var addHaterString = '<input type="text" name="hater[0]">';
 			number++;
 
@@ -197,27 +207,27 @@
 			</tr>
 			<tr>
 				<td><label>성별</label></td>
-				<td><input type="text" name="gender" value="<%= data.gender._ %>" /></td>
+				<td><input type="text" name="gender" value="<%if(data.gender){%><%= data.gender._ %><%}%>" /></td>
 			</tr>
 			<tr>
 				<td><label>전화번호</label></td>
-				<td><input type="text" name="phone" value="<%= data.phone._ %>" /></td>
+				<td><input type="text" name="phone" value="<%if(data.phone){%><%= data.phone._ %><%}%>" /></td>
 			</tr>
 			<tr>
 				<td><label>생년월일</label></td>
 				<td><select name="birthYear">
 					<% for(var i=75; i <99; i++) { %> 
-					<option value="<%=i%>" <% if(i==data.birthYear._) {%>selected<%}%> ><%=i%></option>
+					<option value="<%=i%>" <% if(data.birthYear && i==data.birthYear._) {%>selected<%}%> ><%=i%></option>
 					<% } %>
 					</select>
 					<select name="birthMonth">
 					<% for(var i=1; i <13; i++) { %> 
-					<option value="<%=i%>" <% if(i==data.birthMonth._) {%>selected<%}%> ><%=i%></option>
+					<option value="<%=i%>" <% if(data.birthMonth && i==data.birthMonth._) {%>selected<%}%> ><%=i%></option>
 					<% } %>
 					</select>
 					<select name="birthDay">
 					<% for(var i=1; i <32; i++) { %> 
-					<option value="<%=i%>" <% if(i==data.birthDay._) {%>selected<%}%> ><%=i%></option>
+					<option value="<%=i%>" <% if(data.birthDay && i==data.birthDay._) {%>selected<%}%> ><%=i%></option>
 					<% } %>
 					</select>
 				</td>
@@ -262,11 +272,36 @@
 			<% for(var i=0; i <families.length; i++) { %> 
 				<input type="hidden" name="families[<%=i%>]" value="<%=families[i].RowKey._%>">
 			<% } %>
+			
+			<% for(var i=0; i <hopers.length; i++) { %> 
+				<input type="hidden" name="hopers[<%=i%>]" value="<%=hopers[i].RowKey._%>">
+			<% } %>
 		</table>
 		<input type="submit" />
 		</form>
 	</fieldset>
 
+
+	<form action="/" name="hopers" method="post">
+	<fieldset style="width: 60%">
+		<legend>함께 하고싶은 사람 정보</legend>
+		<table style="width: 100%; table-layout:fixed; text-align: center">
+			<tr>
+				<% for(var i=0; i <hopers.length; i++) { %> 
+					<td><a href="/profile/<%= hopers[i].RowKey._ %>"><%=hopers[i].RowKey._%></a>
+					<input type="button" value="제거" onclick="RemoveFriend('<%=data.RowKey._%>','<%=hopers[i].RowKey._%>')">
+					</td>
+					<%if ((i+1)%4 == 0) {%>
+						</tr><tr>
+					<%}%>
+				<% } %>
+				<% for (var i = 0; i < 3 - ((hopers.length-1)%4); i++) {%>
+					<td></td>
+				<%}%>
+			</tr>
+		</table>
+	</fieldset>
+	</form>
 
 	<form action="/" name="friends" method="post">
 	<fieldset style="width: 60%">
@@ -389,29 +424,32 @@
 	</fieldset>
 	</form>
 
-	<form action="/" name="check" method="post">
-		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
-		<input type="button" value="추가" onclick="AddFriend()">
-	</form>
-
-	<form action="/addFriend/<%= data.RowKey._%>" method="post">
+	<h2>대인관계 수정</h2>
+	<hr />
+	<form action="/addHoper/<%= data.RowKey._%>" name="hopeCheck" method="post">
 		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
 		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
-		<div>친구추가</div>
-		<div id="addFriendCount"><input type="hidden" name="friendNum" value="1"></div>
+		<div>함께하고 싶은 사람 추가 <input type="button" value="추가" onclick="AddHoper()"></div>
+		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
+		<div id="addHoper"><input type="text" name="hoper[0]"></div>
+		<input type="submit">
+	</form>
+	<hr />
+
+	<form action="/addFriend/<%= data.RowKey._%>" name="check" method="post">
+		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
+		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
+		<div>친구추가 <input type="button" value="추가" onclick="AddFriend()"></div>
+		<div id="addFriendNumber"><input type="hidden" id="number" value="1"></div>
 		<div id="addFriend"><input type="text" name="friend[0]"></div>
 		<input type="submit">
 	</form>
 
-	<form action="/" name="check2" method="post">
-		<div id="addHaterNumber"><input type="hidden" id="number" value="1"></div>
-		<input type="button" value="추가" onclick="AddHater()">
-	</form>
-	<form action="/AddHater/<%= data.RowKey._%>" method="post">
+	<form action="/AddHater/<%= data.RowKey._%>" name="haterCheck" method="post">
 		<input type="hidden" name="PartitionKey" value="<%=data.PartitionKey._%>">
 		<input type="hidden" name="RowKey" value="<%=data.RowKey._%>">
-		<div>싫어하는 사람 추가</div>
-		<div id="AddHaterCount"><input type="hidden" name="haterNum" value="1"></div>
+		<div>싫어하는 사람 추가 <input type="button" value="추가" onclick="AddHater()"></div>
+		<div id="addHaterNumber"><input type="hidden" id="number" value="1"></div>
 		<div id="AddHater"><input type="text" name="hater[0]"></div>
 		<input type="submit">
 	</form>
