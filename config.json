@@ -1,0 +1,11 @@
+{
+  "remote":"/",
+  "host":"admin.sbpcc.anyline.kr",
+  "port":2010,
+  "user":"vod_sbpcc",
+  "pass":"sbpcc_3927",
+  "connections":"2",
+  "ignore":[
+    ".htaccess"
+  ]
+}

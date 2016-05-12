@@ -12,7 +12,8 @@
 		<tr>
 		<% data.forEach( function (item, index) { %>
 			<% if(item.part._ == '임원') { %>
-			<th><% if(item.postCharge) { %><%= item.postCharge._ %><br/><% } %><%= item.charge._ %></th>
+			<!-- <% if(item.postCharge) { %><%= item.postCharge._ %><br/><% } %> -->
+			<th><%= item.charge._ %></th>
 			<% } %>
 		<% }); %>
 

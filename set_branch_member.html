@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Add Branch Member Page</title>
+	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
+	<script type="text/javascript">
+		function AddBM() {
+			var number = document.makeBranch.number.value;
+			document.getElementById("addBM").innerHTML += '<br/><input type="text" name="BM[' + number + ']">';
+			number++;
+
+			document.getElementById("addBMNumber").innerHTML = '<input type="hidden" id="number" value="' + number + '">';
+
+		}
+    </script>
+</head>
+<body>
+	<h1>브랜치 편성 페이지</h1>
+	<hr />
+
+	<fieldset style="width: 60%">
+		<legend>BM 등록</legend>
+		<form name="makeBranch" method="post">
+			<div>년도</div>
+			<div><input type="text" name="branch_name"></div>
+			<br/>
+			<div>브랜치 이름</div>
+			<div><input type="text" name="branch_name"></div>
+			<br/>
+			<div>브랜치 맴버 <input type="button" value="추가" onclick="AddBM()"></div>
+			<div id="addBMNumber"><input type="hidden" id="number" value="10"></div>
+			<div id="addBM"><input type="text" name="BM[0]"></div>
+			<div id="addBM"><input type="text" name="BM[1]"></div>
+			<div id="addBM"><input type="text" name="BM[2]"></div>
+			<div id="addBM"><input type="text" name="BM[3]"></div>
+			<div id="addBM"><input type="text" name="BM[4]"></div>
+			<div id="addBM"><input type="text" name="BM[5]"></div>
+			<div id="addBM"><input type="text" name="BM[6]"></div>
+			<div id="addBM"><input type="text" name="BM[7]"></div>
+			<div id="addBM"><input type="text" name="BM[8]"></div>
+			<div id="addBM"><input type="text" name="BM[9]"></div>
+			<input type="submit">
+		</form>
+	</fieldset>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>임원 추가 Page</title>
+</head>
+<body>
+	<h1>임원 추가 Page</h1>
+	<hr />
+	<form method="post">
+	<fieldset>
+		<legend>INSERT DATA</legend>
+		<table>
+			<tr>
+				<td><label>년도</label></td>
+				<!-- <td><input type="text" name="RowKey" /></td> -->
+				<td><select name="PartitionKey">
+					<% for(var i=14; i <50; i++) { %> 
+					<option value="<%=i%>"><%=i%></option>
+					<% } %>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td><label>이름</label></td>
+				<td><input type="text" name="RowKey" /></td>
+			</tr>
+			<tr>
+				<td><label>직책</label></td>
+				<!-- <td><input type="text" name="phone" /></td> -->
+				<td><select name="charge">
+					<option value="회장">회장</option>
+					<option value="청1 총무">청1 총무</option>
+					<option value="청2 총무">청2 총무</option>
+					<option value="청1 회계">청1 회계</option>
+					<option value="청2 회계">청2 회계</option>
+					<option value="서기">서기</option>
+					<option value="찬양팀장">찬양팀장</option>
+					<option value="행사팀장">행사팀장</option>
+					<option value="새신자팀장">새신자팀장</option>
+					<option value="다과팀장">다과팀장</option>
+					<option value="BS">BS</option>
+					</select>
+				</td>
+			</tr>
+
+		</table>
+		<input type="submit" />
+	</fieldset>
+	</form>
+</body>
+</html>
