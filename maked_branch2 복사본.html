@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<% var showValue = 1; %>
+	<title>브랜치 명단</title>
+	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
+	<script type="text/javascript">
+		function Important() {
+			console.log("important <%=showValue%>");
+			<% showValue = 2 %>
+		}
+
+    </script>
+	<style type="text/css">
+	.datagrid table { border-collapse: collapse; text-align: left; width: 100%; table-layout:fixed; text-align: center;} .datagrid {font: normal 12px/150% Arial, Helvetica, sans-serif; background: #fff; overflow: hidden; border: 1px solid #006699; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }.datagrid table td, .datagrid table th { padding: 3px 10px; }.datagrid table thead th {background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; color:#FFFFFF; font-size: 15px; font-weight: bold; border-left: 1px solid #0070A8; } .datagrid table thead th:first-child { border: none; }.datagrid table tbody td { color: #00496B; border-left: 1px solid #E1EEF4;font-size: 12px;font-weight: normal; }.datagrid table tbody .alt td { background: #E1EEF4; color: #00496B; }.datagrid table tbody td:first-child { border-left: none; }.datagrid table tbody tr:last-child td { border-bottom: none; }.datagrid table tfoot td div { border-top: 1px solid #006699;background: #E1EEF4;} .datagrid table tfoot td { padding: 0; font-size: 12px } .datagrid table tfoot td div{ padding: 2px; }.datagrid table tfoot td ul { margin: 0; padding:0; list-style: none; text-align: right; }.datagrid table tfoot  li { display: inline; }.datagrid table tfoot li a { text-decoration: none; display: inline-block;  padding: 2px 8px; margin: 1px;color: #FFFFFF;border: 1px solid #006699;-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #006699), color-stop(1, #00557F) );background:-moz-linear-gradient( center top, #006699 5%, #00557F 100% );filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#006699', endColorstr='#00557F');background-color:#006699; }.datagrid table tfoot ul.active, .datagrid table tfoot ul a:hover { text-decoration: none;border-color: #006699; color: #FFFFFF; background: none; background-color:#00557F;}div.dhtmlx_window_active, div.dhx_modal_cover_dv { position: fixed !important; } .datagrid table a {color: #000000;  text-decoration: none;} .datagrid table caption {font: normal 20px/150% Arial, helvetica, sans-serif; }
+	</style>
+
+<!-- 	<link rel="stylesheet" type="text/css" href="style.css"> -->
+</head>
+<body>
+	<!-- <h1>브랜치 명단</h1> -->
+	<div class="datagrid">
+	<table>
+	<caption>브랜치 명단</caption>
+	<thead>
+		<tr>
+			<th>브랜치 이름</th>
+ 			<% bsList.forEach( function (item, index) { %>
+			<th><%= item.branch._ %></th>
+			<% }); %>
+			<th>기타</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="<%=bsList.length+2 %>">
+				<div id="paging">
+					<form action="/saveMakedBranch" method="post">
+					<% var newIndex = 0 %>
+					<%allMember.forEach(function(branchItem, b_index) {%>
+						<%branchItem.forEach(function(item, index) {%>
+						<% newIndex++ %>
+						<input type="hidden" name="memberName[<%=newIndex%>]" value="<%=item.RowKey._%>">
+						<input type="hidden" name="memberKey[<%=newIndex%>]" value="<%=item.PartitionKey._%>">
+						<input type="hidden" name="branchName[<%=newIndex%>]" value="<%=item.branch._%>">
+						<%});%>
+					<%});%>
+
+		 			<% bsList.forEach( function (item, index) { %>
+					<input type="hidden" name="bsList[<%=index%>]" value="<%=item.RowKey._%>">
+					<% }); %>
+					<ul>
+						<li><a href="/branch" class="active"><span>브랜치 맴버 전원</span></a></li>
+						<li><a href="/branch?attendValue=1"><span>아예 안나오는 사람 제외</span></a></li>
+						<li><a href="/branch?attendValue=2"><span>거의 안나오는 사람 제외</span></a></li>
+						<li><a href="/branch?attendValue=3"><span>잘 나오는 사람들만 표시</span></a></li>
+						<li><a href="/branch?attendValue=4"><span>고정 맴버만 표시</span></a></li>
+						<li><input type="submit" value="저장"></li>
+					</ul>
+					</form>
+				</div>
+		</tr>
+	</tfoot>
+
+	<tbody>
+		<tr>
+			<th>브랜치장</th>
+ 			<% bsList.forEach( function (item, index) { %>
+			<td <% if (item.happy._ < 90) {%>style="background:#FF0000"<%} else if (item.order._ <= 40) {%>style="background:#00FF00"<%}%>>
+				<a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %>(<%=item.oldbranch._%>,<%=item.yearbranch._%>)</a>
+			</td>
+			<% }); %>
+			<th>없음</th>
+		</tr>
+
+		<% for(var i = 0; i < maxNumber; i++) { %>
+		<tr<% if (i%2 == 0) {%> class="alt"<%}%>>
+			<% if (i==0) {%>  <td rowspan="<%=maxNumber%>">청 2부</td> <%}%>
+			<% branchTable.forEach( function (item, index) { %>
+				<td <% if (item.length > i && item[i].happy._ < 90) {%>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ <= 40) {%>style="background:#00FF00"<%}%>>
+					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._%>,<%=item[i].yearbranch._%>)</a><%}%>
+				</td>
+			<% }); %>
+		</tr>
+		<% } %>
+		<tr height="1">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
+		</tr>
+		<% for(var i = 0; i < maxYoungNumber; i++) { %>
+		<tr<% if ((i+maxNumber)%2 == 0) {%> class="alt"<%}%>>
+			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber%>">청 1부</td> <%}%>
+			<% branchYoungTable.forEach( function (item, index) { %>
+				<td <% if (item.length > i && item[i].happy._ < 90) {%>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ <= 40) {%>style="background:#00FF00"<%}%>>
+					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._%>,<%=item[i].yearbranch._%>)</a><%}%>
+				</td>
+			<% }); %>
+		</tr>
+		<% } %>
+		<tr height="1">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
+		</tr>
+		<% for(var i = 0; i < maxArmy; i++) { %>
+		<tr<% if ((i+maxNumber+maxYoungNumber)%2 == 0) {%> class="alt"<%}%>>
+			<% if (i==0) {%>  <td style="background: #E1EEF4" rowspan="<%=maxArmy%>">군입대자</td> <%}%>
+			<% armyTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].happy._%>)</a><%}%></td>
+			<% }); %>
+			<td></td>
+		</tr>
+		<% } %>
+
+		<tr height="1">
+			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
+		</tr>
+		<% for(var i = 0; i < maxOther; i++) { %>
+		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy)%2 == 0) {%> class="alt"<%}%>>
+			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxOther%>">유학자 및 지방근무자</td> <%}%>
+			<% otherTable.forEach( function (item, index) { %>
+				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
+			<% }); %>
+			<td></td>
+		</tr>
+		<% } %>
+		<tr<% if ((maxNumber+maxYoungNumber+maxArmy+maxOther)%2 == 0) {%> class="alt"<%}%>>
+			<td style="background: #E1EEF4">브랜치 활성도</td>
+			<% for (var i = 0; i < branchPowerList.length; i++) {%>
+				<td><%=branchPowerList[i]%></td>
+			<%}%>
+		</tr>
+
+	</tbody>
+	</table>
+	</div>
+</body>
+</html>

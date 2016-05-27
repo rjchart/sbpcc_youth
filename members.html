@@ -312,19 +312,19 @@
 			</thead>
 
 			<tbody>
-				<% for(var i=0; i<memberList.length; i++) {%>
-				<tr <% if(i%2 == 1) {%>class="alt"<%}%> name="<%if(memberList[i].attend._ <1) {%>attend0<%} else if (memberList[i].attend._ <2) {%>attend1<%} else if (memberList[i].attend._ <3) {%>attend2<%} else if (memberList[i].attend._ <4) {%>attend3<%}%>">
-					<td><label onclick="ProfileBS(<%= year %>, '<%= memberList[i].RowKey._ %>','<%= memberList[i].branch._ %>','<%= memberList[i].attend._ %>','<%= memberList[i].birthYear._ %>','<%= memberList[i].birthMonth._ %>','<%= memberList[i].birthDay._ %>','<%= memberList[i].gender._ %>','<%= memberList[i].phone._ %>','<%= memberList[i].attendDesc._ %>',<% if(memberList[i].tension) {%> '<%=memberList[i].tension._%>' <%} else {%> 0 <%}%>,<% if(memberList[i].photo) {%> '<%=memberList[i].photo._%>' <%} else {%> '' <%}%>)" id="profile"><%=memberList[i].RowKey._%></label></td>
-					<td><%=memberList[i].birthYear._%></td>
-					<td><%=memberList[i].gender._%></td>
-					<td><%=memberList[i].phone._%></td>
-					<td><%=parseInt(memberList[i].birthYear._) + 1900%>년 <%=memberList[i].birthMonth._%>월 <%=memberList[i].birthDay._%>일</td>
-					<td><% if (memberList[i].branch) {%><%=memberList[i].branch._%><%} else { %> 없음 <%}%></td>
-					<td><% if (memberList[i].part) {%><%=memberList[i].part._%><%} else { %> 없음 <%}%></td>
-					<td><% if (memberList[i].attend) {%><%=memberList[i].attend._%><%} else { %> 없음 <%}%></td>
-					<td><% if (memberList[i].attendDesc) {%><%=memberList[i].attendDesc._%><%} else { %> 없음 <%}%></td>
+				<% for(var i=0; i<memberList.length; i++) { %>
+				<tr <% if(i%2 == 1) { %>class="alt"<%} %> name="<%if(memberList[i].attend._ <1) { %>attend0<%} else if (memberList[i].attend._ <2) { %>attend1<%} else if (memberList[i].attend._ <3) { %>attend2<%} else if (memberList[i].attend._ <4) { %>attend3<%} %>">
+					<td><label onclick="ProfileBS(<%= year %>, '<%= memberList[i].RowKey._ %>','<%= memberList[i].branch._ %>','<%= memberList[i].attend._ %>','<%= memberList[i].birthYear._ %>','<%= memberList[i].birthMonth._ %>','<%= memberList[i].birthDay._ %>','<%= memberList[i].gender._ %>','<%= memberList[i].phone._ %>','<%= memberList[i].attendDesc._ %>',<% if(memberList[i].tension) { %> '<%=memberList[i].tension._ %>' <%} else { %> 0 <%} %>,<% if(memberList[i].photo) { %> '<%=memberList[i].photo._ %>' <%} else { %> '' <%} %>)" id="profile"><%=memberList[i].RowKey._ %></label></td>
+					<td><%=memberList[i].birthYear._ %></td>
+					<td><%=memberList[i].gender._ %></td>
+					<td><%=memberList[i].phone._ %></td>
+					<td><%=parseInt(memberList[i].birthYear._) + 1900 %>년 <%=memberList[i].birthMonth._ %>월 <%=memberList[i].birthDay._ %>일</td>
+					<td><% if (memberList[i].branch) { %><%=memberList[i].branch._ %><%} else { %> 없음 <%} %></td>
+					<td><% if (memberList[i].part) { %><%=memberList[i].part._ %><%} else { %> 없음 <%} %></td>
+					<td><% if (memberList[i].attend) { %><%=memberList[i].attend._ %><%} else { %> 없음 <%} %></td>
+					<td><% if (memberList[i].attendDesc) { %><%=memberList[i].attendDesc._ %><%} else { %> 없음 <%} %></td>
 				</tr>
-				<%}%>
+				<%} %>
 
 			</tbody>
 			<tfoot>
@@ -433,17 +433,17 @@
 							<td>
 								<!-- <select name="birthYear">
 								<% for(var i=75; i <99; i++) { %> 
-								<option value="<%=i%>"  ><%=i%></option>
+								<option value="<%=i %>"  ><%=i %></option>
 								<% } %>
 								</select>
 								<select name="birthMonth">
 								<% for(var i=1; i <13; i++) { %> 
-								<option value="<%=i%>"  ><%=i%></option>
+								<option value="<%=i %>"  ><%=i %></option>
 								<% } %>
 								</select>
 								<select name="birthDay">
 								<% for(var i=1; i <32; i++) { %> 
-								<option value="<%=i%>"  ><%=i%></option>
+								<option value="<%=i %>"  ><%=i %></option>
 								<% } %>
 								</select> -->
 							</td>

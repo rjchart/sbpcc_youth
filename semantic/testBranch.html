@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>브랜치 명단</title>
+	<script src="http://code.jquery.com/jquery-1.7.js"></script>
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+	<link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+	<script src="./semantic/dist/semantic.min.js"></script> 
+    <script type="text/javascript" src="./lib/ejs_production.js"></script>
+	<script type="text/javascript">
+
+		function ProfileBS(name, year, branch, attend) {
+			// console.log("profile: " + name);
+
+			// // var params = "name="+name+"&friend=name02";
+			// var getData;
+			// for (var i=0; i<test.length; i++) {
+			// 	if (test[i].RowKey == name) {
+			// 		getData = test[i];
+			// 		getData.birthYear = bYear;
+			// 		getData.birthMonth = bMonth;
+			// 		getData.birthDay = bDay;
+			// 		getData.gender = gender;
+			// 		getData.phone = phone;
+			// 		getData.attendDesc = attendDesc;
+			// 		getData.tension = tension;
+			// 		console.log(getData);
+			// 		var html = new EJS({url: 'branch_profile.ejs'}).render(getData);
+			// 		console.log(html);
+			// 	}
+			// }
+
+
+			var data = {
+				name: name,
+				year: year,
+				branch: branch,
+				attend: attend
+			}
+
+			$.ajax({
+				url: "/branch_profile",
+				type: "post",
+				data: data,
+				dataType: "json",
+				success: function(data) {
+					// document.getElementById("result").innerHTML = data.name+"님 반갑습니다.";
+					// var alertString = data.name + "님이 추가되었습니다."
+					// alert(alertString);
+					document.getElementById("aside").innerHTML = data.message;
+				},
+				error: function(request) {
+					alert("실패");
+				}
+			});
+
+		}
+
+		function AddBS() {
+			var bsNumber = document.addBranch.bsNumber.value;
+			var innerText = "";
+			// var lastBranch = "";
+			for (var i = 0; i < bsNumber; i++) {
+				var index = "branch_for_servant[" + i + "]";
+				var index2 = "branch_servant[" + i + "]"
+				var currentBranch = document.getElementsByName(index)[0].value;
+				var currentName = document.getElementsByName(index2)[0].value;
+				innerText += '<tr><th> <div class="ui labeled input"><div class="ui blue label">맴버 이름</div><input type="text" name="branch_servant[' + i + ']" value="' + currentName + '"/> &nbsp;&nbsp;&nbsp;\n</div><div class="ui labeled input"><div class="ui blue label">브랜치 이름</div><input type="text" name="branch_for_servant[' + i + ']" value="' + currentBranch + '" /></div> </th></tr>\n';
+				// lastBranch = currentBranch;
+			}
+
+			document.getElementById("addBSBody").innerHTML = innerText + '\n<tr><th> <div class="ui labeled input"><div class="ui blue label">맴버 이름</div><input type="text" name="branch_servant[' + bsNumber + ']" /> &nbsp;&nbsp;&nbsp;\n</div><div class="ui labeled input"><div class="ui blue label">브랜치 이름</div><input type="text" name="branch_for_servant[' + bsNumber + ']" /></div> </th></tr>';
+			bsNumber++;
+
+			document.getElementById("addBSNumber").innerHTML = '<input type="hidden" id="bsNumber" value="' + bsNumber + '">';
+		}
+
+		function AddBM() {
+			var bmNumber = document.addBranch.bmNumber.value;
+			var innerText = "";
+			var lastBranch = "";
+			for (var i = 0; i < bmNumber; i++) {
+				var index = "branch_for_member[" + i + "]";
+				var index2 = "branch_member[" + i + "]"
+				var index3 = "attendDesc_member[" + i + "]"
+				var currentBranch = document.getElementsByName(index)[0].value;
+				var currentName = document.getElementsByName(index2)[0].value;
+				var currentDesc = document.getElementsByName(index3)[0].value;
+				innerText += '<tr><th> 맴버 이름: <input type="text" name="branch_member[' + i + ']" value="' + currentName + '"/> &nbsp;&nbsp;&nbsp;\n브랜치 이름: <input type="text" name="branch_for_member[' + i + ']" value="' + currentBranch + '" /> &nbsp;&nbsp;&nbsp;\n비고 사항: <input type="text" name="attendDesc_member[' + i + ']" value="' + currentDesc + '" /></th></tr>\n';
+				lastBranch = currentBranch;
+			}
+			// var beforeBranchName = document.getElementsByName("branch_for_member[0]")[0].value;//.branch_for_member[0].value
+			document.getElementById("addBMBody").innerHTML = innerText + '\n<tr><th> 맴버 이름: <input type="text" name="branch_member[' + bmNumber + ']" /> &nbsp;&nbsp;&nbsp;\n브랜치 이름: <input type="text" name="branch_for_member[' + bmNumber + ']" value="' + lastBranch + '" /> &nbsp;&nbsp;&nbsp;\n비고 사항: <input type="text" name="attendDesc_member[' + bmNumber + ']" /></th></tr>';
+			bmNumber++;
+
+			document.getElementById("addBMNumber").innerHTML = '<input type="hidden" id="bmNumber" value="' + bmNumber + '">';
+		}
+
+		function UploadSubmit() {
+
+	        $('#uploadForm').ajaxSubmit({
+	        	error: function(xhr) {
+					alert("실패");
+				},
+
+				success: function(response) {
+					if (response.result)
+					alert("저장되었습니다.");
+				}
+			});
+		}
+
+
+		  //   $('#uploadForm').submit(function() {
+				// console.log("upload");
+
+		  //       $(this).ajaxSubmit({
+		  //       	error: function(xhr) {
+				// 		alert("실패");
+				// 	},
+
+				// 	success: function(response) {
+				// 		alert("결과: " + response.result);
+				// 	}
+				// });
+
+				// // Have to stop the form from submitting and causing                                                                                                       
+				// // a page refresh - don't forget this                                                                                                                      
+				// return false;
+		  //   });
+
+    //         $('#uploadForm').submit();
+
+
+		// $("document").ready(function(){
+		//     $("#ex_file").on('change',function() {
+		// 		alert('Works!!');
+		// 	});
+		// });
+
+		function ReadURL(input) {
+			var url = input.value;
+			var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+			if (input.files && input.files[0] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+			    var reader = new FileReader();
+
+			    reader.onload = function (e) {
+					//로컬 이미지를 보여주기
+			        $('#update_image').attr('src', e.target.result);
+					
+					/*** 이부분은 썸네일 생성 관련 ***/ 
+					//썸네일 이미지 생성
+					var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+					tempImage.src = e.target.result; //data-uri를 이미지 객체에 주입
+					tempImage.onload = function () {
+						//리사이즈를 위해 캔버스 객체 생성
+						var canvas = document.createElement('canvas');
+						var canvasContext = canvas.getContext("2d");
+
+						//캔버스 크기 설정
+						canvas.width = 100; //가로 100px
+						canvas.height = 100; //세로 100px
+
+						//이미지를 캔버스에 그리기
+						canvasContext.drawImage(this, 0, 0, 100, 100);
+
+						//캔버스에 그린 이미지를 다시 data-uri 형태로 변환
+						var dataURI = canvas.toDataURL("image/jpeg");
+
+						//썸네일 이미지 보여주기
+						document.querySelector('#thumbnail').src = dataURI;
+
+						//썸네일 이미지를 다운로드할 수 있도록 링크 설정
+						document.querySelector('#download').href = dataURI;
+						document.querySelector('#thumbnailURL').value = dataURI;
+						// console.log("data" + input.files[0]);
+						// input.files[1] = canvas;
+						// alert("data" + input.files[1]);
+					};
+					/*** 이부분은 썸네일 생성 관련 ***/
+			    }
+			    reader.readAsDataURL(input.files[0]);
+			}
+			else{
+			     $('#update_image').attr('src', '/assets/no_preview.png');
+			}
+		}
+
+			
+			
+			
+			// var file = document.querySelector('#ex_file');
+
+			// file.onchange = function () {
+			// 	var fileList = file.files ;
+
+			// 	// 읽기
+			// 	var reader = new FileReader();
+			// 	reader.readAsDataURL(fileList [0]);
+
+			// 	//로드 한 후
+			// 	reader.onload = function  () {
+			// 		//로컬 이미지를 보여주기
+			// 		document.querySelector('#update_image').src = reader.result;
+
+			// 		//썸네일 이미지 생성
+			// 		var tempImage = new Image(); //drawImage 메서드에 넣기 위해 이미지 객체화
+			// 		tempImage.src = reader.result; //data-uri를 이미지 객체에 주입
+			// 		tempImage.onload = function () {
+			// 			//리사이즈를 위해 캔버스 객체 생성
+			// 			var canvas = document.createElement('canvas');
+			// 			var canvasContext = canvas.getContext("2d");
+
+			// 			//캔버스 크기 설정
+			// 			canvas.width = 100; //가로 100px
+			// 			canvas.height = 100; //세로 100px
+
+			// 			//이미지를 캔버스에 그리기
+			// 			canvasContext.drawImage(this, 0, 0, 100, 100);
+
+			// 			//캔버스에 그린 이미지를 다시 data-uri 형태로 변환
+			// 			var dataURI = canvas.toDataURL("image/jpeg");
+
+			// 			//썸네일 이미지 보여주기
+			// 			document.querySelector('#thumbnail').src = dataURI;
+
+			// 			//썸네일 이미지를 다운로드할 수 있도록 링크 설정
+			// 			document.querySelector('#download').href = dataURI;
+			// 		};
+			// 	};
+			// };
+
+    </script>
+    <link rel="stylesheet" type="text/css" href="css/table.css" />
+	<link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <style>
+	#header {
+	    background-color:black;
+	    color:white;
+	    text-align:center;
+	    padding:5px; 
+	}
+	#nav {
+	    line-height:30px;
+	    background-color:#eeeeee;
+	    height:300px;
+	    width:100px;
+	    float:left;
+	    padding:5px; 
+	}
+	#container {
+		background: #e1eef4;
+		overflow: hidden;
+	}
+	#section {
+	    /*width:70%;
+	    float:left;*/
+	    float:left;
+	    background-color:#eeeeee;
+	    padding:10px; 
+	}
+	#aside {
+		float:left;
+	    background-color:#e1eef4;
+	    /*text-align:left;*/
+	    padding:5px;
+	}
+	#footer {
+	    background-color:black;
+	    color:white;
+	    clear:both;
+	    text-align:center;
+	    padding:5px; 
+	}
+	#profile {
+		cursor: pointer;
+	}
+
+	#update_image {
+		display: inline-block;
+		color: #999;
+		font-size: inherit;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: black;
+		cursor: pointer;
+		border: 1px solid black;
+		border-bottom-color: #e2e2e2;
+		width: 100%;
+		border-radius: .25em;
+	}
+
+
+	.filebox label {
+		display: inline-block;
+		padding: .4em .65em;
+		color: #999;
+		font-size: inherit;
+		line-height: normal;
+		vertical-align: middle;
+		background-color: #fdfdfd;
+		cursor: pointer;
+		border: 1px solid #ebebeb;
+		border-bottom-color: #e2e2e2;
+		border-radius: .25em;
+	}
+
+	.filebox.bs3-primary label {
+		color: #fff;
+		background-color: #337ab7;
+		border-color: #2e6da4;
+		float: right;
+	}
+
+	.filebox.upload label {
+    	text-align: center;
+		background-color: #fdfdfd;
+		width:100%;
+	}
+
+	.filebox.tablesubmit label {
+    	text-align: center;
+		color: #fff;
+		background-color: #337ab7;
+		border-color: #2e6da4;
+		width:100%;
+	}
+
+
+	/* 파일 필드 숨기기 */
+	.filebox input[type="file"] {  
+	  position: absolute;
+	  width: 1px;
+	  height: 1px;
+	  padding: 0;
+	  margin: -1px;
+	  overflow: hidden;
+	  clip:rect(0,0,0,0);
+	  border: 0;
+	}
+
+	/* 파일 필드 숨기기 */
+	.filebox input[type="submit"] {  
+	  position: absolute;
+	  width: 1px;
+	  height: 1px;
+	  padding: 0;
+	  margin: -1px;
+	  overflow: hidden;
+	  clip:rect(0,0,0,0);
+	  border: 0;
+	}
+	
+	.fitImg{
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	</style>
+
+</head>
+<body>
+	<nav class="w3-topnav w3-green">
+		<h1><%=year%>년도 브랜치 편성</h1>
+	</nav>
+	<!-- <div id="nav">
+	London<br>
+	Paris<br>
+	Tokyo
+	</div> -->
+	<!-- <h1>브랜치 명단</h1> -->
+	<div class="w3-row" id="container">
+		<div class="w3-col s8 m9 l9" id="section">
+			<div class="datagrid">
+			<table>
+			<caption>브랜치 명단</caption>
+			<thead>
+				<tr>
+					<th>브랜치</th>
+		 			<% bsList.forEach( function (item, index) { %>
+					<th><%= item.branch._ %></th>
+					<% }); %>
+					<th>기타</th>
+				</tr>
+			</thead>
+			<tfoot>
+				<tr>
+					<td colspan="<%=bsList.length+2 %>">
+						<div id="paging">
+							<ul>
+								<li><a href="/branch?year=<%= year%>" class="active"><span>브랜치 맴버 전원</span></a></li>
+								<li><a href="/branch?year=<%= year%>&attendValue=1"><span>아예 안나오는 사람 제외</span></a></li>
+								<li><a href="/branch?year=<%= year%>&attendValue=2"><span>거의 안나오는 사람 제외</span></a></li>
+								<li><a href="/branch?year=<%= year%>&attendValue=3"><span>잘 나오는 사람들만 표시</span></a></li>
+								<li><a href="/branch?year=<%= year%>&attendValue=4"><span>고정 맴버만 표시</span></a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			</tfoot>
+
+			<tbody>
+				<tr>
+					<th>브랜치장</th>
+		 			<% bsList.forEach( function (item, index) { %>
+					<td><label onclick="ProfileBS('<%= item.RowKey._ %>','<%=year%>','<%= item.branch._ %>','<%= item.attend._ %>')" id="profile"><%= item.RowKey._ %></label><!--<a href="/profile/<%= item.RowKey._ %>"><%= item.RowKey._ %></a>--></td>
+					<% }); %>
+					<th>없음</th>
+				</tr>
+
+				<% for(var i = 0; i < maxNumber; i++) { %>
+				<tr <% if (i%2 == 0) {%> class="alt"<%}%>>
+					<% if (i==0) {%>  <td rowspan="<%=maxNumber%>">청 2부</td> <%}%>
+					<% branchTable.forEach( function (item, index) { %>
+						<td><% if (item.length > i) {%><label onclick="ProfileBS('<%= item[i].RowKey._ %>','<%=year%>','<%= item[i].branch._ %>','<%= item[i].attend._ %>')" id="profile"><%= item[i].RowKey._ %></label><!--<a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a>--><%}%></td>
+					<% }); %>
+				</tr>
+				<% } %>
+				<tr height="1">
+					<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>"></td>
+				</tr>
+				<% for(var i = 0; i < maxYoungNumber; i++) { %>
+				<tr <% if ((i+maxNumber)%2 == 0) {%> class="alt"<%}%>>
+					<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber%>">청 1부</td> <%}%>
+					<% branchYoungTable.forEach( function (item, index) { %>
+						<td><% if (item.length > i) {%><label onclick="ProfileBS('<%= item[i].RowKey._ %>','<%=year%>','<%= item[i].branch._ %>','<%= item[i].attend._ %>')" id="profile"><%= item[i].RowKey._ %></label><!--<a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a>--><%}%></td>
+					<% }); %>
+				</tr>
+				<% } %>
+				<tr height="1">
+					<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>"></td>
+				</tr>
+				<% for(var i = 0; i < maxArmy; i++) { %>
+				<tr <% if ((i+maxNumber+maxYoungNumber)%2 == 0) {%> class="alt"<%}%>>
+					<% if (i==0) {%>  <td style="background: #E1EEF4" rowspan="<%=maxArmy%>">군입대자</td> <%}%>
+					<% armyTable.forEach( function (item, index) { %>
+						<td><% if (item.length > i) {%><label onclick="ProfileBS('<%= item[i].RowKey._ %>','<%=year%>','<%= item[i].branch._ %>','<%= item[i].attend._ %>')" id="profile"><%= item[i].RowKey._ %></label><!--<a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a>--><%}%></td>
+					<% }); %>
+					<td></td>
+				</tr>
+				<% } %>
+
+				<tr height="1">
+					<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>"></td>
+				</tr>
+				<% for(var i = 0; i < maxOther; i++) { %>
+				<tr <% if ((i+maxNumber+maxYoungNumber+maxArmy)%2 == 0) {%> class="alt"<%}%>>
+					<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxOther%>">유학자 및 지방근무자</td> <%}%>
+					<% otherTable.forEach( function (item, index) { %>
+						<td><% if (item.length > i) {%><label onclick="ProfileBS('<%= item[i].RowKey._ %>','<%=year%>','<%= item[i].branch._ %>','<%= item[i].attend._ %>')" id="profile"><%= item[i].RowKey._ %></label><!--<a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a>--><%}%></td>
+					<% }); %>
+					<td></td>
+				</tr>
+				<% } %>
+			</tbody>
+			</table>
+			</div>
+			<br/>
+			<form name="addBranch" method="post">
+			<div class="datagrid">
+				<table>
+			<!-- <caption>브랜치 명단</caption> -->
+				<thead>
+					<tr>
+						<th>Branch Servant 추가 &nbsp;&nbsp;&nbsp; <div class="ui mini input"><input type="button" value="+" onclick="AddBS()" style="color:black;"></div></th>
+					</tr>
+				</thead>
+				<div id="addBSNumber"><input type="hidden" id="bsNumber" value="1"></div>
+				<input type="hidden" name="year" value=<%=year%>>
+				<tbody id="addBSBody">
+					<tr><th>
+						<div class="ui labeled input"> 
+							<div class="ui blue label">
+								맴버 이름 
+							</div>
+							<input type="text" name="branch_servant[0]"/> &nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="ui labeled input">
+							<div class="ui blue label">
+								브랜치 이름 
+							</div>
+							<input type="text" name="branch_for_servant[0]" />
+						</div> 
+					</th></tr>
+						
+				</tbody>
+				</table>
+
+				<table>
+				<thead>
+					<tr>
+						<th>Branch Member 추가  &nbsp;&nbsp;&nbsp; <div class="ui mini input"><input type="button" value="+" onclick="AddBM()" style="color:black;"></div></th>
+					</tr>
+				</thead>
+				<div id="addBMNumber"><input type="hidden" id="bmNumber" value="1"></div>
+				<tbody id="addBMBody">
+					<tr><th>
+						<div class="ui labeled input"> 
+							<div class="ui blue label">
+								맴버 이름
+							</div> 
+							<input type="text" name="branch_member[0]" /> &nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="ui labeled input">
+							<div class="ui blue label">
+								브랜치 이름
+							</div> 
+							<input type="text" name="branch_for_member[0]" /> &nbsp;&nbsp;&nbsp;
+						</div>
+						<div class="ui labeled input">
+							<div class="ui blue label">
+								비고 사항
+							</div> 
+							<input type="text" name="attendDesc_member[0]" />
+						</div> 
+					</th></tr>
+						
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>
+							<div id="paging">
+								<ul>
+									<li><input type="submit" value="결정"></li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</tfoot>
+				</table>
+			</div>
+			</form>
+		</div>
+
+
+
+
+		<div class="w3-col s4 m3 l3" id="aside">
+				<form action="/upload/" enctype="multipart/form-data" method="post">
+				<!--<p style="background-color:black; width=100px height=1000px border: solid 1px silver;"/>-->
+				<div style="width:100%;height:300px;border:solid;background-color:black">
+					<img class="fitImg" src="https://sbpccyouth.blob.core.windows.net/imgcontainer/Unknown.png" align="center" padding="5px"/><br/>
+				</div>
+				<div class="filebox upload">
+				</div>
+				</form>
+				<form method="post">
+				<input type="hidden" name="PartitionKey" >
+				<input type="hidden" name="RowKey" > 
+				<br/>
+				<div class="datagrid">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="2">정보 없음</th>
+							</tr>
+						</thead>
+						<tr>
+							<td><label>또래</label></td>
+							<td></td>
+						</tr>
+						<tr class="alt">
+							<td><label>성별</label></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><label>브랜치</label></td>
+							<td></td>
+						</tr>
+						<tr class="alt">
+							<td><label>전화번호</label></td>
+							<td></td>
+						</tr>
+						<tr>
+							<td><label>생년월일</label></td>
+							<td>
+								<!-- <select name="birthYear">
+								<% for(var i=75; i <99; i++) { %> 
+								<option value="<%=i%>"  ><%=i%></option>
+								<% } %>
+								</select>
+								<select name="birthMonth">
+								<% for(var i=1; i <13; i++) { %> 
+								<option value="<%=i%>"  ><%=i%></option>
+								<% } %>
+								</select>
+								<select name="birthDay">
+								<% for(var i=1; i <32; i++) { %> 
+								<option value="<%=i%>"  ><%=i%></option>
+								<% } %>
+								</select> -->
+							</td>
+						</tr>
+						<tr class="alt">
+							<td><label>출석 빈도</label></td>
+							<td>
+								<!-- <select name="attend">
+								<option value="0" >안 나옴</option>
+								<option value="1" >가끔 나옴</option>
+								<option value="2" >종종 나옴</option>
+								<option value="3" >대부분 나옴</option>
+								<option value="4" >항상 나옴</option>
+								</select> -->
+							</td>
+						</tr>
+						<tr>
+							<td><label>출석 비고</label></td>
+							<td></td>
+						</tr>
+						<tr class="alt">
+							<td><label>성격</label></td>
+							<td>
+								<!-- <select name="tension">
+								<option value="0" >말도 잘 안함</option>
+								<option value="1" >내성적임</option>
+								<option value="2" >무난함</option>
+								<option value="3" >외향적임</option>
+								<option value="4" >분위기 메이커</option>
+								</select> -->
+							</td>
+						</tr> 
+
+						<tr class="filebox tablesubmit">
+							<!--<td colspan="2"><label>제출</label><input type="submit"/></td>-->
+						</tr> 
+					</table>
+				</div>
+				</form>
+			
+			<!-- <fieldset>
+			</fieldset> -->
+		</div>
+	</div>
+</body>
+</html>

@@ -6,7 +6,7 @@
 	<script src="http://code.jquery.com/jquery-1.7.js"></script>		
 	<script type="text/javascript">
 		function Important() {
-			console.log("important <%=showValue%>");
+			console.log("important <%=showValue %>");
 			<% showValue = 2 %>
 		}
 
@@ -37,17 +37,17 @@
 				<div id="paging">
 					<form action="/saveMakedBranch" method="post">
 					<% var newIndex = 0 %>
-					<%allMember.forEach(function(branchItem, b_index) {%>
-						<%branchItem.forEach(function(item, index) {%>
+					<%allMember.forEach(function(branchItem, b_index) { %>
+						<%branchItem.forEach(function(item, index) { %>
 						<% newIndex++ %>
-						<input type="hidden" name="memberName[<%=newIndex%>]" value="<%=item.RowKey._%>">
-						<input type="hidden" name="memberKey[<%=newIndex%>]" value="<%=item.PartitionKey._%>">
-						<input type="hidden" name="branchName[<%=newIndex%>]" value="<%=item.branch._%>">
-						<%});%>
-					<%});%>
+						<input type="hidden" name="memberName[<%=newIndex %>]" value="<%=item.RowKey._ %>">
+						<input type="hidden" name="memberKey[<%=newIndex %>]" value="<%=item.PartitionKey._ %>">
+						<input type="hidden" name="branchName[<%=newIndex %>]" value="<%=item.branch._ %>">
+						<%}); %>
+					<%}); %>
 
 		 			<% bsList.forEach( function (item, index) { %>
-					<input type="hidden" name="bsList[<%=index%>]" value="<%=item.RowKey._%>">
+					<input type="hidden" name="bsList[<%=index %>]" value="<%=item.RowKey._ %>">
 					<% }); %>
 					<ul>
 						<li><a href="/branch" class="active"><span>브랜치 맴버 전원</span></a></li>
@@ -66,19 +66,19 @@
 		<tr>
 			<th>브랜치장</th>
  			<% bsList.forEach( function (item, index) { %>
-			<td <% if (item.happy._ < 90) {%>style="background:#FF0000"<%} else if (item.order._ <= 40) {%>style="background:#00FF00"<%}%>>
-				<a href="/profile/<%= item.RowKey._%>"><%= item.RowKey._ %>(<%=item.oldbranch._%>,<%=item.yearbranch._%>)</a>
+			<td <% if (item.happy._ < 90) { %>style="background:#FF0000"<%} else if (item.order._ <= 40) { %>style="background:#00FF00"<%} %>>
+				<a href="/profile/<%= item.RowKey._ %>"><%= item.RowKey._ %>(<%=item.oldbranch._ %>,<%=item.yearbranch._ %>)</a>
 			</td>
 			<% }); %>
 			<th>없음</th>
 		</tr>
 
 		<% for(var i = 0; i < maxNumber; i++) { %>
-		<tr<% if (i%2 == 0) {%> class="alt"<%}%>>
-			<% if (i==0) {%>  <td rowspan="<%=maxNumber%>">청 2부</td> <%}%>
+		<tr<% if (i%2 == 0) { %> class="alt"<%} %>>
+			<% if (i==0) { %>  <td rowspan="<%=maxNumber %>">청 2부</td> <%} %>
 			<% branchTable.forEach( function (item, index) { %>
-				<td <% if (item.length > i && item[i].happy._ < 90) {%>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ <= 40) {%>style="background:#00FF00"<%}%>>
-					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._%>,<%=item[i].yearbranch._%>)</a><%}%>
+				<td <% if (item.length > i && item[i].happy._ < 90) { %>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ <= 40) { %>style="background:#00FF00"<%} %>>
+					<% if (item.length > i) { %><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._ %>,<%=item[i].yearbranch._ %>)</a><%} %>
 				</td>
 			<% }); %>
 		</tr>
@@ -87,11 +87,11 @@
 			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
 		</tr>
 		<% for(var i = 0; i < maxYoungNumber; i++) { %>
-		<tr<% if ((i+maxNumber)%2 == 0) {%> class="alt"<%}%>>
-			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber%>">청 1부</td> <%}%>
+		<tr<% if ((i+maxNumber)%2 == 0) { %> class="alt"<%} %>>
+			<% if (i==0) { %>  <td style="background: #FFFFFF" rowspan="<%=maxYoungNumber %>">청 1부</td> <%} %>
 			<% branchYoungTable.forEach( function (item, index) { %>
-				<td <% if (item.length > i && item[i].happy._ < 90) {%>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ <= 40) {%>style="background:#00FF00"<%}%>>
-					<% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._%>,<%=item[i].yearbranch._%>)</a><%}%>
+				<td <% if (item.length > i && item[i].happy._ < 90) { %>style="background:#FF0000"<%} else if (item.length > i && item[i].order._ <= 40) { %>style="background:#00FF00"<%} %>>
+					<% if (item.length > i) { %><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].oldbranch._ %>,<%=item[i].yearbranch._ %>)</a><%} %>
 				</td>
 			<% }); %>
 		</tr>
@@ -100,10 +100,10 @@
 			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
 		</tr>
 		<% for(var i = 0; i < maxArmy; i++) { %>
-		<tr<% if ((i+maxNumber+maxYoungNumber)%2 == 0) {%> class="alt"<%}%>>
-			<% if (i==0) {%>  <td style="background: #E1EEF4" rowspan="<%=maxArmy%>">군입대자</td> <%}%>
+		<tr<% if ((i+maxNumber+maxYoungNumber)%2 == 0) { %> class="alt"<%} %>>
+			<% if (i==0) { %>  <td style="background: #E1EEF4" rowspan="<%=maxArmy %>">군입대자</td> <%} %>
 			<% armyTable.forEach( function (item, index) { %>
-				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].happy._%>)</a><%}%></td>
+				<td><% if (item.length > i) { %><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %>(<%=item[i].happy._ %>)</a><%} %></td>
 			<% }); %>
 			<td></td>
 		</tr>
@@ -113,19 +113,19 @@
 			<td style="background: #D1DEE4" colspan="<%=bsList.length+2 %>">
 		</tr>
 		<% for(var i = 0; i < maxOther; i++) { %>
-		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy)%2 == 0) {%> class="alt"<%}%>>
-			<% if (i==0) {%>  <td style="background: #FFFFFF" rowspan="<%=maxOther%>">유학자 및 지방근무자</td> <%}%>
+		<tr<% if ((i+maxNumber+maxYoungNumber+maxArmy)%2 == 0) { %> class="alt"<%} %>>
+			<% if (i==0) { %>  <td style="background: #FFFFFF" rowspan="<%=maxOther %>">유학자 및 지방근무자</td> <%} %>
 			<% otherTable.forEach( function (item, index) { %>
-				<td><% if (item.length > i) {%><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%}%></td>
+				<td><% if (item.length > i) { %><a href="/profile/<%= item[i].RowKey._ %>"><%= item[i].RowKey._ %></a><%} %></td>
 			<% }); %>
 			<td></td>
 		</tr>
 		<% } %>
-		<tr<% if ((maxNumber+maxYoungNumber+maxArmy+maxOther)%2 == 0) {%> class="alt"<%}%>>
+		<tr<% if ((maxNumber+maxYoungNumber+maxArmy+maxOther)%2 == 0) { %> class="alt"<%} %>>
 			<td style="background: #E1EEF4">브랜치 활성도</td>
-			<% for (var i = 0; i < branchPowerList.length; i++) {%>
-				<td><%=branchPowerList[i]%></td>
-			<%}%>
+			<% for (var i = 0; i < branchPowerList.length; i++) { %>
+				<td><%=branchPowerList[i] %></td>
+			<%} %>
 		</tr>
 
 	</tbody>
